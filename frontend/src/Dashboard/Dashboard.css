@@ -1,0 +1,8 @@
+.bg-image {
+  background-image: url("../assets/background-3.jpg");
+  opacity: 0.4;
+  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
