@@ -1,57 +1,68 @@
 .vertical-navbar {
-    display: flex;
-    flex-direction: column;
-    width: 200px; 
-    background-color: #f0f0f0; 
-    padding: 20px;
-    height: 100vh;
-    box-sizing: border-box;
-  }
-  
-  .vertical-navbar ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .vertical-navbar li {
-    margin-bottom: 10px;
-    text-align: left;
-  }
-  
-  .vertical-navbar a {
-    text-decoration: none;
-    color: #333; 
-    font-size: 22px; 
-    display: block; 
-    padding: 10px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    transition: background-color 0.2s ease-in-out;
-  }
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  height: 100vh;
+  box-sizing: border-box;
+  min-width: 200px;
+}
 
-  .nav-icon {
-    width: 30px; 
-    height: 30px;
-    margin-right: 10px; /* Spacing between icon and text */
-    margin-bottom: -3.5px;
-  }
-  
-  .vertical-navbar a.active {
-    background-color: #e0e0e0; 
-  }
-  .vertical-navbar a:hover{
-    background-color: #e0e0e0;
-  }
-  
-  .company-logo {
-    text-align: center;
-    font-weight: bold; 
-    color: #333; 
-    padding-bottom: 25px;
-    font-size: 30px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  }
+.vertical-navbar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-  
+.vertical-navbar li {
+  margin-bottom: 10px;
+  text-align: left;
+}
 
-  
+.vertical-navbar a {
+  text-decoration: none;
+  color: #333;
+  font-size: 22px;
+  display: block;
+  padding: 10px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.nav-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px; /* Spacing between icon and text */
+  margin-bottom: -3.5px;
+}
+
+.vertical-navbar a.active {
+  background-color: #c3d6d0;
+  border-radius: 5px;
+}
+.vertical-navbar a:hover {
+  background: linear-gradient(
+    45deg,
+    rgba(19, 246, 249, 0.5),
+    rgba(5, 75, 68, 0.5)
+  ); /* Gradient hover color */
+  border-radius: 5px;
+  transition: background 0.3s ease; /* Smooth transition effect */
+}
+
+.company-logo {
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+  padding-bottom: 25px;
+  font-size: 30px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background: -webkit-linear-gradient(
+    right,
+    rgba(22, 187, 190, 0.5),
+    rgba(1, 28, 26, 0.5)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
