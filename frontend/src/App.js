@@ -1,33 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./Navbar/Navbar";
-import Login from "./Login/Login";
+import logo from "./logo.svg";
+import "./App.css";
 import Dashboard from "./Dashboard/Dashboard";
+import Login from "./Login/Login";
+import Navbar from "./Navbar/Navbar";
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-
-  useEffect(() => {
-    // Check if the user is logged in when the component mounts
-    const user = localStorage.getItem("user");
-    if (user) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
   return (
-    <Router>
-      {isLoggedIn ? (
-        <>
-          <Navbar />
-          <Routes>
-            <Route path="/dashboard" component={Dashboard} />
-          </Routes>
-        </>
-      ) : (
-        <Login setIsLoggedIn={setIsLoggedIn} />
-      )}
-    </Router>
+    <div className="App">
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Login />}></Route>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
