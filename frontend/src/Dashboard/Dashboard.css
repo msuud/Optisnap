@@ -1,6 +1,5 @@
 .bg-image {
   background-image: url("../assets/background-3.jpg");
-  opacity: 0.58;
   background-blend-mode: multiply;
   background-size: cover;
   background-position: center;
@@ -31,7 +30,7 @@
 }
 
 .small-grid-bg {
-  background: rgba(22, 165, 142, 0.8);
+  background: rgba(22, 165, 142, 0.6);
   border-radius: 100%;
   width: 300px;
 }
@@ -39,13 +38,13 @@
 .workspace {
   font-size: 30px;
   font-family: serif;
-  color: black;
-  font-weight: bolder;
+  color: rgb(40, 38, 38);
+  font-weight: bold;
 }
 
 .image {
   font-size: 30px;
   font-family: serif;
-  color: black;
-  font-weight: bolder;
+  color: rgb(40, 38, 38);
+  font-weight: bold;
 }
