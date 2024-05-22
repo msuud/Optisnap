@@ -3,7 +3,7 @@ import './aboutus.css';
 
 const AboutUs = () => {
   return (
-    <div className="container-fluid bg-image about-us-container">
+    <div className="container-fluid bg-image about-us-container outer-box">
       <div className="relative rounded-3xl p-10 2xl:-mx-10 pt-10 about-us-content">
         <div className="flex items-center space-x-3 content-wrapper">
           <h1 className="font-hero text-3xl leading-none text-white"></h1>

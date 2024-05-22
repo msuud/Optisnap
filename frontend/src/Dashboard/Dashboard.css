@@ -2,14 +2,22 @@
   background-image: url("../assets/background-3.jpg");
   opacity: 0.58;
   background-blend-mode: multiply;
-  background-size: cover;
-  background-position: center;
+  /* background-size: cover; */
+  /* background-position: center; */
   height: 100vh;
+  /* width: 1000px; */
+  max-width: -webkit-fill-available;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .grid-bg {
   background: rgba(32, 101, 138, 0);
 }
+
+/* .container {
+  max-width: 1315px; 
+} */
 
 .grid-bg h1 {
   font-size: 60px;
@@ -25,10 +33,10 @@
   -webkit-text-fill-color: transparent;
 }
 
-.row1 {
+/* .row1 {
   margin: 0 auto;
   margin-left: 80px;
-}
+} */
 
 .small-grid-bg {
   background: rgba(22, 165, 142, 0.8);

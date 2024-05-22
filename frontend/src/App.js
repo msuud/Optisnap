@@ -20,10 +20,10 @@ function App() {
     <div className="App">
       <BrowserRouter>
         {isLoggedIn ? (
-          <div className="">
-            <div className="navbar">
+          <div>
+            <div className="d-flex flex-row min-vh-100 ">
               <Navbar />
-            <div className="dashboard content-container">
+            <div className="container-fluid dashboard content-cointainer mt-0 px-0">
               <Routes>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/about-us" element={<AboutUs />} />
