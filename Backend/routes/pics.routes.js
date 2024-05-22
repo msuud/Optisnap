@@ -54,4 +54,15 @@ router.post('/add', [upload.single('image'), authenticateToken], async (req, res
     }
 })
 
+router.get("/", authenticateToken,async (req, res) => {
+    try {
+        let u = await user.findOne({ email: req.user.name });
+        console.log(u);
+        res.json({ images: u.images }).status(StatusCodes.OK)
+    } catch (error) {
+        console.log("error",error);
+        res.send(error.message)
+    }
+})
+
 module.exports = router;

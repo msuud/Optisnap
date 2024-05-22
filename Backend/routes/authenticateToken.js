@@ -11,6 +11,7 @@ module.exports =  (req, res, next) => {
         return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized');
       }  else {
         req.user = user;
+        // console.log("user",user);
         next();
       }
     });
