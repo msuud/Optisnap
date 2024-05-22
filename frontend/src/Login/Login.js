@@ -11,7 +11,7 @@ const Login = ({ setIsLoggedIn }) => {
     <div className="bg-login">
       <div className="container">
         <div className="form-container">
-          <h1 className="title">{isLoginActive ? "Login" : "Sign Up"}</h1>
+          <h2 className="title">{isLoginActive ? "Login" : "Sign Up"}</h2>
           {isLoginActive ? <LoginForm /> : <SignupForm />}
           <button className="toggle-form" onClick={handleToggleForm}>
             {isLoginActive ? "Create Account" : "Login Instead"}
