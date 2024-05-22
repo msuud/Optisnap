@@ -5,7 +5,7 @@ import Login from "./Login/Login";
 import Dashboard from "./Dashboard/Dashboard";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   useEffect(() => {
     // Check if the user is logged in when the component mounts
