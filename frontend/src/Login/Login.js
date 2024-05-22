@@ -8,6 +8,7 @@ const Login = ({setIsLoggedIn}) => {
     setIsLoginActive(!isLoginActive);
   };
   return (    
+    <div className="bg-login">
     <div className="container">
       <div className="form-container">
         <h1 className="title">{isLoginActive ? 'Login' : 'Sign Up'}</h1>
@@ -20,6 +21,7 @@ const Login = ({setIsLoggedIn}) => {
           {isLoginActive ? 'Create Account' : 'Login Instead'}
         </button>
       </div>
+    </div>
     </div>
   )
 }

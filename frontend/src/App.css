@@ -7,6 +7,15 @@
   pointer-events: none;
 }
 
+.content-container {
+  flex: 1; /* Allow content container to fill remaining space */
+  padding: 1rem; /* Add some padding */
+}
+
+.main-layout {
+  display: flex; 
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

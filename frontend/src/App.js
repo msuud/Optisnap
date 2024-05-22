@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
 import Login from "./Login/Login";
 import Dashboard from "./Dashboard/Dashboard";
+import AboutUs from "./About-us/aboutus";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -22,12 +23,13 @@ function App() {
           <div className="main-layout">
             <div className="navbar">
               <Navbar />
-            </div>
-            <div className="dashboard">
+            <div className="dashboard content-container">
               <Routes>
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/about-us" element={<AboutUs />} />
               </Routes>
             </div>
+          </div>
           </div>
         ) : (
           <Routes>

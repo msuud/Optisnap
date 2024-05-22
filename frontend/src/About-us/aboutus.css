@@ -6,7 +6,9 @@
     background-position: center;
     height: 100vh; /* Ensures full viewport height */
   }
-  
+  /* *{
+    display: -webkit-inline-box;
+  } */
   .relative {
     position: relative; /* Allows absolute positioning of child elements */
   }
