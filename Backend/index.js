@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const userRouter = require('./routes')
+const userRoutes = require('./routes/user.routes')
+const picRoutes = require('./routes/pics.routes')
 
 const run = async () => {
   try {
@@ -16,5 +17,6 @@ const run = async () => {
   });
 };
 
-app.use(userRouter)
+app.use(userRoutes)
+app.use('/pic',picRoutes)
 run();
