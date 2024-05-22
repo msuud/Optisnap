@@ -1,28 +1,24 @@
-import React, { useState } from 'react'
-import './Login.css';
+import React, { useState } from "react";
+import "./Login.css";
 
-const Login = ({setIsLoggedIn}) => {
+const Login = ({ setIsLoggedIn }) => {
   const [isLoginActive, setIsLoginActive] = useState(true);
 
   const handleToggleForm = () => {
     setIsLoginActive(!isLoginActive);
   };
-  return (    
+  return (
     <div className="container">
       <div className="form-container">
-        <h1 className="title">{isLoginActive ? 'Login' : 'Sign Up'}</h1>
-        {isLoginActive ? (
-          <LoginForm />
-        ) : (
-          <SignupForm />
-        )}
+        <h1 className="title">{isLoginActive ? "Login" : "Sign Up"}</h1>
+        {isLoginActive ? <LoginForm /> : <SignupForm />}
         <button className="toggle-form" onClick={handleToggleForm}>
-          {isLoginActive ? 'Create Account' : 'Login Instead'}
+          {isLoginActive ? "Create Account" : "Login Instead"}
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 function LoginForm() {
   return (
     <form className="login-form">
@@ -38,8 +34,8 @@ function LoginForm() {
       </div>
       <button type="submit">Login</button>
       <div className="register-link">
-           <p>Don't have an account?</p>                                        
-          </div>
+        <p>Don't have an account?</p>
+      </div>
     </form>
   );
 }
@@ -47,9 +43,8 @@ function LoginForm() {
 function SignupForm() {
   return (
     <form className="signup-form">
-       <div className="col form-box register">
+      <div className="col form-box register">
         <form action="">
-
           <div className="input-box">
             <input type="text" placeholder="Username" required />
           </div>
@@ -61,10 +56,9 @@ function SignupForm() {
           </div>
           <button type="submit">Register</button>
         </form>
-</div>
+      </div>
     </form>
   );
 }
 
-
-export default Login
+export default Login;
