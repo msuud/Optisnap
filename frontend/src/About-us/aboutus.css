@@ -9,6 +9,13 @@
   /* *{
     display: -webkit-inline-box;
   } */
+
+  .about-us-container {
+    display: flex; /* Make parent container a flexbox */
+    height: 100vh; /* Set full viewport height */
+    width: 100%;
+  }
+
   .relative {
     position: relative; /* Allows absolute positioning of child elements */
   }

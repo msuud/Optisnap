@@ -20,7 +20,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         {isLoggedIn ? (
-          <div className="main-layout">
+          <div className="">
             <div className="navbar">
               <Navbar />
             <div className="dashboard content-container">
