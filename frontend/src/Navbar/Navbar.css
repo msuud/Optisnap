@@ -1,18 +1,26 @@
 .vertical-navbar {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 240px;
   background-color: #f0f0f0;
   padding: 20px;
   height: 100vh;
   box-sizing: border-box;
   min-width: 200px;
+  margin: 0;
 }
 
 .vertical-navbar ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.logo-image {
+  width: 30px; /* Adjust width as needed */
+  height: 30px; /* Adjust height as needed */
+  display: inline-block;
+  margin-right: 7px;
 }
 
 .vertical-navbar li {

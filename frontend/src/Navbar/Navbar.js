@@ -5,6 +5,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import BadgeIcon from "@mui/icons-material/Badge";
 import PersonIcon from "@mui/icons-material/Person";
 import InfoIcon from "@mui/icons-material/Info";
+import logo from "../assets/logo.jpg";
 
 const navigationItems = [
   {
@@ -32,7 +33,10 @@ const navigationItems = [
 const Navbar = () => {
   return (
     <nav className="vertical-navbar">
-      <div className="company-logo">OptiSnap</div>
+      <div className="company-logo">
+        <img src={logo} alt="OptiSnap Logo" className="logo-image" />
+        OptiSnap
+      </div>
       <ul>
         {navigationItems.map((item) => (
           <li key={item.name}>

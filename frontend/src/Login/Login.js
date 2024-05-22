@@ -11,7 +11,7 @@ const Login = ({ setIsLoggedIn }) => {
     <div className="bg-login">
       <div className="container">
         <div className="form-container">
-          <h1 className="title">{isLoginActive ? "Login" : "Sign Up"}</h1>
+          <h2 className="title">{isLoginActive ? "Login" : "Sign Up"}</h2>
           {isLoginActive ? <LoginForm /> : <SignupForm />}
           <button className="toggle-form" onClick={handleToggleForm}>
             {isLoginActive ? "Create Account" : "Login Instead"}
@@ -85,6 +85,7 @@ function LoginForm() {
                 placeholder="Email"
                 value={formValues.email}
                 onChange={handleChange}
+                required
               />
             </div>
 
@@ -95,6 +96,7 @@ function LoginForm() {
                 placeholder="Password"
                 value={formValues.password}
                 onChange={handleChange}
+                required
               />
             </div>
           </form>
@@ -110,38 +112,34 @@ function LoginForm() {
 
 function SignupForm() {
   const startValues = { username: "", email: "", password: "" };
-  const [formValues, setFormValues] = useState(startValues);
-  const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
+  const [regformValues, setRegformValues] = useState(startValues);
+  const [regformErrors, setRegformErrors] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChanges = (e) => {
     const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
-    // console.log(formValues);
+    setRegformValues({ ...regformValues, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleOnSubmit = (e) => {
     e.preventDefault();
-    setFormErrors(validate(formValues));
-    setIsSubmit(true);
+    setRegformErrors(validation(regformValues));
+    setIsSubmitted(true);
   };
 
   useEffect(() => {
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
+    console.log(regformErrors);
+    if (Object.keys(regformErrors).length === 0 && isSubmitted) {
+      console.log(regformValues);
     }
-  }, [formErrors]);
+  }, [regformErrors]);
 
-  const validate = (values) => {
+  const validation = (values) => {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     if (!values.username || !values.email || !values.password) {
-      errors.username = "Email is required !";
+      errors.email = "Username is required !";
       alert("Please fill in all required fields.");
-    }
-    if (!values.email) {
-      errors.email = "Email is required !";
     } else if (!regex.test(values.email)) {
       errors.email = "Email is not of the correct format !";
       alert("Email is not of the correct format.");
@@ -157,40 +155,43 @@ function SignupForm() {
     }
     return errors;
   };
+
   return (
     <div>
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
-        // <div className="ui message successful">Signed in successfully</div>
-        <Login />
+      {Object.keys(regformErrors).length === 0 && isSubmitted ? (
+        <div className="ui message success">Registered Successfullly</div>
       ) : null}
-      <form className="signup-form" onSubmit={handleSubmit}>
+      <form className="signup-form" onSubmit={handleOnSubmit}>
         <div className="col form-box register">
           <form action="">
             <div className="input-box">
               <input
                 type="text"
-                placeholder="Username"
                 name="username"
-                value={formValues.username}
-                onChange={handleChange}
+                placeholder="Username"
+                value={regformValues.username}
+                onChange={handleChanges}
+                required
               />
             </div>
             <div className="input-box">
               <input
-                type="text "
-                placeholder="Email"
+                type="email"
                 name="email"
-                value={formValues.email}
-                onChange={handleChange}
+                placeholder="Email"
+                value={regformValues.email}
+                onChange={handleChanges}
+                required
               />
             </div>
             <div className="input-box">
               <input
                 type="password"
-                placeholder="Password"
                 name="password"
-                value={formValues.password}
-                onChange={handleChange}
+                placeholder="Password"
+                value={regformValues.password}
+                onChange={handleChanges}
+                required
               />
             </div>
             <button type="submit">Register</button>

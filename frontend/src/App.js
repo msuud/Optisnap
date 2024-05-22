@@ -8,22 +8,22 @@ import AboutUs from "./About-us/aboutus";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-  // useEffect(() => {
-  //   // Check if the user is logged in when the component mounts
-  //   const user = localStorage.getItem("user");
-  //   if (user) {
-  //     setIsLoggedIn(true);
-  //   }
-  // }, []);
+  useEffect(() => {
+    // Check if the user is logged in when the component mounts
+    const client = localStorage.getItem("client");
+    if (client) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   return (
     <div className="App">
       <BrowserRouter>
-        {console.log(isLoggedIn) ? (
-          <div className="">
-            <div className="navbar">
+        {isLoggedIn ? (
+          <div>
+            <div className="d-flex flex-row min-vh-100 ">
               <Navbar />
-              <div className="dashboard content-container">
+              <div className="container-fluid dashboard content-cointainer mt-0 px-0">
                 <Routes>
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/about-us" element={<AboutUs />} />
