@@ -1,8 +1,8 @@
 const express = require('express');
-const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const user = require('../userSchema');
 const { StatusCodes } = require('http-status-codes');
+const authenticateToken = require('./authenticateToken')
 const router = express.Router();
 router.use(express.json())
 router.post('/login', async (req, res) => {
@@ -11,7 +11,7 @@ router.post('/login', async (req, res) => {
     let u = await user.findOne({ email: body.email });
     if (await bcrypt.compare(body.password, u.password)) {
       const email = { name: body.email }
-      console.log(username);
+      console.log(email);
       const accessToken = jwt.sign(email, process.env.ACCESS_TOKEN_SECRET)
       res.json({
         message: 'Authentication Successful',
@@ -67,23 +67,6 @@ router.patch('/update', async (req, res) => {
     res.send(error.message).status(StatusCodes.BAD_REQUEST);
   }
 });
-
-//middleware to authenticate token
-const authenticateToken = (req, res, next) => {
-  console.log(req.headers);
-  let token = req.headers.authorization;
-  if (token == null) {
-    return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized');
-  }
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) {
-      return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized');
-    }  else {
-      req.user = user;
-      next();
-    }
-  });
-};
 
 //added just for checking
 router.get('/',authenticateToken,(req,res)=>{

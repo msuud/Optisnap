@@ -1,7 +1,4 @@
-require('dotenv').config()
 const AWS = require('aws-sdk');
-const { log } = require('console');
-
 const s3 = new AWS.S3()
 
 //for listing bucket
