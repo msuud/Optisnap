@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Login.css';
 
-const Login = () => {
+const Login = ({setIsLoggedIn}) => {
   const [isLoginActive, setIsLoginActive] = useState(true);
 
   const handleToggleForm = () => {
