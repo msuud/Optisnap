@@ -4,7 +4,7 @@ import Navbar from "../Navbar/Navbar";
 
 const Dashboard = () => {
   return (
-    <div className="container-fluid bg-image">
+    <div className="bg-image">
       <div className="container rounded text-black text-center p-5 mt-4 ml-4 mr-4 grid-bg">
         <h1>Welcome Back!!</h1>
         <div className="row row1">
