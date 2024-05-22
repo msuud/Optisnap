@@ -1,0 +1,67 @@
+.bg-image {
+  background-image: url("../assets/background-3.jpg");
+  opacity: unset;
+  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
+  height: 100vh; /* Ensures full viewport height */
+}
+/* *{
+  display: -webkit-inline-box;
+} */
+
+.about-us-container {
+  display: flex; /* Make parent container a flexbox */
+  height: 100vh; /* Set full viewport height */
+  width: 100%;
+}
+
+.relative {
+  position: relative; /* Allows absolute positioning of child elements */
+}
+
+.pt-10 {
+  padding-top: 0rem; /* Top padding */
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: black;
+  font-weight: 200;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .box1 p,
+  ul {
+    width: 80%; /* Adjust width for smaller screens */
+    font-size: 2rem; /* Adjust font size for smaller screens */
+  }
+}
+
+.outer-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box1 {
+  width: 1000px; /* Adjust width as needed */
+  margin: 0 auto; /* Center the element horizontally */
+  padding: 1rem; /* Add padding for content */
+  background-color: transparent;
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  color: white;
+  margin: 0 auto;
+}
+.text-left {
+  text-align: left; /* Left-align text content */
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+p,
+ul {
+  color: black;
+}
