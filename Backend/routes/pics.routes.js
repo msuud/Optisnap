@@ -20,10 +20,10 @@ router.post('/addWS', authenticateToken, async (req, res) => {
         const body = req.body;
         const newWorkspace = {
             name: body.workSpace,
-            images : []
+            images: []
         };
         console.log(newWorkspace);
-        let r= await user.updateOne({ email: req.user.name }, { $push: { workspaces:  newWorkspace}})
+        let r = await user.updateOne({ email: req.user.name }, { $push: { workspaces: newWorkspace } })
         console.log(r);
         res.send("Workspace Added!").status(StatusCodes.OK)
     } catch (error) {
@@ -31,24 +31,18 @@ router.post('/addWS', authenticateToken, async (req, res) => {
     }
 })
 
-router.post('/addPic', authenticateToken,upload.single('image'),  async (req, res) => {
+router.post('/addPic', authenticateToken, upload.single('image'), async (req, res) => {
     try {
-        console.log("req.file",req.file);
-        await user.updateOne({ email: req.user.name }, { $push: { images: req.file.originalname } })
         const body = req.body;
-        user.findOne({
-            "workspaces.name": body.WSname // Replace with the workspace name
-          })
-          .then((document) => {
-            if (document) {
-              // Proceed with adding the string if document found
-              const imageName = req.file.originalname; // Replace with the string to add
-              addString(document, imageName);
-            } else {
-              console.error("Workspace not found.");
+        let x = await user.findOne({ email: req.user.name }, { workspaces: 1 })
+        // console.log(x.workspaces);
+        x.workspaces.forEach((ws)=>{
+            if(ws.name === body.WSname){
+                ws.images.push(req.file.originalname)
             }
-          })
-          .catch((error) => console.error(error));
+        })
+        x = await user.updateOne({ email: req.user.name }, { workspaces: x.workspaces })
+        res.send(x).status(StatusCodes.OK)
         //the image needs to be uploaded to aws s3 bucket
         const file = path.join('./uploads', req.file.originalname)
         let fileStream = fs.createReadStream(file);

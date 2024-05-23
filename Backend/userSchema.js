@@ -21,15 +21,7 @@ const UserSchema = new mongoose.Schema(
             required: true
         },
         "workspaces": {
-            type: {
-                name: {
-                    type: String,
-                    required: true,
-                },
-                images: {
-                    type: [String]
-                },
-            },
+            type: Array,
         }
     }
 )
