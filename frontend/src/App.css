@@ -10,14 +10,13 @@
   display: flex; /* Enable flexbox layout for side-by-side elements */
 }
 
-.page > * {  /* Target all direct children of .page */
-  flex: 1;  /* Make each child element take up half the available space */
-  padding: 0;  /* Remove any default padding */
-  border: none;  /* Remove any default border */
+.page > * {  
+  flex: 1; 
+  border: none;  
 }
 .content-container {
   flex: 1; 
-  padding: 1rem; /* Add some padding */
+  padding: 1rem; 
 }
 
 .dashboard{
@@ -72,4 +71,12 @@
   flex: 1;
   padding: 1rem; 
 }
+
+
+
+
+
+
+
+
 

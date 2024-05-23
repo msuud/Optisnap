@@ -6,7 +6,7 @@ import Dashboard from "./Dashboard/Dashboard";
 import AboutUs from "./About-us/aboutus";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     // Check if the user is logged in when the component mounts
@@ -21,12 +21,12 @@ function App() {
       <BrowserRouter>
         {isLoggedIn ? (
           <div>
-            <div className="d-flex flex-row min-vh-100 ">
+            <div className="d-flex flex-row min-vh-100 page-cointainer">
               <Navbar />
-            <div className="container-fluid dashboard content-cointainer mt-0 px-0">
+            <div className="container-fluid dashboard content-cointainer mt-0 px-0 content">
               <Routes>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/dashboard" element={<Dashboard />} className="dashboard" />
+                <Route path="/about-us" element={<AboutUs />}  className="dashboard"/>
               </Routes>
             </div>
           </div>
