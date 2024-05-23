@@ -115,7 +115,7 @@ function LoginForm() {
   );
 }
 
-function SignupForm() {
+function SignupForm({ setIsLoggedIn }) {
   const startValues = { username: "", email: "", password: "" };
   const [regformValues, setRegformValues] = useState(startValues);
   const [regformErrors, setRegformErrors] = useState({});
@@ -136,6 +136,7 @@ function SignupForm() {
     console.log(regformErrors);
     if (Object.keys(regformErrors).length === 0 && isSubmitted) {
       console.log(regformValues);
+      // setIsLoggedIn(true);
     }
   }, [regformErrors]);
 
@@ -166,7 +167,7 @@ function SignupForm() {
       {Object.keys(regformErrors).length === 0 && isSubmitted ? (
         <div className="ui message success">Registered Successfullly</div>
       ) : null}
-      <form className="signup-form" onSubmit={handleOnSubmit}>
+      <form className="signup-form">
         <div className="col form-box register">
           <form action="">
             <div className="input-box">
@@ -176,7 +177,6 @@ function SignupForm() {
                 placeholder="Username"
                 value={regformValues.username}
                 onChange={handleChanges}
-                required
               />
             </div>
             <div className="input-box">
@@ -186,7 +186,6 @@ function SignupForm() {
                 placeholder="Email"
                 value={regformValues.email}
                 onChange={handleChanges}
-                required
               />
             </div>
             <div className="input-box">
@@ -196,10 +195,11 @@ function SignupForm() {
                 placeholder="Password"
                 value={regformValues.password}
                 onChange={handleChanges}
-                required
               />
             </div>
-            <button type="submit">Register</button>
+            <button type="submit" onClick={handleOnSubmit}>
+              Register
+            </button>
           </form>
         </div>
       </form>
