@@ -1,5 +1,4 @@
 const express = require('express');
-const multer = require('multer')
 const fs = require('fs');
 const path = require('path')
 const user = require('../userSchema');
@@ -7,28 +6,49 @@ const authenticateToken = require('./authenticateToken')
 // const user = require('../userSchema');
 const { StatusCodes } = require('http-status-codes');
 const router = express.Router();
+const upload = require('./multerMW')
 router.use(express.json())
 
-//config multer
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        // Set the destination directory for uploads (e.g., 'uploads/')
-        cb(null, './uploads');
-    },
-    filename: (req, file, cb) => {
-        // Use the original filename provided by the user
-        cb(null, file.originalname);
-    }
-});
-const upload = multer({ storage });
 
 //config s3 object for aws
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3()
 
-router.post('/add', [upload.single('image'), authenticateToken], async (req, res) => {
+
+router.post('/addWS', authenticateToken, async (req, res) => {
     try {
+        const body = req.body;
+        const newWorkspace = {
+            name: body.workSpace,
+            images : []
+        };
+        console.log(newWorkspace);
+        let r= await user.updateOne({ email: req.user.name }, { $push: { workspaces:  newWorkspace}})
+        console.log(r);
+        res.send("Workspace Added!").status(StatusCodes.OK)
+    } catch (error) {
+        res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+})
+
+router.post('/addPic', authenticateToken,upload.single('image'),  async (req, res) => {
+    try {
+        console.log("req.file",req.file);
         await user.updateOne({ email: req.user.name }, { $push: { images: req.file.originalname } })
+        const body = req.body;
+        user.findOne({
+            "workspaces.name": body.WSname // Replace with the workspace name
+          })
+          .then((document) => {
+            if (document) {
+              // Proceed with adding the string if document found
+              const imageName = req.file.originalname; // Replace with the string to add
+              addString(document, imageName);
+            } else {
+              console.error("Workspace not found.");
+            }
+          })
+          .catch((error) => console.error(error));
         //the image needs to be uploaded to aws s3 bucket
         const file = path.join('./uploads', req.file.originalname)
         let fileStream = fs.createReadStream(file);
@@ -54,13 +74,13 @@ router.post('/add', [upload.single('image'), authenticateToken], async (req, res
     }
 })
 
-router.get("/", authenticateToken,async (req, res) => {
+router.get("/", authenticateToken, async (req, res) => {
     try {
         let u = await user.findOne({ email: req.user.name });
         console.log(u);
         res.json({ images: u.images }).status(StatusCodes.OK)
     } catch (error) {
-        console.log("error",error);
+        console.log("error", error);
         res.send(error.message)
     }
 })

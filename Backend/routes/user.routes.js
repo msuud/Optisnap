@@ -31,10 +31,9 @@ router.post('/login', async (req, res) => {
 
 router.post('/signup', async (req, res) => {
   try {
-    console.log(process.env.MONGODB_URI);
     const body = req.body;
     const hashedPassword = await bcrypt.hash(body.password, 10);
-    const u = new User({
+    const u = new user({
       username: body.username,
       email: body.email,
       name: body.name,
