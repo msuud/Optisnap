@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Login.css";
+import logo1 from "../assets/logo1.png";
 
 const Login = ({ setIsLoggedIn }) => {
   const [isLoginActive, setIsLoginActive] = useState(true);
@@ -9,6 +10,10 @@ const Login = ({ setIsLoggedIn }) => {
   };
   return (
     <div className="bg-login">
+      <div className="company-logo1">
+        <img src={logo1} alt="OptiSnap Logo" className="logo-image" />
+        OptiSnap
+      </div>
       <div className="container">
         <div className="form-container">
           <h2 className="title">{isLoginActive ? "Login" : "Sign Up"}</h2>

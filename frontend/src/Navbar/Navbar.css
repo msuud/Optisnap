@@ -38,23 +38,65 @@
   transition: background-color 0.2s ease-in-out;
 }
 
+.vertical-navbar {
+  animation: slide-in 0.5s ease-in-out forwards;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.vertical-navbar a.active {
+  animation: pulse 0.7s ease-in-out infinite alternate; /* Add infinite and alternate for pulsating effect */
+  background-color: #c3d6d0;
+  border-radius: 5px;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.8;
+  }
+}
+
+.vertical-navbar a:hover .nav-icon,
+.vertical-navbar a:hover {
+  animation: pop 0.2s ease-in-out;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1); /* Adjust scale for desired pop effect */
+  }
+}
+
 .nav-icon {
   width: 30px;
   height: 30px;
   margin-right: 10px; /* Spacing between icon and text */
-  margin-bottom: -3.5px;
+  margin-bottom: 4px;
 }
 
 .vertical-navbar a.active {
-  background-color: #c3d6d0;
+  background-color: #519f4055;
   border-radius: 5px;
 }
 .vertical-navbar a:hover {
   background: linear-gradient(
     45deg,
-    rgba(19, 246, 249, 0.5),
-    rgba(5, 75, 68, 0.5)
-  ); /* Gradient hover color */
+    rgba(102, 185, 116, 0.5),
+    rgba(18, 85, 6, 0.5)
+  );
   border-radius: 5px;
   transition: background 0.3s ease; /* Smooth transition effect */
 }
@@ -66,11 +108,8 @@
   padding-bottom: 25px;
   font-size: 30px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  background: -webkit-linear-gradient(
-    right,
-    rgba(22, 187, 190, 0.5),
-    rgba(1, 28, 26, 0.5)
-  );
+  background: -webkit-linear-gradient(right, rgba(20, 173, 10), rgba(1, 35, 6));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  /* margin-bottom: 10px; */
 }
