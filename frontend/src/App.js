@@ -4,6 +4,7 @@ import Navbar from "./Navbar/Navbar";
 import Login from "./Login/Login";
 import Dashboard from "./Dashboard/Dashboard";
 import AboutUs from "./About-us/aboutus";
+import Workspace from "./Workspace/workspace";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -27,6 +28,7 @@ function App() {
                 <Routes>
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/about-us" element={<AboutUs />} />
+                  <Route path="/workspace" element={<Workspace />} />
                 </Routes>
               </div>
             </div>
