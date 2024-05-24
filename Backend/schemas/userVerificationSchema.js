@@ -5,7 +5,7 @@ const UserVerificationSchema = new mongoose.Schema(
         "uid" : String,
         "uString" : String,
         "createdAt" : Date,
-        "updatedAt" : Date 
+        "expiresAt" : Date 
     }
 )
 

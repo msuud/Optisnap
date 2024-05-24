@@ -1,12 +1,12 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path')
-const user = require('../userSchema');
-const authenticateToken = require('./authenticateToken')
+const user = require('../schemas/userSchema');
+const authenticateToken = require('../middleware/authenticateToken')
 // const user = require('../userSchema');
 const { StatusCodes } = require('http-status-codes');
 const router = express.Router();
-const upload = require('./multerMW')
+const upload = require('../middleware/multerMW')
 router.use(express.json())
 
 

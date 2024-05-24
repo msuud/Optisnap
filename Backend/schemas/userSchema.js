@@ -22,6 +22,9 @@ const UserSchema = new mongoose.Schema(
         },
         "workspaces": {
             type: Array,
+        },
+        "verified": {
+            type: Boolean,
         }
     }
 )

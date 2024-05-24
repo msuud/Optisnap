@@ -4,7 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 const userRoutes = require('./routes/user.routes')
 const picRoutes = require('./routes/pics.routes')
-
+const verifyRoutes = require('./routes/verify.routes')
 const run = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
@@ -19,4 +19,5 @@ const run = async () => {
 
 app.use(userRoutes)
 app.use('/pic',picRoutes)
+app.use('/verify',verifyRoutes)
 run();

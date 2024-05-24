@@ -1,16 +1,32 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const user = require('../userSchema');
+const user = require('../schemas/userSchema');
 const jwt = require('jsonwebtoken')
+const { v4: uuidv4 } = require('uuid')
+const userVerification = require('../schemas/userVerificationSchema')
 const { StatusCodes } = require('http-status-codes');
-const authenticateToken = require('./authenticateToken')
+const authenticateToken = require('../middleware/authenticateToken')
 const router = express.Router();
 router.use(express.json())
+
+const nodemailer = require('nodemailer')
+
+const transport = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASS  // Use App Password if applicable
+  }
+});
+
 router.post('/login', async (req, res) => {
   try {
     let body = req.body;
     let u = await user.findOne({ email: body.email });
-    if (await bcrypt.compare(body.password, u.password)) {
+    if(!u.verified){
+      res.send("Please verify the email before logging in.").status(StatusCodes.UNAUTHORIZED)
+    }
+    else if (await bcrypt.compare(body.password, u.password)) {
       const email = { name: body.email }
       console.log(email);
       const accessToken = jwt.sign(email, process.env.ACCESS_TOKEN_SECRET)
@@ -29,6 +45,34 @@ router.post('/login', async (req, res) => {
   }
 });
 
+const sendVerificationEmail = async ({ _id, email }, res) => {
+  const currentURL = "http:localhost:4000/"
+  const uniqueString = uuidv4() + _id;
+  const mailOptions = {
+    from: process.env.AUTH_EMAIL,
+    to: email,
+    subject: "Verify Your Email",
+    html: `<p>Verify your email address to complete the signup and login into your account .< /p><p>This link <b>expires in 6 hours</b> .
+      < /p><p>Press <a href=${currentURL + "verify/" + _id + "/" + uniqueString}>here</a> to proceed .< /p>`,
+  }
+
+  try {
+    const hashedUniqueString = await bcrypt.hash(uniqueString, 10)
+    // console.log(hashedUniqueString);
+    const newUserVerification = new userVerification({
+      uid: _id,
+      uString: hashedUniqueString,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + 21600000,
+    })
+    await newUserVerification.save()
+    await transport.sendMail(mailOptions)
+    return "mail sent!!"
+  } catch (error) {
+    res.send("Error at sending the email.").status(StatusCodes.INTERNAL_SERVER_ERROR)
+  }
+}
+
 router.post('/signup', async (req, res) => {
   try {
     const body = req.body;
@@ -37,11 +81,14 @@ router.post('/signup', async (req, res) => {
       username: body.username,
       email: body.email,
       name: body.name,
-      password: hashedPassword
+      password: hashedPassword,
+      verified: false,
     });
-    await u.save();
+    let response = await u.save();
+    response = await sendVerificationEmail(response, res)
     res.json({
-      message: "User Created"
+      message: "User Created",
+      response: response
     }).status(StatusCodes.CREATED);
   } catch (error) {
     console.log(error);
@@ -69,7 +116,7 @@ router.patch('/update', async (req, res) => {
 });
 
 //added just for checking
-router.get('/',authenticateToken,(req,res)=>{
-  res.json({user : req.user})
+router.get('/', authenticateToken, (req, res) => {
+  res.json({ user: req.user })
 })
 module.exports = router;
