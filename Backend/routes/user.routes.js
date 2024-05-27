@@ -2,13 +2,14 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const user = require("../schemas/userSchema");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const { v4: uuidv4 } = require("uuid");
 const userVerification = require("../schemas/userVerificationSchema");
 const { StatusCodes } = require("http-status-codes");
 const authenticateToken = require("../middleware/authenticateToken");
 const router = express.Router();
-const axios = require("axios");
 router.use(express.json());
+router.use(cookieParser());
 
 const nodemailer = require("nodemailer");
 
@@ -16,7 +17,7 @@ const transport = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.EMAIL,
-    pass: process.env.PASS, // Use App Password if applicable
+    pass: process.env.PASS,
   },
 });
 
@@ -24,7 +25,6 @@ router.post("/login", async (req, res) => {
   try {
     let body = req.body;
     let u = await user.findOne({ email: body.email });
-
     if (u == null) {
       res.send("Email is not registered").status(StatusCodes.UNAUTHORIZED);
     } else if (!u.verified) {
@@ -33,8 +33,9 @@ router.post("/login", async (req, res) => {
       const email = { name: body.email };
       // console.log(email);
       const accessToken = jwt.sign(email, process.env.ACCESS_TOKEN_SECRET);
-      res.cookie("accessToken", accessToken, { httpOnly: true });
+      console.log(accessToken);
       res
+        .cookie("accessToken", accessToken, { httpOnly: true })
         .json({
           message: "Authentication Successful",
         })
@@ -53,7 +54,7 @@ router.post("/login", async (req, res) => {
 });
 
 const sendVerificationEmail = async ({ _id, email }, res) => {
-  const currentURL = "http://localhost:4000/";
+  const currentURL = "http:localhost:4000/";
   const uniqueString = uuidv4() + _id;
   const mailOptions = {
     from: process.env.AUTH_EMAIL,
@@ -87,11 +88,11 @@ const sendVerificationEmail = async ({ _id, email }, res) => {
 router.post("/signup", async (req, res) => {
   try {
     const body = req.body;
-    console.log(body);
     const hashedPassword = await bcrypt.hash(body.password, 10);
     const u = new user({
       username: body.username,
       email: body.email,
+      name: body.name,
       password: hashedPassword,
       verified: false,
     });
@@ -144,13 +145,13 @@ router.patch("/update", async (req, res) => {
 router.get("/", authenticateToken, (req, res) => {
   res.json({ user: req.user });
 });
-module.exports = router;
 
 router.post("/logout", authenticateToken, async (req, res) => {
   try {
-    await user.findOneAndDelete({ email: res.user.name });
-    res.json({ message: "Logged Out" }).status(StatusCodes.OK);
+    res.clearCookie("accessToken").send("logged out");
   } catch (error) {
     res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 });
+
+module.exports = router;
