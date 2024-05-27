@@ -40,7 +40,7 @@ const Navbar = () => {
       <ul>
         {navigationItems.map((item) => (
           <li key={item.name}>
-            <NavLink to={item.path} activeClassName="active">
+            <NavLink to={item.path}>
               {item.icon}
               {item.name}
             </NavLink>

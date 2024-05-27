@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Starter.css";
 import logo from "../assets/logo1.png";
+import axios from "axios";
+import { StatusCodes } from "http-status-codes";
 
 const SignupForm = () => {
   const startValues = { username: "", email: "", password: "" };
   const [regformValues, setRegformValues] = useState(startValues);
   const [regformErrors, setRegformErrors] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isRegistered, setIsRegistered] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
@@ -21,21 +22,31 @@ const SignupForm = () => {
     setRegformValues({ ...regformValues, [name]: value });
   };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
     setRegformErrors(validation(regformValues));
-    setIsSubmitted(true);
-  };
 
-  useEffect(() => {
-    console.log(regformErrors);
-    if (Object.keys(regformErrors).length === 0 && isSubmitted) {
-      console.log(regformValues);
-      setIsRegistered(true);
-      console.log("Registered successfully");
-      navigate("/verification");
+    if (Object.keys(regformErrors).length === 0) {
+      try {
+        const response = await axios.post("http://localhost:4000/signup", {
+          username: regformValues.username,
+          email: regformValues.email,
+          password: regformValues.password,
+        });
+        console.log("Response", response.data);
+        if (response.data == "username exist") {
+          alert("Username already exist");
+        } else if (response.data == "Email exists") {
+          alert("Email already exists");
+        } else {
+          navigate("/verification");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Signup Failed !");
+      }
     }
-  }, [regformErrors]);
+  };
 
   const validation = (values) => {
     const errors = {};
@@ -61,54 +72,52 @@ const SignupForm = () => {
 
   return (
     <div className="bg-login">
-      {Object.keys(regformErrors).length === 0 && isSubmitted ? (
+      {/* {Object.keys(regformErrors).length === 0 && isSubmitted ? (
         <div className="ui message success">Registered Successfullly</div>
-      ) : null}
+      ) : null} */}
       <div className="company-logo1">
         <img src={logo} alt="OptiSnap Logo" className="logo-image" />
         OptiSnap
       </div>
       <form className="container">
         <div className="col form-box register">
-          <form action="">
-            <p className="title">Sign Up</p>
-            <div className="input-box">
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                value={regformValues.username}
-                onChange={handleChanges}
-              />
-            </div>
-            <div className="input-box">
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={regformValues.email}
-                onChange={handleChanges}
-              />
-            </div>
-            <div className="input-box">
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={regformValues.password}
-                onChange={handleChanges}
-              />
-            </div>
-            <button type="submit" className="button1" onClick={handleOnSubmit}>
-              Register
-            </button>
-            <button
-              className="toggle-form register-link"
-              onClick={handleLoginClick}
-            >
-              Already have an account ? Login
-            </button>
-          </form>
+          <p className="title">Sign Up</p>
+          <div className="input-box">
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={regformValues.username}
+              onChange={handleChanges}
+            />
+          </div>
+          <div className="input-box">
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={regformValues.email}
+              onChange={handleChanges}
+            />
+          </div>
+          <div className="input-box">
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={regformValues.password}
+              onChange={handleChanges}
+            />
+          </div>
+          <button type="submit" className="button1" onClick={handleOnSubmit}>
+            Register
+          </button>
+          <button
+            className="toggle-form register-link"
+            onClick={handleLoginClick}
+          >
+            Already have an account ? Login
+          </button>
         </div>
       </form>
     </div>

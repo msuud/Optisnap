@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import "./Starter.css";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo1.png";
+import axios from "axios";
 
 const LoginForm = ({ setIsLoggedIn }) => {
   const initialValues = { email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
 
   const handleRegisterClick = () => {
@@ -21,21 +21,30 @@ const LoginForm = ({ setIsLoggedIn }) => {
     // console.log(formValues);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    setIsSubmit(true);
-  };
-
-  useEffect(() => {
-    console.log(formErrors);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
-      setIsLoggedIn(true);
-      console.log("Logged in successfully");
-      navigate("/dashboard");
+    if (Object.keys(formErrors).length === 0) {
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/login",
+          formValues
+        );
+        console.log(response.data);
+        if (response.data == "Email is not verified") {
+          alert("Email is not verified");
+        } else if (response.data.message == "Authentication Successful") {
+          setIsLoggedIn(true);
+          navigate("/dashboard");
+        } else {
+          alert("Invalid Credentials");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Login Failed!");
+      }
     }
-  }, [formErrors]);
+  };
 
   const validate = (values) => {
     const errors = {};
@@ -61,39 +70,34 @@ const LoginForm = ({ setIsLoggedIn }) => {
 
   return (
     <div className="bg-login">
-      {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <div className="ui message successful">Signed in successfully</div>
-      ) : null}
       <div className="company-logo1">
         <img src={logo} alt="OptiSnap Logo" className="logo-image" />
         OptiSnap
       </div>
       <form className="container-login" onSubmit={handleSubmit}>
         <div className="col form-box login">
-          <form action="">
-            <p className="title">Login</p>
-            <div className="input-box">
-              <input
-                type="text"
-                name="email"
-                placeholder="Email"
-                value={formValues.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
+          <p className="title">Login</p>
+          <div className="input-box">
+            <input
+              type="text"
+              name="email"
+              placeholder="Email"
+              value={formValues.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-            <div className="input-box">
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={formValues.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </form>
+          <div className="input-box">
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formValues.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
         </div>
         <button type="submit" className="button1">
           Login
