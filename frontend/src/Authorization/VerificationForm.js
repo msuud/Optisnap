@@ -4,12 +4,11 @@ import "./Starter.css";
 import logo from "../assets/logo1.png";
 
 const VerificationForm = () => {
-  const [isVerified, setIsVerified] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     setTimeout(() => {
-      setIsVerified(true);
-    }, 3000);
+      navigate("/login");
+    }, 5000);
   });
   return (
     <div className="bg-login">
@@ -22,7 +21,6 @@ const VerificationForm = () => {
           Your email has been sent for verification!<br></br>
           Please check your email and verify it.
         </p>
-        {isVerified ? navigate("/login") : null}
       </div>
     </div>
   );

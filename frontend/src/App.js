@@ -10,13 +10,6 @@ import VerificationForm from "./Authorization/VerificationForm";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    const client = localStorage.getItem("client");
-    if (client) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
   return (
     <div className="App">
       <BrowserRouter>
