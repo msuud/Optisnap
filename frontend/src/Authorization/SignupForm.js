@@ -32,6 +32,7 @@ const SignupForm = () => {
     if (Object.keys(regformErrors).length === 0 && isSubmitted) {
       console.log(regformValues);
       setIsRegistered(true);
+      console.log("Registered successfully");
       navigate("/verification");
     }
   }, [regformErrors]);

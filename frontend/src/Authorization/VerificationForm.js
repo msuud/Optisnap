@@ -9,6 +9,7 @@ const VerificationForm = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsVerified(true);
+      console.log("Email is verified");
     }, 3000);
   });
   return (

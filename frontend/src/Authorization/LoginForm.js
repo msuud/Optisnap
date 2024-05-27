@@ -32,6 +32,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(formValues);
       setIsLoggedIn(true);
+      console.log("Logged in successfully");
       navigate("/dashboard");
     }
   }, [formErrors]);
