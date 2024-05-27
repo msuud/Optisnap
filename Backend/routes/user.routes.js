@@ -145,4 +145,19 @@ router.post("/logout", authenticateToken, async (req, res) => {
   }
 })
 
+router.post('/delete', authenticateToken, async (req, res) => {
+  try {
+    let response = await user.deleteOne({ email: req.user.name })
+    // console.log(response);
+    if (response.deletedCount > 0) {
+      res.clearCookie("accessToken").send("deleted").status(StatusCodes.OK)
+    }
+    else{
+      res.clearCookie("accessToken").send("not deleted").status(StatusCodes.BAD_REQUEST)
+    }
+  } catch (error) {
+    res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
+  }
+})
+
 module.exports = router;
