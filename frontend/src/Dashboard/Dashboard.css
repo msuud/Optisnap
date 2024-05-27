@@ -85,8 +85,8 @@ h1 {
   font-size: 30px;
   padding: 5px;
   font-family: serif;
-  color: black;
-  font-weight: bolder;
+  color: rgb(40, 38, 38);
+  font-weight: bold;
 }
 
 .image {
