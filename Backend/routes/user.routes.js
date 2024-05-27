@@ -23,7 +23,7 @@ router.post('/login', async (req, res) => {
   try {
     let body = req.body;
     let u = await user.findOne({ email: body.email });
-    if(!u.verified){
+    if (!u.verified) {
       res.send("Please verify the email before logging in.").status(StatusCodes.UNAUTHORIZED)
     }
     else if (await bcrypt.compare(body.password, u.password)) {
@@ -120,3 +120,12 @@ router.get('/', authenticateToken, (req, res) => {
   res.json({ user: req.user })
 })
 module.exports = router;
+
+router.post("/logout", authenticateToken, async (req, res) => {
+  try {
+    await user.findOneAndDelete({ email: res.user.name })
+    res.json({ message: "Logged Out" }).status(StatusCodes.OK);
+  } catch (error) {
+    res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
+  }
+})
