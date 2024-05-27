@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
       const email = { name: body.email }
       // console.log(email);
       const accessToken = jwt.sign(email, process.env.ACCESS_TOKEN_SECRET)
-      res.cookie('accessToken', accessToken, { httpOnly: true })
+      res.cookie('accessToken', accessToken, { httpOnly: true, secure: false });
       res.json({
         message: 'Authentication Successful',
       }).status(StatusCodes.ACCEPTED);

@@ -28,7 +28,8 @@ const LoginForm = ({ setIsLoggedIn }) => {
       try {
         const response = await axios.post(
           "http://localhost:4000/login",
-          formValues
+          formValues,
+          { withCredentials: true }
         );
         console.log(response.data);
         if (response.data == "Email is not verified") {

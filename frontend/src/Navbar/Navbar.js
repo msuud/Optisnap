@@ -38,7 +38,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const handleActualLogout = async () => {
     if (window.confirm("Do you want to logout?")) {
-      const response = await axios.post("http://localhost:4000/logout");
+      const response = await axios.post("http://localhost:4000/logout", "", { withCredentials: true });
       console.log(response);
       navigate("/");
     }
