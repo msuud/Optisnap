@@ -25,8 +25,12 @@ router.post('/login', async (req, res) => {
   try {
     let body = req.body;
     let u = await user.findOne({ email: body.email });
-    if (!u.verified) {
-      res.send("Please verify the email before logging in.").status(StatusCodes.UNAUTHORIZED)
+    if (u == null) {
+      res.send("Email is not registered").status(StatusCodes.UNAUTHORIZED)
+
+    }
+    else if (!u.verified) {
+      res.send("Email is not verified").status(StatusCodes.UNAUTHORIZED)
     }
     else if (await bcrypt.compare(body.password, u.password)) {
       const email = { name: body.email }
@@ -35,7 +39,6 @@ router.post('/login', async (req, res) => {
       res.cookie('accessToken', accessToken, { httpOnly: true })
       res.json({
         message: 'Authentication Successful',
-        accessToken: accessToken
       }).status(StatusCodes.ACCEPTED);
     } else {
       res.json({
@@ -95,7 +98,18 @@ router.post('/signup', async (req, res) => {
     }).status(StatusCodes.CREATED);
   } catch (error) {
     console.log(error);
-    res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR);
+    if (error.code === 11000) {
+      // console.log();
+      if (error.message.search("username") !== -1) {
+        res.send("username exist").status(StatusCodes.BAD_REQUEST)
+      }
+      else {
+        res.send("Email exists").status(StatusCodes.BAD_REQUEST)
+      }
+    }
+    else {
+      res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR);
+    }
   }
 });
 
