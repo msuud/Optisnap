@@ -30,7 +30,6 @@ const LoginForm = ({ setIsLoggedIn }) => {
         const response = await axios.post(
           "http://localhost:4000/login",
           formValues,
-          "",
           { withCredentials: true }
         );
         console.log(response.data);

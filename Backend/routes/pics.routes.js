@@ -22,9 +22,9 @@ router.post('/addWS', authenticateToken, async (req, res) => {
             name: body.workSpace,
             images: []
         };
-        console.log(newWorkspace);
+        // console.log(newWorkspace);
         let r = await user.updateOne({ email: req.user.name }, { $push: { workspaces: newWorkspace } })
-        console.log(r);
+        // console.log(r);
         res.send("Workspace Added!").status(StatusCodes.OK)
     } catch (error) {
         res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
@@ -34,15 +34,13 @@ router.post('/addWS', authenticateToken, async (req, res) => {
 router.post('/addPic', authenticateToken, upload.single('image'), async (req, res) => {
     try {
         const body = req.body;
-        let x = await user.findOne({ email: req.user.name }, { workspaces: 1 })
-        // console.log(x.workspaces);
-        x.workspaces.forEach((ws)=>{
-            if(ws.name === body.WSname){
-                ws.images.push(req.file.originalname)
-            }
-        })
-        x = await user.updateOne({ email: req.user.name }, { workspaces: x.workspaces })
-        res.send(x).status(StatusCodes.OK)
+        let x = await user.updateOne(
+            { "workspaces.name": body.WSname },
+            { $push: { "workspaces.$.images": req.file.originalname } }
+        )
+        console.log(x);
+        res.send("Image added").status(StatusCodes.OK)
+
         //the image needs to be uploaded to aws s3 bucket
         const file = path.join('./uploads', req.file.originalname)
         let fileStream = fs.createReadStream(file);
@@ -67,6 +65,23 @@ router.post('/addPic', authenticateToken, upload.single('image'), async (req, re
         res.send(error.message)
     }
 })
+
+router.get("/deleteWS/:WSname", authenticateToken, async (req, res) => {
+    try {
+        let WSname = req.params.WSname;
+        let response = await user.updateOne({ email: req.user.name }, { $pull: { workspaces: { name: WSname } } })
+        console.log(response);
+        if (response.modifiedCount === 0) {
+            res.send("Workspace not found").status(StatusCodes.NOT_FOUND)
+        }else{
+            res.send("Workspace deleted").status(StatusCodes.OK)
+        }
+    } catch (error) {
+        res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+})
+
+
 
 router.get("/", authenticateToken, async (req, res) => {
     try {
