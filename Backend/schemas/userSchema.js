@@ -21,6 +21,12 @@ const UserSchema = new mongoose.Schema({
   verified: {
     type: Boolean,
   },
+  img_count:{
+    type: Number,
+  },
+  recent_10:{
+    type: Array,
+  }
 });
 
 module.exports = mongoose.model("users", UserSchema);

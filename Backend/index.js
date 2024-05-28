@@ -3,9 +3,11 @@ const mongoose = require("mongoose");
 const app = express();
 const PORT = process.env.PORT || 4000;
 const userRoutes = require("./routes/user.routes");
+const loadRoutes = require('./routes/load.routes')
 const picRoutes = require("./routes/pics.routes");
 const verifyRoutes = require("./routes/verify.routes");
 const cors = require("cors");
+const compression = require('compression')
 const run = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
@@ -18,13 +20,15 @@ const run = async () => {
   });
 };
 
+app.use(compression())
 app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true
   })
 );
-app.use(userRoutes);
+app.use("/",userRoutes);
+app.use("/load",loadRoutes)
 app.use("/pic", picRoutes);
 app.use("/verify", verifyRoutes);
 run();
