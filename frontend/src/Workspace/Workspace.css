@@ -1,0 +1,197 @@
+.bg-image {
+    background-image: url("../assets/background-3.jpg");
+    opacity: 0.8;
+    background-blend-mode: multiply;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+  .box3{
+    width: 1000px; /* Adjust width as needed */
+    padding: 1rem; /* Add padding for content */
+    background-color: transparent;
+    color: white;
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 60px;
+    /* font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif; */
+    font-weight: bold;
+    color: rgb(199, 91, 91);
+    margin: 5px;
+    padding: 10px;
+    font-style: normal;
+    font-family: "AmstelvarAlpha";
+    background: linear-gradient(90deg, #012f19, #1fa11f, #012f19);
+    background-repeat: inherit;
+    background-size: 80%;
+    animation: animate 5s linear infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: rgba(204, 199, 201, 0);
+  }
+  .grid-bg {
+    background: rgba(19, 59, 81, 0);
+  }
+  
+  .grid-bg h3 {
+    font-size: 60px;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", "Geneva", Verdana, sans-serif;
+    font-weight: bolder;
+    background: -webkit-linear-gradient(
+      right,
+      rgb(87, 206, 221),
+      rgb(16, 5, 28)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .small-grid-bg,.button-create {
+    background: rgba(99, 206, 156, 0.8);
+    border-radius: 50px;
+    width: 300px;
+    border: none  ;
+  }
+  
+  .workspace {
+    font-size: 30px;
+    font-family: serif;
+    color: black;
+    font-weight: bolder;
+    justify-content: center;
+  }
+  
+  .image {
+    font-size: 30px;
+    font-family: serif;
+    color: rgb(8, 8, 8);
+    font-weight: bolder;
+    justify-content: center;
+  }
+
+  .grid2 {
+    position: absolute;
+    left: 28%;
+    /* backdrop-filter: blur(15px); */
+    margin-bottom: 0%;
+    width: 70%;
+    color: rgb(35, 37, 35);
+  }
+
+  h1 {
+    animation: slide-in 0.5s ease-in-out forwards;
+  }
+  
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1; 
+      transform: translateX(0);
+    }
+  }
+  
+  .small-grid-bg,
+  .grid2 {
+    animation: pop-up 0.5s ease-in forwards;
+  }
+  
+  @keyframes pop-up {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+
+  /* workspace user */
+
+.workspace-box {
+  display: inline-block; /* Wrap each title in a separate block */
+  margin: 5px; 
+  text-align: center; 
+  min-width: 360px;
+  min-height: 190px;
+  /* border: 2px solid black; */
+  border-radius: 30px;
+  padding: 25px;
+  background: rgba(76, 209, 146, 0.4);
+  text-decoration: none;
+}
+
+.app1 {
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  grid-gap: 10px; 
+  position: absolute; 
+  left: -240%; 
+  /* right: 0%; */
+  margin-top: 45px;
+}
+.box4{
+  margin-top: 0px;
+}
+.workspace-box:last-child{
+  background: rgba(153, 222, 190, 0.4);
+  border: 2px dashed green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.workspace-box:last-child:hover{
+  background: rgba(117, 210, 165, 0.4);
+  cursor: pointer;
+}
+h4{
+  text-decoration: none;
+  color: rgb(54, 53, 53);
+}
+
+/* model box */
+.ModelBox{
+  background: rgba(1, 1, 1, 0.3);
+  backdrop-filter: blur(30);
+}
+.ModelBox2{
+  background-color: azure;
+  padding: 30px;
+}
+.Button-form{
+  border: none;
+  background-color: transparent;
+}
+.popup-modal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+ background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  height: 100%;
+  width: 100%;
+}
+
+.pop-placeholder:focus {
+  outline: none; /* Remove default outline */
+  border: 1px solid #ccc; /* Add a subtle border on focus */
+}
+
+/* New styling for pop-placeholder */
+.pop-placeholder {
+  width: 100%; /* Ensure it fills the available space */
+  padding: 10px 15px; /* Add some padding for better readability */
+  font-size: 16px; /* Adjust font size as needed */
+  color: #333; /* Set text color */
+  background-color: #fff; /* Set background color */
+  border: 1px solid #ccc; /* Add a solid border */
+  border-radius: 4px; /* Add rounded corners */
+}
