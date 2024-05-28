@@ -38,17 +38,13 @@ const Navbar = () => {
   const navigate = useNavigate();
   const handleActualLogout = async () => {
     if (window.confirm("Do you want to logout?")) {
-      const response = await axios.post("http://localhost:4000/logout");
+      const response = await axios.post("http://localhost:4000/logout", "", {
+        withCredentials: true,
+      });
       console.log(response);
       navigate("/");
     }
   };
-
-  // useEffect(()=>{
-  //   if(setIsLoggedout){
-  //     setIsLoggedIn(false);
-  //   }
-  // })
   return (
     <nav className="vertical-navbar">
       <div className="company-logo">
@@ -58,7 +54,7 @@ const Navbar = () => {
       <ul>
         {navigationItems.map((item) => (
           <li key={item.name}>
-            <NavLink to={item.path} activeClassName="active">
+            <NavLink to={item.path} activeclassname="active">
               {item.icon}
               {item.name}
             </NavLink>

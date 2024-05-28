@@ -4,13 +4,12 @@ import { useNavigate } from "react-router-dom";
 import "./Starter.css";
 import logo from "../assets/logo1.png";
 import axios from "axios";
-import { StatusCodes } from "http-status-codes";
 
 const SignupForm = () => {
   const startValues = { username: "", email: "", password: "" };
   const [regformValues, setRegformValues] = useState(startValues);
   const [regformErrors, setRegformErrors] = useState({});
-  const [isLoading, setLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
@@ -25,8 +24,8 @@ const SignupForm = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     setRegformErrors(validation(regformValues));
-
-    if (Object.keys(regformErrors).length === 0) {
+    setIsSubmitted(true);
+    if (Object.keys(regformErrors).length === 0 && isSubmitted) {
       try {
         const response = await axios.post("http://localhost:4000/signup", {
           username: regformValues.username,
@@ -34,6 +33,7 @@ const SignupForm = () => {
           password: regformValues.password,
         });
         console.log("Response", response.data);
+
         if (response.data == "username exist") {
           alert("Username already exist");
         } else if (response.data == "Email exists") {
@@ -72,9 +72,6 @@ const SignupForm = () => {
 
   return (
     <div className="bg-login">
-      {/* {Object.keys(regformErrors).length === 0 && isSubmitted ? (
-        <div className="ui message success">Registered Successfullly</div>
-      ) : null} */}
       <div className="company-logo1">
         <img src={logo} alt="OptiSnap Logo" className="logo-image" />
         OptiSnap

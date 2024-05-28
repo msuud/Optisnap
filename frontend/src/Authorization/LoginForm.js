@@ -9,6 +9,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
   const initialValues = { email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
 
   const handleRegisterClick = () => {
@@ -18,17 +19,19 @@ const LoginForm = ({ setIsLoggedIn }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-    // console.log(formValues);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    if (Object.keys(formErrors).length === 0) {
+    setIsSubmit(true);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
       try {
         const response = await axios.post(
           "http://localhost:4000/login",
-          formValues
+          formValues,
+          "",
+          { withCredentials: true }
         );
         console.log(response.data);
         if (response.data == "Email is not verified") {
