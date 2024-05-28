@@ -5,7 +5,10 @@ import HomeIcon from "@mui/icons-material/Home";
 import BadgeIcon from "@mui/icons-material/Badge";
 import PersonIcon from "@mui/icons-material/Person";
 import InfoIcon from "@mui/icons-material/Info";
+import LogoutIcon from '@mui/icons-material/Logout';
 import logo from "../assets/logo1.png";
+import { useNavigate } from "react-router-dom";
+import { useState,useEffect } from "react";
 
 const navigationItems = [
   {
@@ -27,10 +30,23 @@ const navigationItems = [
     name: "About Us",
     path: "/about-us",
     icon: <InfoIcon className="nav-icon" />,
-  },
+  }
 ];
 
-const Navbar = () => {
+const Navbar = ({handleLogout}) => {
+  const navigate=useNavigate();
+  const handleActualLogout=()=>{
+    if(window.confirm("Do you want to logout?")){
+      handleLogout();
+      navigate("/");
+    }
+  }
+
+  // useEffect(()=>{
+  //   if(setIsLoggedout){
+  //     setIsLoggedIn(false);
+  //   }
+  // })
   return (
     <nav className="vertical-navbar">
       <div className="company-logo">
@@ -44,6 +60,7 @@ const Navbar = () => {
             </NavLink>
           </li>
         ))}
+        <li className="logout-button"><a href="#"><LogoutIcon /><button onClick={handleActualLogout} className="Navbar-button">Logout</button></a></li>
       </ul>
     </nav>
   );
