@@ -14,6 +14,17 @@
     align-items: center; 
   }
 
-.cointainer-workspace{
-    /* margin-left: 100px; */
-}
+  .upload-button button {
+    background: rgba(34, 183, 69);
+    color: white; /* White text */
+    padding: 10px 20px; /* Adjust padding for desired size */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Indicate clickable action */
+    transition: background-color 0.2s ease-in-out; /* Smooth hover effect */
+  }
+  
+  .upload-button button:hover {
+    background: rgb(19, 97, 37);
+  }
+  

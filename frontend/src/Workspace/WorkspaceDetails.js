@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import './WorkspaceDetails.css'
 import TableWorkspace from "../Table/TableWorkspace";
+import UploadImage from "./UploadImage";
 
 
 const WorkspaceDetails = ({ data }) => {
@@ -26,8 +27,11 @@ const WorkspaceDetails = ({ data }) => {
       <div className="cointainer-workspace mt-4">
       <h2 className="">Workspace Name: {workspace.title}</h2>
       <h2 className="">Images: {workspace.images}</h2>
-      <div className="d-flex justify-content-center mt-5">
+      <div className="d-flex justify-content-center mt-4">
       <div className="Table-workspace">
+        <div className="d-flex justify-content-start my-2 mx-3 upload-button">
+        <button className="text-start">Upload Image</button>
+        </div>
         <TableWorkspace />
       </div>
       </div>
