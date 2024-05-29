@@ -1,35 +1,29 @@
-import React from 'react';
-import './Profile.css';
+import React from "react";
+import "./Profile.css";
+import axios from "axios";
 
-const Profile = ({ name, email, username, numWorkspaces, numImages }) => {
+const Profile = ({ email, username, numWorkspaces, numImages }) => {
   const handleClick = () => {
-    console.log('Button clicked!');
+    console.log("Button clicked!");
   };
 
   return (
-    <div className="bg-image rounded d-flex flex-column align-items-center justify-content-center">
+    <div className="bg-image rounded d-flex flex-column justify-content-center">
       <div className="image-overlay">
-        <div className="grid1 rounded fixed top-0 left-0 right-0 z-10 text-center p-5">
-        <div>
-      <h1>Profile</h1>
-      <div>
-        <strong>Name:</strong> {name}
-      </div>
-      <div>
-        <strong>Email:</strong> {email}
-      </div>
-      <div>
-        <strong>Username:</strong> {username}
-      </div>
-      <div>
-        <strong>Number of Workspaces:</strong> {numWorkspaces}
-      </div>
-      <div>
-        <strong>Number of Images:</strong> {numImages}
-      </div>
-      <button onClick={handleClick}>Edit Profile</button>
-    </div>
-
+        <div className="container profile-grid d-flex flex-column">
+          <div className="profile-grid1">
+            <h1 className="h1">Priyanshi Adhwaryu</h1>
+            <h3>Email :- urvadave2@gmail.com</h3> {email}
+            <h3>Username :- urvadave2</h3> {username}
+          </div>
+          {/* <button className="edit-profile" onClick={handleClick}>
+            Edit Profile
+          </button> */}
+          <div className="profile-grid2">
+            <button className="workspace-grid">Number of Workspaces</button>{" "}
+            {numWorkspaces}
+            <button className="image-grid">Number of Images</button> {numImages}
+          </div>
         </div>
       </div>
     </div>

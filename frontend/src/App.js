@@ -16,47 +16,37 @@ import PopupForm from "./PopupForm";
 function App() {
   const [data, setData] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // useEffect(() => {
+  //   const client = localStorage.getItem("client");
+  //   if (client) {
+  //     setIsLoggedIn(true);
+  //   }
+  // }, []);
+
   useEffect(() => {
     const client = localStorage.getItem("client");
     if (client) {
       setIsLoggedIn(true);
     }
-  }, []);
+  }, [])
+
+  useEffect(() => {
+    // getData()
+    setData(db);
+  }, [])
 
   const handleLogout = () => {
     setIsLoggedIn(false); 
   };
 
   // fetch
-  const getData = async () => {
-    try {
-      const response = await fetch("db.json", {
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      });
-      const myjson = await response.json();
-      setData(myjson);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      // Handle errors (e.g., display an error message)
-    }
-  };
-
-  useEffect(() => {
-    getData(); // Fetch data on component mount
-  }, []); // Empty dependency array
+  
 
 
   return (
     <div className="App">
+      {console.log("Data in Appjs:", data)}
       <BrowserRouter>
-      {/* {console.log("Data in App:", data)} */}
-      {data.map((val) => (
-          <Route
-            key={val.id}
-            path={`/${val.title}`}
-            element={<WorkspaceDetails title={val.title} />}
-          />
-        ))}
         {isLoggedIn ? (
           <div>
             <div className="d-flex flex-row min-vh-100 ">
@@ -68,6 +58,10 @@ function App() {
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/workspace" element={<Workspace />} />
                   <Route path="/workspace-user" element={<WorkspaceUser />} />
+                  <Route
+            path="/workspace-user/:id"
+            element={<WorkspaceDetails data={data} />}
+          />
                 </Routes>
               </div>
             </div>

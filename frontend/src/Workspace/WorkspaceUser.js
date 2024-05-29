@@ -13,14 +13,10 @@ const WorkspaceUser = () => {
   const [showModel, setShowModel]=useState(false);
   const navigate=useNavigate();
 
-  const getData = () => {
-    fetch('db.json', { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' } })
-      .then((response) => response.json())
-      .then((myjson) => setData(myjson))
-  }
 
   useEffect(() => {
-    getData()
+    // getData()
+    setData(db);
   }, [])
 
   useEffect(() => {
@@ -44,8 +40,8 @@ const WorkspaceUser = () => {
 }
 
   return (
-    <div className="bg-image rounded box4 justify-content-center">
-      {console.log("Data in App:", data)}
+    <div className="bg-image1 rounded box4 ">
+      {console.log("Data in App:", db)}
       <div className="cointainer">
       <h1 className="heading1">Your Workspaces</h1>
         <div className="grid1 rounded fixed top-0 left-0 right-0 z-10 text-center p-5">
@@ -53,7 +49,7 @@ const WorkspaceUser = () => {
             {
               db && db.length > 0 && db.map((val) => {
                 return (
-                  <Link key={val.id} to={`/${val.title}`} className="workspace-box" onClick={() => handleWorkspaceClick(val.title)} >
+                  <Link key={val.id} to={`/workspace-user/${val.id}`} className="workspace-box" onClick={() => handleWorkspaceClick(val.title)} >
                     <h2>{val.title}</h2>
                     <h4 className='mt-5'>Images: {val.images}</h4>
                   </Link>
