@@ -50,7 +50,7 @@ router.post('/addPic', authenticateToken, upload.single('image'), async (req, re
         // console.log(x);
         if (x.modifiedCount > 0) {
             const user1 = await user.findOneAndUpdate({ email: req.user.name },{$inc: {img_count:1}})
-            user1.recent_10.push(req.file.originalname); // Add image name directly to the array (modification tracked)
+            user1.recent_10.push(newImage); // Add image name directly to the array (modification tracked)
 
             if (user1.recent_10.length > 10) {
                 user1.recent_10.shift(); // Remove the last element if exceeding 10
