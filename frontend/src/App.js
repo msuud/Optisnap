@@ -13,7 +13,11 @@ import WorkspaceDetails from "./Workspace/WorkspaceDetails";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    // getData()
+    setData(db);
+  }, []);
   const handleLogout = () => {
     setIsLoggedIn(false);
   };
