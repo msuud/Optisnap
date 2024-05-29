@@ -38,27 +38,32 @@ router.post('/addWS', authenticateToken, async (req, res) => {
 router.post('/addPic', authenticateToken, upload.single('image'), async (req, res) => {
     try {
         const body = req.body;
+        let now = new Date();
+        const newImage = {
+            name: req.file.originalname,
+            uploadedAt: now
+        }
         let x = await user.updateOne(
             { "workspaces.name": body.WSname },
-            { $inc: { img_count: 1 }, $push: { "workspaces.$.images": req.file.originalname } }
+            { $push: { "workspaces.$.images": newImage } }
         )
         // console.log(x);
-        const user1 = await user.findOne({ email: req.user.name })
-        user1.recent_10.push(req.file.originalname); // Add image name directly to the array (modification tracked)
-
-        if (user1.recent_10.length > 10) {
-            user1.recent_10.shift(); // Remove the last element if exceeding 10
-        }
-
-        user1.img_count = user1.recent_10.length;
-
-        await user1.save();
         if (x.modifiedCount > 0) {
-            res.send("Image added").status(StatusCodes.OK)
+            const user1 = await user.findOneAndUpdate({ email: req.user.name },{$inc: {img_count:1}})
+            user1.recent_10.push(newImage); // Add image name directly to the array (modification tracked)
+
+            if (user1.recent_10.length > 10) {
+                user1.recent_10.shift(); // Remove the last element if exceeding 10
+            }
+            await user1.save();
+
+            user1.img_count = user1.recent_10.length;
+            res.send("Image added successfully")    
         }
         else {
-            res.send("error occured").status(StatusCodes.INTERNAL_SERVER_ERROR)
+            res.send("Workspace not found").status(StatusCodes.INTERNAL_SERVER_ERROR)
         }
+
 
         // // the image needs to be uploaded to aws s3 bucket
         // const file = path.join('./uploads', req.file.originalname)
