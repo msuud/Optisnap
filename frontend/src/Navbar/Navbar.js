@@ -34,7 +34,7 @@ const navigationItems = [
   },
 ];
 
-const Navbar = () => {
+const Navbar = ({ handleLogout }) => {
   const navigate = useNavigate();
   const handleActualLogout = async () => {
     if (window.confirm("Do you want to logout?")) {
@@ -42,7 +42,8 @@ const Navbar = () => {
         withCredentials: true,
       });
       console.log(response);
-      navigate("/");
+      handleLogout();
+      navigate("/login");
     }
   };
   return (

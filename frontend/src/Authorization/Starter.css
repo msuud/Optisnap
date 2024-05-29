@@ -16,6 +16,16 @@
   height: 100vh;
 }
 
+.bg-login-loading {
+  background-image: url("../assets/bg-login8.jpg");
+  opacity: unset;
+  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  backdrop-filter: blur(20px);
+}
+
 .form-box {
   width: 100%;
   padding: 4px;
@@ -296,4 +306,11 @@ h2 {
 .toggle-form:hover {
   transform: scale(1.05); /* Slight scale on hover */
   transition: transform 0.1s ease-in-out;
+}
+
+.toast-message {
+  background: rgb(247, 247, 246);
+  color: green;
+  font-size: 20px;
+  width: 32vw;
 }

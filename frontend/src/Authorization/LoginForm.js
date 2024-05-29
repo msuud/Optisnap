@@ -8,7 +8,7 @@ import axios from "axios";
 const LoginForm = ({ setIsLoggedIn }) => {
   const initialValues = { email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
-  const [formErrors, setFormErrors] = useState({});
+  const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
 
@@ -23,16 +23,40 @@ const LoginForm = ({ setIsLoggedIn }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormErrors(validate(formValues));
-    setIsSubmit(true);
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
+
+    const validationErrors = {};
+
+    if (!formValues.email.trim()) {
+      validationErrors.email = "email is required";
+      alert("Please provide email.");
+    } else if (!/\S+@\S+\.\S+/.test(formValues.email)) {
+      validationErrors.email = "email is not valid";
+      alert("Email is not valid.");
+    }
+
+    if (!formValues.password.trim()) {
+      validationErrors.password = "password is required";
+      alert("Please provide password.");
+    } else if (formValues.password.length < 4) {
+      validationErrors.password = "password must be more than 4 characters";
+      alert("Password must be more than 4 characters");
+    } else if (formValues.password.length > 10) {
+      validationErrors.password =
+        "password must not be more than 10 characters";
+      alert("Password must not be more than 10 characters");
+    }
+
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      setIsSubmit(true);
       try {
         const response = await axios.post(
           "http://localhost:4000/login",
           formValues,
           { withCredentials: true }
         );
-        console.log(response.data);
+        console.log("Response", response.data);
         if (response.data == "Email is not verified") {
           alert("Email is not verified");
         } else if (response.data.message == "Authentication Successful") {
@@ -46,28 +70,6 @@ const LoginForm = ({ setIsLoggedIn }) => {
         alert("Login Failed!");
       }
     }
-  };
-
-  const validate = (values) => {
-    const errors = {};
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (!values.email || !values.password) {
-      errors.email = "Email is required !";
-      alert("Please fill in all required fields.");
-    } else if (!regex.test(values.email)) {
-      errors.email = "Email is not of the correct format !";
-      alert("Email is not of the correct format.");
-    }
-    if (!values.password) {
-      errors.password = "Password is required !";
-    } else if (values.password.length < 4) {
-      errors.password = "Password should be more than 4 characters !";
-      alert("Password should be more than 4 characters.");
-    } else if (values.password.length > 10) {
-      errors.password = "Password should not exceed 10 characters !";
-      alert("Password should not exceed 10 characters.");
-    }
-    return errors;
   };
 
   return (
@@ -86,7 +88,6 @@ const LoginForm = ({ setIsLoggedIn }) => {
               placeholder="Email"
               value={formValues.email}
               onChange={handleChange}
-              required
             />
           </div>
 
@@ -97,7 +98,6 @@ const LoginForm = ({ setIsLoggedIn }) => {
               placeholder="Password"
               value={formValues.password}
               onChange={handleChange}
-              required
             />
           </div>
         </div>

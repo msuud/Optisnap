@@ -5,10 +5,14 @@ import Dashboard from "./Dashboard/Dashboard";
 import AboutUs from "./About-us/aboutus";
 import SignupForm from "./Authorization/SignupForm";
 import LoginForm from "./Authorization/LoginForm";
-import VerificationForm from "./Authorization/VerificationForm";
+import Profile from "./Profile/Profile";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
 
   return (
     <div className="App">
@@ -16,11 +20,12 @@ function App() {
         {isLoggedIn ? (
           <div>
             <div className="d-flex flex-row min-vh-100 ">
-              <Navbar />
+              <Navbar handleLogout={handleLogout} />
               <div className="container-fluid dashboard content-cointainer mt-0 px-0">
                 <Routes>
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/about-us" element={<AboutUs />} />
+                  <Route path="/profile" element={<Profile />} />
                 </Routes>
               </div>
             </div>
@@ -33,7 +38,6 @@ function App() {
             />{" "}
             <Route path="/" element={<SignupForm />} />
             <Route path="/login" element={<LoginForm />} />
-            <Route path="/verification" element={<VerificationForm />} />
           </Routes>
         )}
       </BrowserRouter>
