@@ -55,7 +55,7 @@ export default function BasicTable() {
           <TableBody>
             {rows.map((row) => (
               <TableRow
-                key={row.image + "-" + row.date}
+                key={row.name}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell
@@ -76,6 +76,6 @@ export default function BasicTable() {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
-  );
+ </div>
+);
 }

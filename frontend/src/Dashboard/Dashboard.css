@@ -61,7 +61,7 @@ h1 {
 }
 
 .small-grid-bg {
-  background: rgba(34, 183, 69, 0.5);
+  background: rgba(34, 183, 69, 0.2);
   border-radius: 100%;
   width: 300px;
   padding: 20px;
@@ -103,9 +103,11 @@ h1 {
   /* backdrop-filter: blur(15px); */
   margin-bottom: 0%;
   width: 70%;
-  color: rgb(79, 83, 79);
+  color: rgb(79,83,79);
 }
 
+
+/* animations */
 h1 {
   animation: slide-in 1s ease-in-out forwards;
 }
@@ -121,8 +123,7 @@ h1 {
   }
 }
 
-.small-grid-bg,
-.grid2 {
+.small-grid-bg,.grid2 {
   animation: pop-up 0.5s ease-in forwards;
 }
 
@@ -134,3 +135,4 @@ h1 {
     transform: scale(1);
   }
 }
+

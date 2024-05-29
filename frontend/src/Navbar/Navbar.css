@@ -2,11 +2,13 @@
   display: flex;
   flex-direction: column;
   width: 240px;
+  width: 240px;
   background-color: #f0f0f0;
   padding: 20px;
   height: 100vh;
   box-sizing: border-box;
   min-width: 200px;
+  margin: 0;
   margin: 0;
 }
 
@@ -115,6 +117,7 @@
   height: 30px;
   margin-right: 10px; /* Spacing between icon and text */
   margin-bottom: 4px;
+  margin-bottom: 4px;
 }
 
 .vertical-navbar a.active,
@@ -140,7 +143,9 @@
   font-size: 30px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   background: -webkit-linear-gradient(right, rgba(20, 173, 10), rgba(1, 35, 6));
+  background: -webkit-linear-gradient(right, rgba(20, 173, 10), rgba(1, 35, 6));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  /* margin-bottom: 10px; */
   /* margin-bottom: 10px; */
 }
