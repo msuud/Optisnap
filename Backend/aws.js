@@ -1,5 +1,5 @@
-const AWS = require('aws-sdk');
-const s3 = new AWS.S3()
+// const AWS = require('aws-sdk');
+// const s3 = new AWS.S3()
 
 //for listing bucket
 /*s3.listBuckets((err, data) => {
@@ -48,3 +48,29 @@ s3.listObjects(bucketParams, (err, data) => {
     }
 });*/
 
+
+//for deleting an object
+/*let params = {  Bucket: 'your bucket', Key: 'your object' };
+
+s3.deleteObject(params, function(err, data) {
+  if (err) console.log(err, err.stack);  // error
+  else     console.log();                 // deleted
+});*/
+
+const fs = require('fs');
+const https = require('https');
+
+function downloadImage(url, filepath) {
+  https.get(url, (res) => {
+    res.pipe(fs.createWriteStream(filepath))
+      .on('error', (err) => {
+        console.error('Error downloading image:', err);
+      })
+      .once('close', () => console.log('Image downloaded successfully!'));
+  });
+}
+
+const imageUrl = 'https://opti-snap9574.s3.ap-south-1.amazonaws.com/1323165.png';
+const filePath = './uploads/downloaded_image.jpg';
+
+downloadImage(imageUrl, filePath);
