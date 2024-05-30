@@ -1,9 +1,6 @@
 const express = require('express');
-const fs = require('fs');
-const path = require('path')
 const user = require('../schemas/userSchema');
 const authenticateToken = require('../middleware/authenticateToken')
-// const user = require('../userSchema');
 const { StatusCodes } = require('http-status-codes');
 const router = express.Router();
 const upload = require('../middleware/multerMW')
@@ -29,9 +26,9 @@ router.post('/addWS', authenticateToken, async (req, res) => {
             }
         )
         // console.log(r);
-        res.send("Workspace Added!").status(StatusCodes.OK)
+        return res.send("Workspace Added!").status(StatusCodes.OK)
     } catch (error) {
-        res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
+        return res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
     }
 })
 
@@ -58,10 +55,10 @@ router.post('/addPic', authenticateToken, upload.single('image'), async (req, re
             await user1.save();
 
             user1.img_count = user1.recent_10.length;
-            res.send("Image added successfully")    
+            return res.send("Image added successfully")    
         }
         else {
-            res.send("Workspace not found").status(StatusCodes.INTERNAL_SERVER_ERROR)
+            return res.send("Workspace not found").status(StatusCodes.INTERNAL_SERVER_ERROR)
         }
 
 
@@ -80,13 +77,13 @@ router.post('/addPic', authenticateToken, upload.single('image'), async (req, re
         //     }
         //     else {
         //         // console.log(data.Location);
-        //         res.send('File Uploaded successfully').status(StatusCodes.OK);
+        //         return res.send('File Uploaded successfully').status(StatusCodes.OK);
         //     }
         // })
 
     } catch (error) {
         console.log(error);
-        res.send(error.message)
+        return res.send(error.message)
     }
 })
 
@@ -100,12 +97,12 @@ router.get("/deleteWS/:WSname", authenticateToken, async (req, res) => {
         )
         console.log(response);
         if (response.modifiedCount === 0) {
-            res.send("Workspace not found").status(StatusCodes.NOT_FOUND)
+            return res.send("Workspace not found").status(StatusCodes.NOT_FOUND)
         } else {
-            res.send("Workspace deleted").status(StatusCodes.OK)
+            return res.send("Workspace deleted").status(StatusCodes.OK)
         }
     } catch (error) {
-        res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
+        return res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
     }
 })
 
@@ -115,10 +112,10 @@ router.get("/", authenticateToken, async (req, res) => {
     try {
         let u = await user.findOne({ email: req.user.name });
         console.log(u);
-        res.json({ images: u.images }).status(StatusCodes.OK)
+        return res.json({ images: u.images }).status(StatusCodes.OK)
     } catch (error) {
         console.log("error", error);
-        res.send(error.message)
+        return res.send(error.message)
     }
 })
 
@@ -133,20 +130,20 @@ router.get("/dashboard", authenticateToken, async (req, res) => {
         let r10 = u.recent_10
         r10.reverse()
         console.log(r10);
-        res.json({
+        return res.json({
             username: u.username,
             noOfWS: u.workspaces.length,
             noOfImg: u.img_count,
             recent_10: r10
         });
     } catch (error) {
-        res.send(error)
+        return res.send(error)
     }
 })
 
 router.get("/workspace", authenticateToken, async (req, res) => {
     let u = await user.findOne({ email: req.user.name }, { workspaces: 1 });
-    res.json({ data: u.workspaces })
+    return res.json({ data: u.workspaces })
 })
 
 router.get("/workspace/:WSname", authenticateToken, async (req, res) => {
@@ -154,13 +151,13 @@ router.get("/workspace/:WSname", authenticateToken, async (req, res) => {
         let u = await user.findOne({ email: req.user.name }, { workspaces: 1 });
         let ws = u.workspaces.find((ws) => ws.name === req.params.WSname)
         if (ws) {
-            res.json({ data: ws }).status(StatusCodes.OK)
+            return res.json({ data: ws }).status(StatusCodes.OK)
         }
         else {
-            res.send("Workspace not found").status(StatusCodes.NOT_FOUND)
+            return res.send("Workspace not found").status(StatusCodes.NOT_FOUND)
         }
     } catch (error) {
-        res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
+        return res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
     }
 })
 
@@ -173,14 +170,14 @@ router.get("/profile", authenticateToken, async (req, res) => {
             img_count: 1
         })
         // console.log(u);
-        res.json({
+        return res.json({
             username: u.username,
             email: u.email,
             WScount: u.workspaces.length,
             img_count: u.img_count
         })
     } catch (error) {
-        res.send(error).status(StatusCodes.INTERNAL_SERVER_ERROR)
+        return res.send(error).status(StatusCodes.INTERNAL_SERVER_ERROR)
     }
 })
 /*

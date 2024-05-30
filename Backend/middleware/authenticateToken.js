@@ -5,11 +5,17 @@ module.exports =  (req, res, next) => {
       // console.log(req.cookies);
       let token = req.cookies.accessToken;
       if (token == null) {
-        return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized');
+        return res.status(StatusCodes.UNAUTHORIZED).json({
+          message: "Unauthorized",
+          success: false
+        });
       }
       jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if (err) {
-          return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized');
+          return res.status(StatusCodes.UNAUTHORIZED).json({
+            message: "Unauthorized",
+            success: false
+          });
         }  else {
           req.user = user;
           // console.log("user",user);
@@ -18,6 +24,9 @@ module.exports =  (req, res, next) => {
       });
     } catch (error) {
       // console.log(error);
-      return res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: error.message,
+        success: false
+      });
     }
   };
