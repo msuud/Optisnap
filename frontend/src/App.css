@@ -10,26 +10,28 @@
   display: flex; /* Enable flexbox layout for side-by-side elements */
 }
 
-.page > * {  
-  flex: 1; 
-  border: none;  
+.page > * {
+  /* Target all direct children of .page */
+  flex: 1; /* Make each child element take up half the available space */
+  padding: 0; /* Remove any default padding */
+  border: none; /* Remove any default border */
 }
 .content-container {
-  flex: 1; 
-  padding: 1rem; 
+  flex: 1;
+  padding: 1rem; /* Add some padding */
 }
 
-.dashboard{
-  flex: 1; 
+.dashboard {
+  flex: 1;
   padding: 1rem;
   min-width: 1000px;
   display: flex;
-    flex-direction: column;
-    background-color: #f0f0f0;
-    height: 100vh;
-    box-sizing: border-box;
-    min-width: 200px;
-    margin: 0;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  height: 100vh;
+  box-sizing: border-box;
+  min-width: 200px;
+  margin: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -64,12 +66,12 @@
 .App {
   display: flex;
   flex-direction: column; /* Stack content vertically by default */
-  justify-content: center; 
+  justify-content: center;
 }
 
 .content {
   flex: 1;
-  padding: 1rem; 
+  padding: 1rem;
 }
 
 

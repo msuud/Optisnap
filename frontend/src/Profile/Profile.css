@@ -5,13 +5,11 @@
   border-radius: 30px;
   /* padding: 70px; */
   width: 900px;
-  height: 400px;
+  height: 450px;
   /* align-items: flex-end; */
 }
 
 .h1 {
-  padding-top: 0%;
-  padding-bottom: 50px;
   padding-left: 0%;
   font-size: 80px;
   font-weight: bolder;
@@ -20,17 +18,18 @@
 }
 
 h3 {
+  padding-top: 10px;
   text-align: left;
   color: rgb(43, 91, 4);
 }
 
-.profile-grid1 {
+.container1 {
   padding-right: 30px;
   padding-bottom: 90px;
   position: absolute;
   left: 5%;
 }
-.profile-grid2 {
+.container2 {
   color: white;
   padding-left: 50px;
   position: absolute;
@@ -69,5 +68,5 @@ h3 {
   border: none;
   color: rgb(15, 54, 27);
   font-family: Georgia, "Times New Roman", Times, serif;
-  font-weight: 600;
-} */
+  font-weight: 600;
+} */

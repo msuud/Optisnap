@@ -16,6 +16,16 @@
   height: 100vh;
 }
 
+.bg-login-loading {
+  background-image: url("../assets/bg-login8.jpg");
+  opacity: unset;
+  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  backdrop-filter: blur(20px);
+}
+
 .form-box {
   width: 100%;
   padding: 4px;
@@ -91,7 +101,7 @@ form .remember-forgot {
   font-size: 16px;
   color: #fbf9f9;
   font-weight: 700;
-  margin-bottom: 15px; 
+  margin-bottom: 15px;
 }
 
 form .register-link {
@@ -209,17 +219,26 @@ h2 {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  animation: slide-in 0.5s ease-in-out forwards;
+  animation: slide-up 0.5s ease-in-out forwards;
 }
 
 .container {
   animation: slide-in 0.5s ease-in-out forwards;
 }
+
 .container-login {
   animation: slide-out 0.5s ease-in-out forwards;
 }
-.container-new {
-  animation: slide-up 0.5s ease-in-out forwards;
+
+@keyframes slide-up {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @keyframes slide-in {
@@ -236,17 +255,6 @@ h2 {
 @keyframes slide-out {
   from {
     transform: translateX(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slide-up {
-  from {
-    transform: translateY(-100%);
     opacity: 0;
   }
   to {
@@ -297,5 +305,12 @@ h2 {
 
 .toggle-form:hover {
   transform: scale(1.05); /* Slight scale on hover */
-  transition: transform 0.1s ease-in-out;
+  transition: transform 0.1s ease-in-out;
+}
+
+.toast-message {
+  background: rgb(247, 247, 246);
+  color: green;
+  font-size: 20px;
+  width: 32vw;
 }

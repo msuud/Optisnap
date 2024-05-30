@@ -1,113 +1,114 @@
 .bg-image {
-    background-image: url("../assets/background-3.jpg");
-    opacity: unset;
-    background-blend-mode: multiply;
-    background-size: cover;
-    background-position: center;
-    height: 100vh; /* Ensures full viewport height */
-  }
-  /* *{
-    display: -webkit-inline-box;
-  } */
-
-  body{
-    animation: fade-zoom-in 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-    opacity: 0;
-  }
-  
-  @keyframes fade-zoom-in {
-    from {
-      opacity: 0;
-      transform: scale(0.9); /* Start slightly smaller */
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  .about-us-container {
-    display: flex; /* Make parent container a flexbox */
-    height: 100vh; /* Set full viewport height */
-    width: 100%;
-  }
-
-  .relative {
-    position: relative; /* Allows absolute positioning of child elements */
-  }
-   
-  .pt-10 {
-    padding-top: 0rem; /* Top padding */
-  }
-
-  h2{
-    font-size: 2.5rem;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color: black;
-    font-weight: 200;
-    text-align: center;
-  }
-
-  @media (max-width: 768px) {
-    .box1 p,ul {
-        width: 80%; /* Adjust width for smaller screens */
-        font-size: 2rem; /* Adjust font size for smaller screens */
-    }
+  background-image: url("../assets/background-3.jpg");
+  opacity: unset;
+  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
+  height: 100vh; /* Ensures full viewport height */
 }
-  
-.outer-box{
+/* *{
+  display: -webkit-inline-box;
+} */
+
+.about-us-container {
+  display: flex; /* Make parent container a flexbox */
+  height: 100vh; /* Set full viewport height */
+  width: 100%;
+}
+
+.relative {
+  position: relative; /* Allows absolute positioning of child elements */
+}
+
+.pt-10 {
+  padding-top: 0rem; /* Top padding */
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: black;
+  font-weight: 200;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .box1 p,
+  ul {
+    width: 80%; /* Adjust width for smaller screens */
+    font-size: 2rem; /* Adjust font size for smaller screens */
+  }
+}
+
+.outer-box {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .box1 {
-    width: 1000px; /* Adjust width as needed */
-    margin: 0 auto; /* Center the element horizontally */
-    padding: 1rem; /* Add padding for content */
-    background-color: transparent;
-    backdrop-filter: blur(15px); 
-    border-radius: 20px;
-    color: white;
-    margin: 0 auto;
+  width: 1000px; /* Adjust width as needed */
+  margin: 0 auto; /* Center the element horizontally */
+  padding: 1rem; /* Add padding for content */
+  background-color: transparent;
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  color: white;
+  margin: 0 auto;
+}
+.text-left {
+  text-align: left; /* Left-align text content */
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+p,
+ul {
+  color: black;
+}
+
+/* animations */
+.box1 {
+  animation: pulse-shadow 5s ease-in-out infinite;
+}
+
+@keyframes pulse-shadow {
+  from {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
   }
-  .text-left {
-    text-align: left; /* Left-align text content */
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  to {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
-    
-  p, ul{
-    color: black;
+}
+
+.box1 {
+  animation: fade-in 0.5s ease-in-out forwards,
+    slide-up 0.7s ease-in-out forwards;
+  animation-delay: 0.1s; /* Delay box1 animations */
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
   }
-  
-  /* animations */
-  .box1 {
-    animation: pulse-shadow 5s ease-in-out infinite;
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
-  
-  @keyframes pulse-shadow {
-    from { box-shadow: 0 0 0 rgba(0, 0, 0, 0.1); }
-    to { box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); }
+}
+
+.box1 p,
+.box1 ul li {
+  animation: pop-in 1s ease-in-out forwards;
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .box1 {
-    animation: fade-in 0.5s ease-in-out forwards, slide-up 0.7s ease-in-out forwards;
-    animation-delay: 0.1s; /* Delay box1 animations */
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  @keyframes slide-up {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  
-  .box1 p, .box1 ul li {
-    animation: pop-in 1s ease-in-out forwards;
-  }
-  
-  @keyframes pop-in {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-  
-  
-  
+}

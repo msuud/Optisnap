@@ -6,19 +6,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Dashboard from "../Dashboard/Dashboard";
 
-function createData(image, date) {
-  return { image, date };
-}
-
-const rows = [
-  createData("image 1", "20 March 2024"),
-  createData("image 2", "22 December 2023"),
-  createData("image 3", "2 February 2024"),
-  createData("image 4", "4 November 2023"),
-];
-
-export default function BasicTable() {
+export default function BasicTable({ tableData }) {
+  let rows = tableData.uploadedImages;
   return (
     <div className="table">
       <TableContainer
@@ -53,29 +44,30 @@ export default function BasicTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell
-                  align="center"
-                  component="th"
-                  scope="row"
-                  style={{ fontSize: "17px" }}
+            {rows &&
+              rows.map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  {row.image}
-                </TableCell>
-                {/* <TableCell align="left">{row.name}</TableCell>
+                  <TableCell
+                    align="center"
+                    component="th"
+                    scope="row"
+                    style={{ fontSize: "17px" }}
+                  >
+                    {row.name}
+                  </TableCell>
+                  {/* <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.link}</TableCell> */}
-                <TableCell align="center" style={{ fontSize: "17px" }}>
-                  {row.date}
-                </TableCell>
-              </TableRow>
-            ))}
+                  <TableCell align="center" style={{ fontSize: "17px" }}>
+                    {row.uploadedAt}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
- </div>
-);
+    </div>
+  );
 }

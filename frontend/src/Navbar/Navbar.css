@@ -2,11 +2,13 @@
   display: flex;
   flex-direction: column;
   width: 240px;
+  width: 240px;
   background-color: #f0f0f0;
   padding: 20px;
   height: 100vh;
   box-sizing: border-box;
   min-width: 200px;
+  margin: 0;
   margin: 0;
 }
 
@@ -16,14 +18,15 @@
   padding: 0;
 }
 
-.logo-image{
+.logo-image {
   width: 30px; /* Adjust width as needed */
   height: 30px; /* Adjust height as needed */
   display: inline-block;
   margin-right: 7px;
 }
 
-.vertical-navbar li,.Navbar-button {
+.vertical-navbar li,
+.Navbar-button {
   margin-bottom: 10px;
   text-align: left;
 }
@@ -40,7 +43,6 @@
 .logout-button {
   margin-top: auto; /* Move logout button to bottom */
 }
-
 
 .vertical-navbar a {
   text-decoration: none;
@@ -65,7 +67,7 @@
   }
 }
 
-.Navbar-button{
+.Navbar-button {
   border: none;
   padding: 0px;
   background-color: transparent;
@@ -96,7 +98,8 @@
   }
 }
 
-.vertical-navbar a:hover .nav-icon, .vertical-navbar a:hover{
+.vertical-navbar a:hover .nav-icon,
+.vertical-navbar a:hover {
   animation: pop 0.2s ease-in-out;
 }
 
@@ -114,9 +117,11 @@
   height: 30px;
   margin-right: 10px; /* Spacing between icon and text */
   margin-bottom: 4px;
+  margin-bottom: 4px;
 }
 
-.vertical-navbar a.active,.Navbar-button a.active {
+.vertical-navbar a.active,
+.Navbar-button a.active {
   background-color: #519f4055;
   border-radius: 5px;
 }
@@ -125,7 +130,7 @@
     45deg,
     rgba(102, 185, 116, 0.5),
     rgba(18, 85, 6, 0.5)
-);
+  );
   border-radius: 5px;
   transition: background 0.3s ease; /* Smooth transition effect */
 }
@@ -138,7 +143,9 @@
   font-size: 30px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   background: -webkit-linear-gradient(right, rgba(20, 173, 10), rgba(1, 35, 6));
+  background: -webkit-linear-gradient(right, rgba(20, 173, 10), rgba(1, 35, 6));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  /* margin-bottom: 10px; */
   /* margin-bottom: 10px; */
 }

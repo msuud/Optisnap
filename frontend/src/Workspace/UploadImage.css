@@ -1,66 +1,69 @@
-.btn { /* Base button styles for consistency */
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  .btn:hover { /* Button hover effect (optional) */
-    background-color: #080457;
-  }
-  
-  /* Specific styles for UploadImage component */
-  .UploadImage {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000; /* Ensure modal appears above other content */
-    background-color: #fff; /* Modal background color */
-    border-radius: 5px; /* Rounded corners for a softer look */
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    width: 400px; /* Adjust width as desired */
-    max-width: 80%; /* Responsive behavior on smaller screens */
-  }
-  
-  .UploadImage .modal-header {
-    padding: 20px;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Title and close button alignment */
-  }
-  
-  .UploadImage .modal-title h4 {
-    margin: 0; /* Remove default margin for cleaner styling */
-    font-weight: bold;
-  }
-  
-  .UploadImage .Button-form {
-    border: none;
-    background-color: transparent;
-    /* Consider using CloseIcon component for a more Material UI-like close button */
-  }
-  
-  .UploadImage .modal-body {
-    padding: 20px;
-  }
-  
-  .UploadImage .pop-placeholder {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-  }
-  
-  .UploadImage .modal-footer {
-    padding: 10px 20px;
-    display: flex;
-    justify-content: flex-end; /* Buttons aligned to the right */
-  }
-  
-  .UploadImage .btn-primary { /* Override Bootstrap's default primary color */
-    background-color: #007bff;
-    border-color: #007bff;
-  }
+.btn {
+  /* Base button styles for consistency */
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+  /* Button hover effect (optional) */
+  background-color: #080457;
+}
+
+/* Specific styles for UploadImage component */
+.UploadImage {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* Ensure modal appears above other content */
+  background-color: #fff; /* Modal background color */
+  border-radius: 5px; /* Rounded corners for a softer look */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  width: 400px; /* Adjust width as desired */
+  max-width: 80%; /* Responsive behavior on smaller screens */
+}
+
+.UploadImage .modal-header {
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Title and close button alignment */
+}
+
+.UploadImage .modal-title h4 {
+  margin: 0; /* Remove default margin for cleaner styling */
+  font-weight: bold;
+}
+
+.UploadImage .Button-form {
+  border: none;
+  background-color: transparent;
+  /* Consider using CloseIcon component for a more Material UI-like close button */
+}
+
+.UploadImage .modal-body {
+  padding: 20px;
+}
+
+.UploadImage .pop-placeholder {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.UploadImage .modal-footer {
+  padding: 10px 20px;
+  display: flex;
+  justify-content: flex-end; /* Buttons aligned to the right */
+}
+
+.UploadImage .btn-primary {
+  /* Override Bootstrap's default primary color */
+  background-color: #007bff;
+  border-color: #007bff;
+}
