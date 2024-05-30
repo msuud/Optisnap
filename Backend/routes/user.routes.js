@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
       const email = { name: body.email }
       // console.log(email);
       const accessToken = jwt.sign(email, process.env.ACCESS_TOKEN_SECRET)
-      res.cookie('accessToken', accessToken, { httpOnly: true, secure: false });
+      res.cookie('accessToken', accessToken);
       res.json({
         message: 'Authentication Successful',
       }).status(StatusCodes.ACCEPTED);
@@ -89,6 +89,7 @@ router.post('/signup', async (req, res) => {
       name: body.name,
       password: hashedPassword,
       verified: false,
+      img_count: 0
     });
     let response = await u.save();
     response = await sendVerificationEmail(response, res)

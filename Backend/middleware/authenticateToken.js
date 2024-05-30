@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 const { StatusCodes } = require('http-status-codes');
 module.exports =  (req, res, next) => {
-    // console.log(req.headers);
-    try {
+  try {
+      // console.log(req.cookies);
       let token = req.cookies.accessToken;
       if (token == null) {
         return res.status(StatusCodes.UNAUTHORIZED).send('Unauthorized');
@@ -17,7 +17,7 @@ module.exports =  (req, res, next) => {
         }
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
     }
   };
