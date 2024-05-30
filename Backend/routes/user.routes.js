@@ -38,9 +38,9 @@ router.post('/login', async (req, res) => {
       }).status(StatusCodes.UNAUTHORIZED)
     }
     else if (await bcrypt.compare(body.password, u.password)) {
-      const email = { name: body.email }
+      const id = { id: u._id }
       // console.log(email);
-      const accessToken = jwt.sign(email, process.env.ACCESS_TOKEN_SECRET)
+      const accessToken = jwt.sign(id, process.env.ACCESS_TOKEN_SECRET)
       res.cookie('accessToken', accessToken);
       return res.json({
         message: 'Authentication Successful',
@@ -99,15 +99,17 @@ router.post('/signup', async (req, res) => {
     const u = new user({
       username: body.username,
       email: body.email,
-      name: body.name,
       password: hashedPassword,
       verified: false,
-      img_count: 0
+      img_count: 0,
+      recent: [],
+      createdAt: Date.now(),
+      lastModified: Date.now(),
     });
-    let response = await u.save();
-    response = await sendVerificationEmail(response, res)
+    await u.save();
+    let response = await sendVerificationEmail(u, res)
     return res.json({
-      message: "User Created",
+      message: `User Created , ${response}`,
       success: true
     }).status(StatusCodes.CREATED);
   } catch (error) {
@@ -136,6 +138,8 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+
+// needs to change but later
 router.patch('/update', async (req, res) => {
   try {
     const body = req.body;
