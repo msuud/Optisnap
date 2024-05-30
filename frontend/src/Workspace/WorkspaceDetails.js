@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./WorkspaceDetails.css";
+import "./Workspace.css";
 import TableWorkspace from "../Table/TableWorkspace";
+import UploadImage from "./UploadImage";
 
 const WorkspaceDetails = ({ data }) => {
   const { id } = useParams();
   const [workspace, setWorkspace] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -13,6 +16,9 @@ const WorkspaceDetails = ({ data }) => {
       setWorkspace(foundWorkspace);
     }
   }, [data, id]);
+  const onClose = () => {
+    setShowForm(false);
+  };
 
   if (!workspace) {
     return <div>Workspace not found!</div>;
@@ -28,13 +34,26 @@ const WorkspaceDetails = ({ data }) => {
           <div className="d-flex justify-content-center mt-4">
             <div className="Table-workspace">
               <div className="d-flex justify-content-start my-2 mx-3 upload-button">
-                <button className="text-start">Upload Image</button>
+                <button
+                  className="text-start"
+                  onClick={() => setShowForm(true)}
+                >
+                  Upload Image
+                </button>
               </div>
               <TableWorkspace />
             </div>
           </div>
         </div>
       </div>
+      {showForm && (
+        <div className="popup-modal">
+          <div className="popup-form-container">
+            <UploadImage onClose={onClose} />
+          </div>
+          <div className="popup-backdrop" onClick={onClose} />
+        </div>
+      )}
     </div>
   );
 };
