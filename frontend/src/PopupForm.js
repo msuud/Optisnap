@@ -33,7 +33,7 @@ const PopupForm = ({onClose, handleworkspace}) => {
 
       <Modal.Footer>
         <Button type="secondary" onClick={onClose}>Close</Button>
-        <Button type='submit' onClick={handleworkspace1}>Save changes</Button>
+        <Button type='submit' onClick={handleworkspace}>Save changes</Button>
       </Modal.Footer>
     </Modal.Dialog>
   </div>

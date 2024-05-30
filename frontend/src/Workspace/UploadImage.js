@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import CloseButton from 'react-bootstrap/esm/CloseButton';
 import { useNavigate } from 'react-router-dom';
+import './UploadImage.css'
 
 
 const UploadImage = ({onClose, handleworkspace}) => {
@@ -20,13 +21,15 @@ const UploadImage = ({onClose, handleworkspace}) => {
   >
     <Modal.Dialog>
       <Modal.Header >
-        <Modal.Title><h4>Workspace Name</h4></Modal.Title>
+        <Modal.Title><h4>Upload image</h4></Modal.Title>
         <button onClick={onClose} className="Button-form"><CloseButton /></button>
       </Modal.Header>
 
       <Modal.Body>
         <form>
-        <input type='text' placeholder='Enter Workspace Name' className="pop-placeholder"/>
+        Name: <input type='text' placeholder='Enter Image Name' className="pop-placeholder"/>
+        Choose Image:<br/>
+        <input type='file' />
         </form>
       </Modal.Body>
 

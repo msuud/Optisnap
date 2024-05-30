@@ -18,7 +18,7 @@ const navigationItems = [
   },
   {
     name: "Workspace",
-    path: "/workspace",
+    path: "/workspace-user",
     icon: <BadgeIcon className="nav-icon" />,
   },
   {

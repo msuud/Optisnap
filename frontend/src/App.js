@@ -7,7 +7,6 @@ import SignupForm from "./Authorization/SignupForm";
 import LoginForm from "./Authorization/LoginForm";
 import VerificationForm from "./Authorization/VerificationForm";
 import Profile from "./Profile/Profile";
-import Workspace from "./Workspace/Workspace";
 import WorkspaceUser from "./Workspace/WorkspaceUser";
 import db from "./Workspace/db.json"
 import WorkspaceDetails from "./Workspace/WorkspaceDetails";
@@ -56,7 +55,6 @@ function App() {
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/about-us" element={<AboutUs />} />
                   <Route path="/profile" element={<Profile />} />
-                  <Route path="/workspace" element={<Workspace />} />
                   <Route path="/workspace-user" element={<WorkspaceUser />} />
                   <Route
             path="/workspace-user/:id"
