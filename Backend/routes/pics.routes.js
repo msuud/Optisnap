@@ -7,6 +7,8 @@ const router = express.Router();
 const upload = require('../middleware/multerMW')
 const fs = require('fs')
 const path = require('path')
+const fs = require('fs')
+const path = require('path')
 router.use(express.json())
 
 
@@ -38,6 +40,7 @@ router.post('/addWS', authenticateToken, async (req, res) => {
 })
 
 //working
+//working
 router.post('/addPic', authenticateToken, upload.single('image'), async (req, res) => {
     try {
         const body = req.body;
@@ -46,8 +49,15 @@ router.post('/addPic', authenticateToken, upload.single('image'), async (req, re
 
         // console.log(`Image size: ${ sizeInMB.toFixed(2) } MB`);
 
+        const time = new Date()
+        const sizeInMB = req.file.size / (1024 * 1024);
+
+        // console.log(`Image size: ${ sizeInMB.toFixed(2) } MB`);
+
         const newImage = {
             name: req.file.originalname,
+            uploadedAt: time,
+            size: sizeInMB.toFixed(2)
             uploadedAt: time,
             size: sizeInMB.toFixed(2)
         }
@@ -59,7 +69,9 @@ router.post('/addPic', authenticateToken, upload.single('image'), async (req, re
         if (x.modifiedCount > 0) {
             const user1 = await user.findOneAndUpdate({ _id: req.user.id }, { $inc: { img_count: 1 } })
             user1.recent.push(newImage);
+            user1.recent.push(newImage);
             if (user1.recent.length > 5) {
+                user1.recent.shift();
                 user1.recent.shift();
             }
             await user1.save();
@@ -107,6 +119,11 @@ router.post('/addPic', authenticateToken, upload.single('image'), async (req, re
         fs.rm(filePath, (error) => {
             if (error) console.log(error)
         })
+    } finally {
+        let filePath = path.join(__dirname, "../uploads", req.file.originalname)
+        fs.rm(filePath, (error) => {
+            if (error) console.log(error)
+        })
     }
 })
 
@@ -139,6 +156,7 @@ router.get("/deleteWS/:WSname", authenticateToken, async (req, res) => {
 })
 
 //working
+//might need change with the data 
 //might need change with the data 
 router.get("/dashboard", authenticateToken, async (req, res) => {
     try {
