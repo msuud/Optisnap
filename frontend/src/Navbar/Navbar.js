@@ -46,6 +46,7 @@ const Navbar = () => {
             </NavLink>
           </li>
         ))}
+        <div></div>
       </ul>
     </nav>
   );
