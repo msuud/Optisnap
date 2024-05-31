@@ -25,29 +25,39 @@ router.post('/login', async (req, res) => {
   try {
     let body = req.body;
     let u = await user.findOne({ email: body.email });
-    if (u == null) {
-      res.send("Email is not registered").status(StatusCodes.UNAUTHORIZED)
-
+    if (u === null) {
+      return res.json({
+        messsage: "Email is not registered",
+        success: false
+      }).status(StatusCodes.UNAUTHORIZED)
     }
     else if (!u.verified) {
-      res.send("Email is not verified").status(StatusCodes.UNAUTHORIZED)
+      return res.json({
+        messsage: "Email is not verified",
+        success: false
+      }).status(StatusCodes.UNAUTHORIZED)
     }
     else if (await bcrypt.compare(body.password, u.password)) {
-      const email = { name: body.email }
+      const id = { id: u._id }
       // console.log(email);
-      const accessToken = jwt.sign(email, process.env.ACCESS_TOKEN_SECRET)
+      const accessToken = jwt.sign(id, process.env.ACCESS_TOKEN_SECRET)
       res.cookie('accessToken', accessToken);
-      res.json({
+      return res.json({
         message: 'Authentication Successful',
+        success: true
       }).status(StatusCodes.ACCEPTED);
     } else {
-      res.json({
-        message: 'Authentication Failed'
+      return res.json({
+        message: 'Authentication Failed',
+        success: false
       }).status(StatusCodes.NOT_FOUND);
     }
   } catch (error) {
     console.log(error);
-    res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR);
+    return res.json({
+      messsage: error.message,
+      success: false
+    }).status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 });
 
@@ -75,7 +85,10 @@ const sendVerificationEmail = async ({ _id, email }, res) => {
     await transport.sendMail(mailOptions)
     return "mail sent!!"
   } catch (error) {
-    res.send("Error at sending the email.").status(StatusCodes.INTERNAL_SERVER_ERROR)
+    return res.json({
+      message: "Error at sending the email.",
+      success: false
+    }).status(StatusCodes.INTERNAL_SERVER_ERROR)
   }
 }
 
@@ -86,34 +99,47 @@ router.post('/signup', async (req, res) => {
     const u = new user({
       username: body.username,
       email: body.email,
-      name: body.name,
       password: hashedPassword,
       verified: false,
-      img_count: 0
+      img_count: 0,
+      recent: [],
+      createdAt: Date.now(),
+      lastModified: Date.now(),
     });
-    let response = await u.save();
-    response = await sendVerificationEmail(response, res)
-    res.json({
-      message: "User Created",
-      response: response
+    await u.save();
+    let response = await sendVerificationEmail(u, res)
+    return res.json({
+      message: `User Created , ${response}`,
+      success: true
     }).status(StatusCodes.CREATED);
   } catch (error) {
     console.log(error);
     if (error.code === 11000) {
       // console.log();
       if (error.message.search("username") !== -1) {
-        res.send("username exist").status(StatusCodes.BAD_REQUEST)
+        return res.json({
+          message: "Username already exists",
+          success: false
+        }).status(StatusCodes.BAD_REQUEST)
       }
       else {
-        res.send("Email exists").status(StatusCodes.BAD_REQUEST)
+        return res.json({
+          message: "Email exists",
+          success: false
+        }).status(StatusCodes.BAD_REQUEST)
       }
     }
     else {
-      res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR);
+      return res.json({
+        message: error.message,
+        success: false
+      }).status(StatusCodes.INTERNAL_SERVER_ERROR);
     }
   }
 });
 
+
+// needs to change but later
 router.patch('/update', async (req, res) => {
   try {
     const body = req.body;
@@ -122,27 +148,88 @@ router.patch('/update', async (req, res) => {
     }, {
       $set: body
     });
-    console.log(u);
+    // console.log(u);
     if (u.acknowledged) {
-      res.send("Updated successfully").status(StatusCodes.OK);
+      return res.json({
+        message: "Updated successfully",
+        success: true
+      }).status(StatusCodes.OK);
     } else {
-      res.send("Not Updated successfully").status(400);
+      return res.json({
+        message: "Not Updated successfully",
+        success: false
+      }).status(400);
     }
   } catch (error) {
-    res.send(error.message).status(StatusCodes.BAD_REQUEST);
+    return res.json({
+      message: error.message,
+      success: false
+    }).status(StatusCodes.BAD_REQUEST);
   }
 });
 
 //added just for checking
 router.get('/', authenticateToken, (req, res) => {
-  res.json({ user: req.user })
+  return res.json({
+    user: req.user,
+    success: true
+  }).status(StatusCodes.OK)
 })
 
 router.post("/logout", authenticateToken, async (req, res) => {
   try {
-    res.clearCookie("accessToken").send("logged out");
+    return res.clearCookie("accessToken").json({
+      message: "Logged out successfully",
+      success: true
+    });
   } catch (error) {
-    res.send(error.message).status(StatusCodes.INTERNAL_SERVER_ERROR)
+    return res.json({
+      message: error.message,
+      success: false
+    }).status(StatusCodes.INTERNAL_SERVER_ERROR)
+  }
+})
+
+router.patch("/addName", authenticateToken, async (req, res) => {
+  try {
+    let name = req.body.name
+    let User = await user.updateOne({
+      _id: req.user.id
+    }, { $set: { name: name } })
+    if (User.acknowledged) {
+      return res.json({
+        message: "Updated successfully",
+        success: true
+      })
+    }
+    else {
+      return res.json({
+        message: "Name Not Updated",
+        success: false
+      })
+    }
+  } catch (error) {
+    return res.json({
+      message: error.message,
+      success: false
+    })
+  }
+})
+
+router.get("/user",authenticateToken,async(req,res)=>{
+  try {
+    let u = await user.findById(req.user.id).select('-_id -password -img_count -recent -createdAt -lastModified -__v')
+    // console.log(u);
+    return res.json({
+      data: u,
+      message: "data sent",
+      success: true
+    }).status(StatusCodes.OK)
+  } catch (error) {
+    return res.json({
+      message: error.message,
+      success: false
+    }).status(StatusCodes.INTERNAL_SERVER_ERROR)
   }
 })
 
