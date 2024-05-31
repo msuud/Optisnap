@@ -187,4 +187,30 @@ router.post("/logout", authenticateToken, async (req, res) => {
   }
 })
 
+router.patch("/addName", authenticateToken, async (req, res) => {
+  try {
+    let name = req.body.name
+    let User = await user.updateOne({
+      _id: req.user.id
+    }, { $set: { name: name } })
+    if (User.acknowledged) {
+      return res.json({
+        message: "Updated successfully",
+        success: true
+      })
+    }
+    else {
+      return res.json({
+        message: "Name Not Updated",
+        success: false
+      })
+    }
+  } catch (error) {
+    return res.json({
+      message: error.message,
+      success: false
+    })
+  }
+})
+
 module.exports = router;
