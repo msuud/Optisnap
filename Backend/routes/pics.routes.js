@@ -7,8 +7,6 @@ const router = express.Router();
 const upload = require('../middleware/multerMW')
 const fs = require('fs')
 const path = require('path')
-const fs = require('fs')
-const path = require('path')
 router.use(express.json())
 
 

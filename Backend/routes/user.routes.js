@@ -216,4 +216,21 @@ router.patch("/addName", authenticateToken, async (req, res) => {
   }
 })
 
+router.get("/user",authenticateToken,async(req,res)=>{
+  try {
+    let u = await user.findById(req.user.id).select('-_id -password -img_count -recent -createdAt -lastModified -__v')
+    // console.log(u);
+    return res.json({
+      data: u,
+      message: "data sent",
+      success: true
+    }).status(StatusCodes.OK)
+  } catch (error) {
+    return res.json({
+      message: error.message,
+      success: false
+    }).status(StatusCodes.INTERNAL_SERVER_ERROR)
+  }
+})
+
 module.exports = router;
