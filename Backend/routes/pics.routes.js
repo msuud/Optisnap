@@ -49,17 +49,10 @@ router.post('/addPic', authenticateToken, upload.single('image'), async (req, re
 
         // console.log(`Image size: ${ sizeInMB.toFixed(2) } MB`);
 
-        const time = new Date()
-        const sizeInMB = req.file.size / (1024 * 1024);
-
-        // console.log(`Image size: ${ sizeInMB.toFixed(2) } MB`);
-
         const newImage = {
             name: req.file.originalname,
             uploadedAt: time,
-            size: sizeInMB.toFixed(2)
-            uploadedAt: time,
-            size: sizeInMB.toFixed(2)
+            size: sizeInMB.toFixed(2),
         }
         let x = await WS.updateOne(
             { name: body.WSname },
@@ -114,11 +107,6 @@ router.post('/addPic', authenticateToken, upload.single('image'), async (req, re
             message: error.message,
             success: false
         }).status(StatusCodes.INTERNAL_SERVER_ERROR)
-    } finally {
-        let filePath = path.join(__dirname, "../uploads", req.file.originalname)
-        fs.rm(filePath, (error) => {
-            if (error) console.log(error)
-        })
     } finally {
         let filePath = path.join(__dirname, "../uploads", req.file.originalname)
         fs.rm(filePath, (error) => {
