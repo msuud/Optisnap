@@ -36,7 +36,7 @@ const WorkspaceUser = () => {
 
   return (
     <div className="bg-image1 rounded box4 ">
-      {console.log("Data in App:", db)}
+      {/* {console.log("Data in App:", db)} */}
       <div className="cointainer">
         <h1 className="heading1">Your Workspaces</h1>
         <div className="grid1 rounded fixed top-0 left-0 right-0 z-10 text-center p-5">

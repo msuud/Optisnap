@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 import HomeIcon from "@mui/icons-material/Home";
@@ -8,7 +8,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import logo from "../assets/logo1.png";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { AuthContext } from "../Contexts/AuthContext";
 import axios from "axios";
 
 const navigationItems = [
@@ -34,15 +34,16 @@ const navigationItems = [
   },
 ];
 
-const Navbar = ({ handleLogout }) => {
+const Navbar = () => {
+  const {setIsLoggedIn} = useContext(AuthContext)
   const navigate = useNavigate();
   const handleActualLogout = async () => {
     if (window.confirm("Do you want to logout?")) {
       const response = await axios.post("http://localhost:4000/logout", "", {
         withCredentials: true,
       });
-      console.log(response);
-      handleLogout();
+      // console.log(response);
+      setIsLoggedIn(false)
       navigate("/login");
     }
   };

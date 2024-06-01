@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import Table from "../Table/Table";
 import { useEffect } from "react";
 import axios from "axios";
-
+import {AuthContext} from "../Contexts/AuthContext";
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const [dashboardData, setDashboardData] = useState({
     username: "",
     noOfWS: 0,
@@ -30,7 +33,10 @@ const Dashboard = () => {
           uploadedImages: response.data.recent_10,
         });
       } catch (error) {
-        console.log(error);
+        console.log(error.response.status === 401);
+        if (error.response.status === 401) {
+          navigate("/")
+        }
       }
     };
     fetchData();

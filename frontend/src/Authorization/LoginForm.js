@@ -1,17 +1,19 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./Starter.css";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo1.png";
 import axios from "axios";
+import { AuthContext } from "../Contexts/AuthContext";
 
-const LoginForm = ({ setIsLoggedIn }) => {
+const LoginForm = () => {
   const initialValues = { email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
 
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const handleRegisterClick = () => {
     navigate("/");
   };
@@ -56,12 +58,12 @@ const LoginForm = ({ setIsLoggedIn }) => {
           formValues,
           { withCredentials: true }
         );
-        console.log("Response", response.data);
+        // console.log("Response", response.data);
         localStorage.setItem("accessToken", response.data.accessToken);
         if (response.data == "Email is not verified") {
           alert("Email is not verified");
         } else if (response.data.message == "Authentication Successful") {
-          setIsLoggedIn(true);
+          setIsLoggedIn(true); // Update context state here
           navigate("/dashboard");
         } else {
           alert("Invalid Credentials");
@@ -69,9 +71,11 @@ const LoginForm = ({ setIsLoggedIn }) => {
       } catch (error) {
         console.error(error);
         alert("Login Failed!");
+      } finally {
+        setIsSubmit(false); // Reset submit state after async operation
       }
-    }
-  };
+    };
+  }
 
   return (
     <div className="bg-login">

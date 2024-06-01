@@ -150,7 +150,7 @@ router.get("/dashboard", authenticateToken, async (req, res) => {
         let WScount = await WS.find({ uid: u._id });
         let rev = u.recent
         rev.reverse()
-        console.log(rev);
+        // console.log(rev);
         return res.json({
             message: "Data sent",
             data: {

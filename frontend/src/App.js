@@ -1,5 +1,5 @@
-import React, { useState, createContext, useContext, useEffect } from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
 import Dashboard from "./Dashboard/Dashboard";
 import AboutUs from "./About-us/aboutus";
@@ -9,31 +9,24 @@ import Profile from "./Profile/Profile";
 import WorkspaceUser from "./Workspace/WorkspaceUser";
 import db from "./Workspace/db.json";
 import WorkspaceDetails from "./Workspace/WorkspaceDetails";
-
-const AuthContext = createContext(null);
+import {AuthContext} from "./Contexts/AuthContext";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const token = localStorage.getItem("accessToken");
-    return token ? true : false;
-  });
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const [data, setData] = useState([]);
+
   useEffect(() => {
     setData(db);
+    // console.log(isLoggedIn);
   }, []);
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    setIsLoggedIn(false);
-  };
 
   return (
     <div className="App">
-      <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
         <BrowserRouter>
           {isLoggedIn ? (
             <div>
               <div className="d-flex flex-row min-vh-100 ">
-                <Navbar handleLogout={handleLogout} />
+                <Navbar />
                 <div className="container-fluid dashboard content-cointainer mt-0 px-0">
                   <Routes>
                     <Route path="/dashboard" element={<Dashboard />} />
@@ -49,30 +42,13 @@ function App() {
               </div>
             </div>
           ) : (
-            // Conditional rendering for login/signup
             <Routes>
-              <Route
-                path="/login"
-                element={<LoginForm setIsLoggedIn={setIsLoggedIn} />}
-              />
+              <Route path="/login" element={<LoginForm />} />
               <Route path="/" element={<SignupForm />} />
-              <Route path="/login" element={<LoginForm />} />{" "}
-              {/* Remove duplicate */}
             </Routes>
           )}
         </BrowserRouter>
-      </AuthContext.Provider>
     </div>
-  );
-}
-
-function ProtectedRoute({ children, ...rest }) {
-  const authContext = useContext(AuthContext);
-
-  return authContext.isLoggedIn ? (
-    <Route {...rest}>{children}</Route>
-  ) : (
-    <Navigate to="/login" replace />
   );
 }
 
