@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const user = require('../schemas/userSchema');
+const WS = require('../schemas/workspaceSchema')
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 const { v4: uuidv4 } = require('uuid')
@@ -33,7 +34,7 @@ router.post('/login', async (req, res) => {
     }
     else if (!u.verified) {
       return res.json({
-        messsage: "Email is not verified",
+        messsage: "Email is not verified", 
         success: false
       }).status(StatusCodes.UNAUTHORIZED)
     }
@@ -98,6 +99,7 @@ router.post('/signup', async (req, res) => {
     const hashedPassword = await bcrypt.hash(body.password, 10);
     const u = new user({
       username: body.username,
+      name: body.firstName+" "+body.lastName,
       email: body.email,
       password: hashedPassword,
       verified: false,
@@ -169,9 +171,9 @@ router.patch('/update', async (req, res) => {
 });
 
 //added just for checking
-router.get('/', authenticateToken, (req, res) => {
+router.get('/checkAuth', authenticateToken, (req, res) => {
   return res.json({
-    user: req.user,
+    message: "Authenticated successfully",
     success: true
   }).status(StatusCodes.OK)
 })
@@ -190,38 +192,20 @@ router.post("/logout", authenticateToken, async (req, res) => {
   }
 })
 
-router.patch("/addName", authenticateToken, async (req, res) => {
-  try {
-    let name = req.body.name
-    let User = await user.updateOne({
-      _id: req.user.id
-    }, { $set: { name: name } })
-    if (User.acknowledged) {
-      return res.json({
-        message: "Updated successfully",
-        success: true
-      })
-    }
-    else {
-      return res.json({
-        message: "Name Not Updated",
-        success: false
-      })
-    }
-  } catch (error) {
-    return res.json({
-      message: error.message,
-      success: false
-    })
-  }
-})
-
-router.get("/user",authenticateToken,async(req,res)=>{
+router.get("/user", authenticateToken, async (req, res) => {
   try {
     let u = await user.findById(req.user.id).select('-_id -password -img_count -recent -createdAt -lastModified -__v')
     // console.log(u);
+    let WScount = await WS.find({ uid: u._id });
+    u.WScount = WScount.length
     return res.json({
-      data: u,
+      data: {
+        username : u.username,
+        firstName : u.name.split(" ")[0],
+        lastName : u.name.split(" ")[1],
+        WScount : u.WScount,
+        email: u.email
+      },
       message: "data sent",
       success: true
     }).status(StatusCodes.OK)

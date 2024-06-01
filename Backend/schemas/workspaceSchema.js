@@ -13,7 +13,6 @@ const WorkspaceSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
-        unique: true,
     },
     images: {
         type: Array
