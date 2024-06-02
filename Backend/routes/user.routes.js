@@ -34,7 +34,7 @@ router.post('/login', async (req, res) => {
     }
     else if (!u.verified) {
       return res.json({
-        messsage: "Email is not verified", 
+        messsage: "Email is not verified",
         success: false
       }).status(StatusCodes.UNAUTHORIZED)
     }
@@ -99,7 +99,7 @@ router.post('/signup', async (req, res) => {
     const hashedPassword = await bcrypt.hash(body.password, 10);
     const u = new user({
       username: body.username,
-      name: body.firstName+" "+body.lastName,
+      name: body.firstName + " " + body.lastName,
       email: body.email,
       password: hashedPassword,
       verified: false,
@@ -142,32 +142,33 @@ router.post('/signup', async (req, res) => {
 
 
 // needs to change but later
-router.patch('/update', async (req, res) => {
+router.patch('/update/:field',authenticateToken, async (req, res) => {
   try {
+    const field = req.params.field
     const body = req.body;
     const u = await user.updateOne({
-      email: body.email
+      _id: req.user.id
     }, {
-      $set: body
+      $set: { [field] : body.value}
     });
-    // console.log(u);
-    if (u.acknowledged) {
-      return res.json({
-        message: "Updated successfully",
-        success: true
-      }).status(StatusCodes.OK);
-    } else {
-      return res.json({
-        message: "Not Updated successfully",
-        success: false
-      }).status(400);
-    }
+// console.log(u);
+if (u.acknowledged) {
+  return res.json({
+    message: "Updated successfully",
+    success: true
+  }).status(StatusCodes.OK);
+} else {
+  return res.json({
+    message: "Not Updated successfully",
+    success: false
+  }).status(400);
+}
   } catch (error) {
-    return res.json({
-      message: error.message,
-      success: false
-    }).status(StatusCodes.BAD_REQUEST);
-  }
+  return res.json({
+    message: error.message,
+    success: false
+  }).status(StatusCodes.BAD_REQUEST);
+}
 });
 
 //added just for checking
@@ -194,16 +195,17 @@ router.post("/logout", authenticateToken, async (req, res) => {
 
 router.get("/user", authenticateToken, async (req, res) => {
   try {
-    let u = await user.findById(req.user.id).select('-_id -password -img_count -recent -createdAt -lastModified -__v')
+    let u = await user.findById(req.user.id).select('-_id -password -recent -createdAt -lastModified -__v')
     // console.log(u);
     let WScount = await WS.find({ uid: u._id });
     u.WScount = WScount.length
     return res.json({
       data: {
-        username : u.username,
-        firstName : u.name.split(" ")[0],
-        lastName : u.name.split(" ")[1],
-        WScount : u.WScount,
+        username: u.username,
+        firstName: u.name.split(" ")[0],
+        lastName: u.name.split(" ")[1],
+        WScount: u.WScount,
+        img_count: u.img_count,
         email: u.email
       },
       message: "data sent",

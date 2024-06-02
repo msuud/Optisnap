@@ -138,6 +138,30 @@ router.get("/deleteWS/:WSname", authenticateToken, async (req, res) => {
     }
 })
 
+router.update("/editWS", authenticateToken, async (req, res) => {
+    try {
+        let body = req.body
+        let response = await WS.updateOne({ uid: req.user.id, name: body.name }, { $set: { name: body.newName } })
+        if (response.modifiedCount > 0) {
+            return res.json({
+                message: "WorkSpace updated",
+                success: true
+            }).status(StatusCodes.OK)
+        }
+        else {
+            return res.json({
+                message: "Workspace name not found",
+                success: false
+            }).status(StatusCodes.BAD_REQUEST)
+        }
+    } catch (error) {
+        return res.json({
+            message: error.message,
+            success: false
+        }).status(StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+})
+
 //working
 //might need change with the data 
 router.get("/dashboard", authenticateToken, async (req, res) => {
