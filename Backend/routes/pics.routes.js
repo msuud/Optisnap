@@ -138,7 +138,7 @@ router.get("/deleteWS/:WSname", authenticateToken, async (req, res) => {
     }
 })
 
-router.update("/editWS", authenticateToken, async (req, res) => {
+router.patch("/editWS", authenticateToken, async (req, res) => {
     try {
         let body = req.body
         let response = await WS.updateOne({ uid: req.user.id, name: body.name }, { $set: { name: body.newName } })
