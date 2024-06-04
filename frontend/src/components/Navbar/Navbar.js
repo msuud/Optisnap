@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 import HomeIcon from "@mui/icons-material/Home";
@@ -6,15 +6,17 @@ import BadgeIcon from "@mui/icons-material/Badge";
 import PersonIcon from "@mui/icons-material/Person";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
-import logo from "../assets/logo1.png";
+import logo from "../../assets/logo1.png";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { UserContext } from "../../context/UserContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const navigationItems = [
   {
     name: "Dashboard",
-    path: "/dashboard",
+    path: "/",
     icon: <HomeIcon className="nav-icon" />,
   },
   {
@@ -34,13 +36,15 @@ const navigationItems = [
   },
 ];
 
-const Navbar = ({ handleLogout }) => {
+const Navbar = () => {
   const navigate = useNavigate();
+  const { handleLogout } = useContext(AuthContext);
   const handleActualLogout = async () => {
     if (window.confirm("Do you want to logout?")) {
       const response = await axios.post("http://localhost:4000/logout", "", {
         withCredentials: true,
       });
+
       console.log(response);
       handleLogout();
       navigate("/login");

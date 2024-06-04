@@ -1,15 +1,21 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import "./Starter.css";
-import logo from "../assets/logo1.png";
+import logo from "../../assets/logo1.png";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Audio } from "react-loader-spinner";
 
 const SignupForm = () => {
-  const startValues = { username: "", email: "", password: "" };
+  const startValues = {
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    password: "",
+  };
   const [regformValues, setRegformValues] = useState(startValues);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -61,6 +67,8 @@ const SignupForm = () => {
 
         const response = await axios.post("http://localhost:4000/signup", {
           username: regformValues.username,
+          firstName: regformValues.firstName,
+          lastName: regformValues.lastName,
           email: regformValues.email,
           password: regformValues.password,
         });
@@ -70,23 +78,15 @@ const SignupForm = () => {
           alert("Username already exist");
         } else if (response.data == "Email exists") {
           alert("Email already exists");
-        } else if (response.data.message == "User Created") {
+        } else if (response.data.message == "User Created , mail sent!!") {
           alert(
-            "An email has been sent to your registered email id. Please verify it!"
+            "An email has been sent to your registered email id. Please verify it !"
           );
           navigate("/login");
         }
       } catch (error) {
         console.error(error);
         alert("Signup Failed !");
-      } finally {
-        // toast.success(
-        //   "An email has been sent to your registered email id. Please verify it!",
-        //   {
-        //     className: "toast-message",
-        //     autoClose: false,
-        //   }
-        // );
       }
     }
   };
@@ -110,7 +110,27 @@ const SignupForm = () => {
         <form className="container">
           <div className="col form-box register">
             <p className="title">Sign Up</p>
-            <div className="input-box">
+            <div className="d-flex flex-row" style={{ marginTop: "7%" }}>
+              <div className="input-box-fn">
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="First Name"
+                  value={regformValues.firstName}
+                  onChange={handleChanges}
+                />
+              </div>
+              <div className="input-box-ln">
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Last Name"
+                  value={regformValues.lastName}
+                  onChange={handleChanges}
+                />
+              </div>
+            </div>
+            <div className="input-box-register">
               <input
                 type="text"
                 name="username"
@@ -119,7 +139,7 @@ const SignupForm = () => {
                 onChange={handleChanges}
               />
             </div>
-            <div className="input-box">
+            <div className="input-box-register">
               <input
                 type="email"
                 name="email"
@@ -128,7 +148,7 @@ const SignupForm = () => {
                 onChange={handleChanges}
               />
             </div>
-            <div className="input-box">
+            <div className="input-box-register">
               <input
                 type="password"
                 name="password"

@@ -1,5 +1,5 @@
 .bg-image {
-  background-image: url("../assets/background-3.jpg");
+  background-image: url("../../assets/background-3.jpg");
   opacity: 0.8;
   background-blend-mode: multiply;
   background-size: cover;
@@ -7,6 +7,7 @@
   height: 100vh;
   display: flex;
   justify-content: center;
+  background-repeat: repeat-y;
 }
 .box3 {
   width: 1000px; /* Adjust width as needed */
@@ -52,6 +53,21 @@ h1 {
   border-radius: 50px;
   width: 300px;
   border: none;
+}
+
+.workspace-text {
+  text-decoration: none;
+  margin-right: 35%;
+}
+
+.three-button {
+  border: none;
+  background-color: transparent;
+}
+
+.three-button:hover {
+  /* border: 2px solid rgb(159, 159, 159); */
+  background-color: rgba(99, 151, 116, 0.4);
 }
 
 .workspace {
@@ -123,6 +139,16 @@ h1 {
   text-decoration: none;
 }
 
+.workspace-box {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.three-button {
+  margin-right: 10px;
+}
+
 .app1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -189,4 +215,37 @@ h4 {
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+/* responsive */
+@media (max-width: 1350px) and (min-width: 641px) {
+  .app1 {
+    grid-template-columns: repeat(2, 1fr); /* Adjust for two columns */
+    margin-left: 200%;
+  }
+  .workspace-box {
+    min-width: 270px;
+  }
+}
+
+@media (max-width: 800px) {
+  .app1 {
+    grid-template-columns: repeat(
+      1,
+      1fr
+    ); /* Single column for smaller screens */
+    margin-top: 0;
+    margin-left: 330%;
+  }
+  h1 {
+    font-size: 3rem;
+  }
+
+  .container {
+    padding-top: 20px; /* Add top padding for content below navbar */
+  }
+  .workspace-box {
+    min-width: 250px;
+    margin-left: 10px;
+  }
 }
