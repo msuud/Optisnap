@@ -148,7 +148,7 @@ router.patch('/update/:field', authenticateToken, async (req, res) => {
     const body = req.body;
     const u = await user.findById(req.user.id);
     if (field === "username") {
-      u.username = body.username
+      u.username = body.name
     }
     else if (field === "firstName") {
       u.name = u.name.replace(u.name.split(' ')[0], body.name);
