@@ -1,0 +1,29 @@
+.bg-image1 {
+  background-image: url("../../assets/background-3.jpg");
+  opacity: 0.8;
+  background-blend-mode: multiply;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.grid1w {
+  align-items: center;
+}
+
+.upload-button button {
+  background: rgba(34, 183, 69);
+  color: white; /* White text */
+  padding: 10px 20px; /* Adjust padding for desired size */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Indicate clickable action */
+  transition: background-color 0.2s ease-in-out; /* Smooth hover effect */
+}
+
+.upload-button button:hover {
+  background: rgb(19, 97, 37);
+}
