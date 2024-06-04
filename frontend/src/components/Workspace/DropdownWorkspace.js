@@ -22,6 +22,8 @@ const DropdownWorkspace = ({ workspaceDetails }) => {
       if (response.data.message == "WorskSpace deleted") {
         alert("Workspace deleted successfully !");
         window.location.reload();
+      } else if (response.data.success === false && response.status === 200) {
+        alert(response.data.message);
       }
     } catch (error) {
       console.error(error);
