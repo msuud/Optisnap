@@ -21,7 +21,6 @@ const WorkspaceDetails = () => {
           }
         );
         setWorkspace(response.data.data);
-        console.log(response);
       } catch (error) {
         console.error(error);
       }

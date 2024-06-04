@@ -57,7 +57,18 @@ h1 {
 
 .workspace-text {
   text-decoration: none;
-  margin-right: 35%;
+  /* margin-right: 40%; */
+  position: relative;
+  right: 15%;
+  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
+  margin-top: 10%;
+}
+.workspace-text h2 {
+  white-space: nowrap; /* This prevents text from wrapping within the h2 element */
+  overflow: hidden; /* This hides any text that overflows the h2 element */
+  text-overflow: ellipsis; /* This adds an ellipsis (...) if the text overflows */
 }
 
 .three-button {
@@ -154,7 +165,7 @@ h1 {
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
   position: absolute;
-  left: -240%;
+  left: -195%;
   /* right: 0%; */
   margin-top: 45px;
 }

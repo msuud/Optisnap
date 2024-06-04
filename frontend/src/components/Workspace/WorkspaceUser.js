@@ -84,7 +84,7 @@ const WorkspaceUser = () => {
                       className="workspace-text"
                     >
                       <h2>{workspaceDetails.name}</h2>
-                      <h4 className="mt-5">
+                      <h4 className="mt-3">
                         Images: {workspaceDetails?.images?.length || 0}
                       </h4>
                     </Link>

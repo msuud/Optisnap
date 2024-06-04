@@ -7,6 +7,24 @@ import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 
 const Profile = () => {
+  // const [isLoading, setIsLoading] = useState(true);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     console.log("hello");
+  //     const response = await fetch("http://localhost:4000/pic", {
+  //       method: "GET",
+  //     });
+  //     console.log(response);
+
+  //     setTimeout(() => {
+  //       setIsLoading(false);
+  //     }, 2000);
+  //   };
+
+  //   fetchData();
+  // }, []);
+
   const onClose = () => {
     setShowProfileForm(false);
     window.location.reload();

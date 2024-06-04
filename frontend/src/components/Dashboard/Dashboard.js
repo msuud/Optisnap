@@ -22,7 +22,6 @@ const Dashboard = () => {
           "http://localhost:4000/pic/dashboard",
           { withCredentials: true }
         );
-        console.log(response);
         setDashboardData({
           username: response.data.data.username,
           noOfWS: response.data.data.noOfWS,
