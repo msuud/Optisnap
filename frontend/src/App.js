@@ -1,14 +1,14 @@
 import React, { useState, createContext, useContext, useEffect } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import Navbar from "./Navbar/Navbar";
-import Dashboard from "./Dashboard/Dashboard";
-import AboutUs from "./About-us/aboutus";
-import SignupForm from "./Authorization/SignupForm";
-import LoginForm from "./Authorization/LoginForm";
-import Profile from "./Profile/Profile";
-import WorkspaceUser from "./Workspace/WorkspaceUser";
-import db from "./Workspace/db.json";
-import WorkspaceDetails from "./Workspace/WorkspaceDetails";
+import Navbar from "./components/Navbar/Navbar";
+import Dashboard from "./components/Dashboard/Dashboard";
+import AboutUs from "./components/About-us/aboutus";
+import SignupForm from "./components/Authorization/SignupForm";
+import LoginForm from "./components/Authorization/LoginForm";
+import Profile from "./components/Profile/Profile";
+import WorkspaceUser from "./components/Workspace/WorkspaceUser";
+import db from "./components/Workspace/db.json";
+import WorkspaceDetails from "./components/Workspace/WorkspaceDetails";
 
 const AuthContext = createContext(null);
 
@@ -36,7 +36,7 @@ function App() {
                 <Navbar handleLogout={handleLogout} />
                 <div className="container-fluid dashboard content-cointainer mt-0 px-0">
                   <Routes>
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/" element={<Dashboard />} />
                     <Route path="/about-us" element={<AboutUs />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/workspace-user" element={<WorkspaceUser />} />

@@ -1,0 +1,182 @@
+.profile-grid {
+  backdrop-filter: blur(30px);
+  background-color: rgba(36, 91, 8, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  /* padding: 70px; */
+  width: 900px;
+  height: 450px;
+  /* align-items: flex-end; */
+}
+
+.h1 {
+  padding-left: 0%;
+  font-size: 80px;
+  font-weight: bolder;
+  text-align: left;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+h3 {
+  padding-top: 10px;
+  text-align: left;
+  color: rgb(43, 91, 4);
+}
+
+.container1 {
+  padding-right: 30px;
+  padding-bottom: 70px;
+  position: absolute;
+  left: 5%;
+}
+.container2 {
+  color: white;
+  padding-left: 50px;
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  padding-bottom: 20px;
+  /* align-items: flex-end; */
+}
+
+.workspace-grid {
+  background-color: rgba(81, 138, 35, 0.5);
+  width: 300px;
+  height: 100px;
+  margin-bottom: 30px;
+  border-radius: 30px;
+  border: none;
+  font-size: 25px;
+  color: white;
+}
+
+.image-grid {
+  background-color: rgba(81, 138, 35, 0.5);
+  width: 300px;
+  height: 100px;
+  margin-bottom: 30px;
+  border-radius: 30px;
+  border: none;
+  font-size: 25px;
+  color: white;
+}
+.edit-grid {
+  margin-top: 40px;
+  background-color: rgb(249, 249, 249);
+  width: 350px;
+  height: 60px;
+  margin-bottom: 30px;
+  border-radius: 30px;
+  border: none;
+  font-size: 30px;
+  color: rgb(47, 90, 15);
+}
+
+
+/* skelton css */
+.fname{
+  background-color: rgb(237, 234, 234);
+  border-radius: 20px;
+  color: rgb(237, 234, 234);
+  min-width: 100px;
+  margin-bottom: none;
+}
+.c1{
+  background-color: white;
+}
+.image-overlay1{
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+}
+.email-skelton{
+  background-color: rgb(237, 234, 234);
+  border-radius: 20px;
+  min-width: 100px;
+  color: rgb(237, 234, 234);
+}
+.button-skelton{
+  background-color: rgb(237, 234, 234);
+  width: 300px;
+  height: 100px;
+  margin-bottom: 30px;
+  border-radius: 30px;
+  border: none;
+  font-size: 25px;
+  color: rgb(237, 234, 234);
+}
+.edit-skelton{
+  background-color: rgb(237, 234, 234);
+  color: rgb(237, 234, 234);
+  margin-top: 40px;
+  width: 350px;
+  height: 60px;
+  margin-bottom: 30px;
+  border-radius: 30px;
+  border: none;
+  font-size: 30px;
+}
+
+.cointainer-skelton{
+  background-color: rgb(249, 247, 247);
+}
+
+/* animations */
+/* Base styles */
+.c1 {
+  background-color: white;
+}
+.image-overlay1 {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Skeleton styles */
+.fname,
+.email-skelton,
+.button-skelton,
+.edit-skelton {
+  background-color: rgb(237, 234, 234); /* Light gray */
+  border-radius: 20px;
+  color: rgb(237, 234, 234); /* Light gray */
+}
+
+/* Specific styles */
+.fname {
+  min-width: 100px;
+  margin-bottom: none;
+}
+.email-skelton {
+  min-width: 100px;
+}
+.button-skelton {
+  width: 300px;
+  height: 100px;
+  margin-bottom: 30px;
+}
+.edit-skelton {
+  width: 350px;
+  height: 60px;
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+/* Animation */
+@keyframes skeleton-shimmer {
+  0% {
+    background-color: rgb(237, 234, 234); /* Light gray */
+    color: rgb(237, 234, 234);
+  }
+  100% {
+    background-color: rgb(224, 223, 223); /* Dark gray */
+    color: rgb(224, 223, 223);
+  }
+}
+
+.fname,
+.email-skelton,
+.button-skelton,
+.edit-skelton {
+  animation: skeleton-shimmer 1.5s infinite ease-in-out;
+}

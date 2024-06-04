@@ -4,7 +4,7 @@
 }
 
 .bg-login {
-  background-image: url("../assets/bg-login8.jpg");
+  background-image: url("../../assets/bg-login8.jpg");
   opacity: unset;
   background-blend-mode: multiply;
   background-size: cover;
@@ -17,7 +17,7 @@
 }
 
 .bg-login-loading {
-  background-image: url("../assets/bg-login8.jpg");
+  background-image: url("../../assets/bg-login8.jpg");
   opacity: unset;
   background-blend-mode: multiply;
   background-size: cover;

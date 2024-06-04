@@ -7,8 +7,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-function createData(image, size, Uploaddate, LastUsed) {
-  return { image, size, Uploaddate, LastUsed };
+function createData(image, size, Uploaddate) {
+  return { image, size, Uploaddate };
 }
 
 const rows = [
@@ -56,12 +56,6 @@ export default function BasicTable() {
               >
                 Upload Date
               </TableCell>
-              <TableCell
-                align="center"
-                style={{ fontSize: "20px", color: "green", fontWeight: "bold" }}
-              >
-                Last Updated
-              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -96,9 +90,6 @@ export default function BasicTable() {
                 </TableCell>
                 {/* <TableCell align="left">{row.name}</TableCell>
                 <TableCell align="left">{row.link}</TableCell> */}
-                <TableCell align="center" style={{ fontSize: "17px" }}>
-                  {row.LastUsed}
-                </TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -1,5 +1,5 @@
 .bg-image1 {
-  background-image: url("../assets/background-3.jpg");
+  background-image: url("../../assets/background-3.jpg");
   opacity: 0.8;
   background-blend-mode: multiply;
   background-size: cover;

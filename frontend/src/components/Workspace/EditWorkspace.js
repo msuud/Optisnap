@@ -1,13 +1,21 @@
-import React from "react";
-import "./Workspace/Workspace.css";
+import React, { useState } from "react";
+import "./Workspace.css";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/esm/CloseButton";
 import { useNavigate } from "react-router-dom";
 
-const PopupForm = ({ onClose, handleworkspace }) => {
+const EditWorkspace = ({ onClose, handleworkspace }) => {
   const navigate = useNavigate();
+  const [inputValue, setInputValue] = useState(""); // Track input value
+
+  const handleChange = (event) => {
+    setInputValue(event.target.value); // Update state on input change
+  };
+
+  // Disable "Save changes" button based on input value
+  const isSaveButtonDisabled = inputValue.trim() === ""; // Check for empty or whitespace
 
   const handleworkspace1 = () => {
     navigate("/workspace-user");
@@ -21,7 +29,7 @@ const PopupForm = ({ onClose, handleworkspace }) => {
       <Modal.Dialog>
         <Modal.Header>
           <Modal.Title>
-            <h4>Workspace Name</h4>
+            <h4>Edit Workspace Name</h4>
           </Modal.Title>
           <button onClick={onClose} className="Button-form">
             <CloseButton />
@@ -32,17 +40,20 @@ const PopupForm = ({ onClose, handleworkspace }) => {
           <form>
             <input
               type="text"
-              placeholder="Enter Workspace Name"
+              placeholder="Edit Workspace Name"
               className="pop-placeholder"
+              value={inputValue} // Bind input value to state
+              onChange={handleChange} // Update state on input change
             />
           </form>
         </Modal.Body>
 
         <Modal.Footer>
-          <Button type="secondary" onClick={onClose}>
-            Close
-          </Button>
-          <Button type="submit" onClick={handleworkspace1}>
+          <Button
+            type="submit"
+            onClick={handleworkspace}
+            disabled={isSaveButtonDisabled} // Disable button conditionally
+          >
             Save changes
           </Button>
         </Modal.Footer>
@@ -51,4 +62,4 @@ const PopupForm = ({ onClose, handleworkspace }) => {
   );
 };
 
-export default PopupForm;
+export default EditWorkspace;

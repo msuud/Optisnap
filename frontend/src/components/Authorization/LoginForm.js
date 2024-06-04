@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./Starter.css";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo1.png";
+import logo from "../../assets/logo1.png";
 import axios from "axios";
 
 const LoginForm = ({ setIsLoggedIn }) => {
@@ -57,12 +57,13 @@ const LoginForm = ({ setIsLoggedIn }) => {
           { withCredentials: true }
         );
         console.log("Response", response.data);
-        localStorage.setItem("accessToken", response.data.accessToken);
+
         if (response.data == "Email is not verified") {
           alert("Email is not verified");
         } else if (response.data.message == "Authentication Successful") {
+          localStorage.setItem("accessToken", response.data.accessToken);
           setIsLoggedIn(true);
-          navigate("/dashboard");
+          navigate("/");
         } else {
           alert("Invalid Credentials");
         }
@@ -116,4 +117,4 @@ const LoginForm = ({ setIsLoggedIn }) => {
   );
 };
 
-export default LoginForm;
+export default LoginForm;

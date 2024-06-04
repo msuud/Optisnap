@@ -16,8 +16,8 @@
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.3.1",
     "react-loader-spinner": "^6.1.6",
+    "react-loading-skeleton": "^3.4.0",
     "react-router-dom": "^6.23.1",
-    "react-scripts": "5.0.1",
     "react-toastify": "^10.0.5",
     "web-vitals": "^2.1.4"
   },
@@ -48,5 +48,8 @@
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "react-scripts": "^5.0.1"
+  }
 }

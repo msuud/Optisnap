@@ -6,7 +6,7 @@ import BadgeIcon from "@mui/icons-material/Badge";
 import PersonIcon from "@mui/icons-material/Person";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
-import logo from "../assets/logo1.png";
+import logo from "../../assets/logo1.png";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -14,7 +14,7 @@ import axios from "axios";
 const navigationItems = [
   {
     name: "Dashboard",
-    path: "/dashboard",
+    path: "/",
     icon: <HomeIcon className="nav-icon" />,
   },
   {

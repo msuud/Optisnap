@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Starter.css";
-import logo from "../assets/logo1.png";
+import logo from "../../assets/logo1.png";
 
 const VerificationForm = () => {
   const [isVerified, setIsVerified] = useState(false);

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import "./Dashboard.css";
 import Table from "../Table/Table";
 import { useEffect } from "react";
 import axios from "axios";
+import { AuthContext } from "../../App";
+import { Navigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({
@@ -20,12 +22,13 @@ const Dashboard = () => {
           "http://localhost:4000/pic/dashboard",
           { withCredentials: true }
         );
-        // console.log(response);
+        console.log(response);
         setDashboardData({
           username: response.data.username,
           noOfWS: response.data.noOfWS,
           noOfImg: response.data.noOfImg,
         });
+        console.log(dashboardData.username);
         setTableData({
           uploadedImages: response.data.recent_10,
         });
@@ -35,6 +38,7 @@ const Dashboard = () => {
     };
     fetchData();
   }, []);
+
   return (
     <div className="bg-image rounded d-flex flex-column align-items-center justify-content-center">
       <div className="image-overlay">
@@ -59,11 +63,17 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <h3>Uploaded Images</h3>
-        <div className="grid2 text-gray">
-          {/* <Table /> */}
-          <Table tableData={tableData} />
-        </div>
+        {tableData.uploadedImages.length === 0 ? (
+          <h3>No recently uploaded images !</h3>
+        ) : (
+          <>
+            <h3>Recently Uploaded Images</h3>
+            <div className="grid2 text-gray">
+              {/* <Table /> */}
+              <Table tableData={tableData} />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
