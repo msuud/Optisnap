@@ -88,7 +88,11 @@
   margin-right: 10%; /* Spacing between icon and text */
   margin-bottom: 4%;
 }
-
+.vertical-navbar a.active,
+.Navbar-button a.active {
+  background-color: #519f4055;
+  border-radius: 5px;
+}
 .vertical-navbar a:hover {
   background: linear-gradient(
     45deg,
@@ -98,6 +102,7 @@
   border-radius: 5px;
   transition: background 0.3s ease; /* Smooth transition effect */
 }
+
 .company-logo {
   text-align: center;
   font-weight: bold;
