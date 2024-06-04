@@ -1,16 +1,18 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useContext } from "react";
+import { useState } from "react";
 import "./Starter.css";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo1.png";
 import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
-const LoginForm = ({ setIsLoggedIn }) => {
+const LoginForm = () => {
   const initialValues = { email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
+  const { setIsLoggedIn } = useContext(AuthContext);
 
   const handleRegisterClick = () => {
     navigate("/");

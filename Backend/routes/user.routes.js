@@ -159,40 +159,31 @@ router.post("/signup", async (req, res) => {
 });
 
 // needs to change but later
-router.patch("/update", async (req, res) => {
+router.patch("/update/:field", authenticateToken, async (req, res) => {
   try {
+    const field = req.params.field;
     const body = req.body;
-    const u = await user.updateOne(
-      {
-        email: body.email,
-      },
-      {
-        $set: body,
-      }
-    );
-    // console.log(u);
-    if (u.acknowledged) {
-      return res
-        .json({
-          message: "Updated successfully",
-          success: true,
-        })
-        .status(StatusCodes.OK);
+    const u = await user.findById(req.user.id);
+    if (field === "username") {
+      u.username = body.name;
+    } else if (field === "firstName") {
+      u.name = u.name.replace(u.name.split(" ")[0], body.name);
     } else {
-      return res
-        .json({
-          message: "Not Updated successfully",
-          success: false,
-        })
-        .status(400);
+      u.name = u.name.replace(u.name.split(" ")[1], body.name);
     }
+    u.lastModified = Date.now();
+    await u.save();
+    return res.json({
+      message: "Updated successfully",
+      success: true,
+    });
   } catch (error) {
     return res
       .json({
         message: error.message,
         success: false,
       })
-      .status(StatusCodes.BAD_REQUEST);
+      .status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 });
 
@@ -254,4 +245,4 @@ router.get("/user", authenticateToken, async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = router;

@@ -6,6 +6,9 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  name: {
+    type: String,
+  },
   email: {
     type: String,
     required: true,
@@ -15,17 +18,22 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  workspaces: {
-    type: Array,
-  },
   verified: {
     type: Boolean,
   },
-  img_count:{
+  img_count: {
     type: Number,
   },
-  recent_10:{
+  recent: {
     type: Array,
+  },
+  createdAt: {
+    type: Date,
+    required: true
+  },
+  lastModified: {
+    type: Date,
+    required: true
   }
 });
 

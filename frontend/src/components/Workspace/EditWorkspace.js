@@ -5,20 +5,37 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/esm/CloseButton";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const EditWorkspace = ({ onClose, handleworkspace }) => {
+const EditWorkspace = ({ onClose, workspaceDetails }) => {
   const navigate = useNavigate();
-  const [inputValue, setInputValue] = useState(""); // Track input value
+  const [inputValue, setInputValue] = useState("");
 
   const handleChange = (event) => {
-    setInputValue(event.target.value); // Update state on input change
+    setInputValue(event.target.value);
   };
 
-  // Disable "Save changes" button based on input value
-  const isSaveButtonDisabled = inputValue.trim() === ""; // Check for empty or whitespace
+  const isSaveButtonDisabled = inputValue.trim() === "";
 
-  const handleworkspace1 = () => {
-    navigate("/workspace-user");
+  const handleworkspace = async () => {
+    try {
+      const response = await axios.patch(
+        "http://localhost:4000/pic/editWS",
+        {
+          name: workspaceDetails.name,
+          newName: inputValue,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response);
+      if (response.data.success === false) {
+        alert("Workspace name already exists");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -42,8 +59,8 @@ const EditWorkspace = ({ onClose, handleworkspace }) => {
               type="text"
               placeholder="Edit Workspace Name"
               className="pop-placeholder"
-              value={inputValue} // Bind input value to state
-              onChange={handleChange} // Update state on input change
+              value={inputValue}
+              onChange={handleChange}
             />
           </form>
         </Modal.Body>

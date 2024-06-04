@@ -14,7 +14,6 @@ const ProfileForm = ({ onClose }) => {
   const [firstNameFilled, setFirstNameFilled] = useState(false);
   const [lastNameFilled, setLastNameFilled] = useState(false);
   const [usernameFilled, setUsernameFilled] = useState(false);
-
   const handleInputChange = (event) => {
     const inputName = event.target.name;
     const value = event.target.value;
@@ -33,18 +32,27 @@ const ProfileForm = ({ onClose }) => {
         break;
     }
   };
-  const firstNameClick=(event)=>{
-    // Call backend db
+
+  const handleChangesClick = async (event, field) => {
     event.preventDefault();
-  }
-  const lastNameClick=(event)=>{
-    // Call backend db
-    event.preventDefault();
-  }
-  const usernameClick=(event)=>{
-    // Call backend db
-    event.preventDefault();
-  }
+    try {
+      const response = await axios.patch(
+        `http://localhost:4000/update/${field}`,
+        {
+          name: document.getElementById(field).value,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response);
+      if (response.data.success === false) {
+        alert("Username already exists");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div
@@ -69,12 +77,13 @@ const ProfileForm = ({ onClose }) => {
               className="pop-placeholder w-50 m-3"
               name="firstName"
               onChange={handleInputChange}
+              id="firstName"
             />
             <Button
               type="submit"
               disabled={!firstNameFilled}
               className="button mx-4"
-              onClick={firstNameClick}
+              onClick={(event) => handleChangesClick(event, "firstName")}
             >
               Save changes
             </Button>
@@ -84,12 +93,13 @@ const ProfileForm = ({ onClose }) => {
               className="pop-placeholder w-50 m-3"
               name="lastName"
               onChange={handleInputChange}
+              id="lastName"
             />
             <Button
               type="submit"
               disabled={!lastNameFilled}
               className="button mx-4"
-              onClick={lastNameClick}
+              onClick={(event) => handleChangesClick(event, "lastName")}
             >
               Save changes
             </Button>
@@ -99,12 +109,13 @@ const ProfileForm = ({ onClose }) => {
               className="pop-placeholder w-50 m-3"
               name="username"
               onChange={handleInputChange}
+              id="username"
             />
             <Button
               type="submit"
               disabled={!usernameFilled}
               className="button mx-4"
-              onClick={usernameClick}
+              onClick={(event) => handleChangesClick(event, "username")}
             >
               Save changes
             </Button>

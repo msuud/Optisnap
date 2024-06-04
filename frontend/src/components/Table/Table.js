@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Dashboard from "../Dashboard/Dashboard";
+import moment from "moment";
 
 export default function BasicTable({ tableData }) {
   let rows = tableData.uploadedImages;
@@ -33,8 +33,6 @@ export default function BasicTable({ tableData }) {
               >
                 Image
               </TableCell>
-              {/* <TableCell align="left">Name</TableCell>
-              <TableCell align="left">URL</TableCell> */}
               <TableCell
                 align="center"
                 style={{ fontSize: "20px", color: "green", fontWeight: "bold" }}
@@ -58,10 +56,9 @@ export default function BasicTable({ tableData }) {
                   >
                     {row.name}
                   </TableCell>
-                  {/* <TableCell align="left">{row.name}</TableCell>
-                <TableCell align="left">{row.link}</TableCell> */}
+
                   <TableCell align="center" style={{ fontSize: "17px" }}>
-                    {row.uploadedAt}
+                    {moment(row.uploadedAt).format("MM-DD-YYYY")}
                   </TableCell>
                 </TableRow>
               ))}
