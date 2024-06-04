@@ -11,7 +11,7 @@ const WorkspaceUser = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData, setIsLoggedIn] = useState([]);
   const [showModel, setShowModel] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false); // New state variable for dropdown visibility
+  const [showDropdown, setShowDropdown] = useState(false);
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState(null);
   const navigate = useNavigate();
 

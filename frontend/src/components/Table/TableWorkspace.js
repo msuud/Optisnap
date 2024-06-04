@@ -71,6 +71,7 @@ export default function BasicTable({ workspace }) {
                     style={{ fontSize: "17px" }}
                   >
                     {row.size}
+                    {" MB"}
                   </TableCell>
                   <TableCell
                     align="center"
