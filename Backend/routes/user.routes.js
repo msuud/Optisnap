@@ -9,20 +9,20 @@ const userVerification = require('../schemas/userVerificationSchema')
 const { StatusCodes } = require('http-status-codes');
 const authenticateToken = require('../middleware/authenticateToken')
 const router = express.Router();
-router.use(express.json())
-router.use(cookieParser())
+router.use(express.json());
+router.use(cookieParser());
 
-const nodemailer = require('nodemailer')
+const nodemailer = require("nodemailer");
 
 const transport = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
     user: process.env.EMAIL,
-    pass: process.env.PASS
-  }
+    pass: process.env.PASS,
+  },
 });
 
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     let body = req.body;
     let u = await user.findOne({ email: body.email });
@@ -63,42 +63,45 @@ router.post('/login', async (req, res) => {
 });
 
 const sendVerificationEmail = async ({ _id, email }, res) => {
-  const currentURL = "http:localhost:4000/"
+  const currentURL = "http:localhost:4000/";
   const uniqueString = uuidv4() + _id;
   const mailOptions = {
     from: process.env.AUTH_EMAIL,
     to: email,
     subject: "Verify Your Email",
     html: `<p>Verify your email address to complete the signup and login into your account .< /p><p>This link <b>expires in 6 hours</b> .
-      < /p><p>Press <a href=${currentURL + "verify/" + _id + "/" + uniqueString}>here</a> to proceed .< /p>`,
-  }
+      < /p><p>Press <a href=${
+        currentURL + "verify/" + _id + "/" + uniqueString
+      }>here</a> to proceed .< /p>`,
+  };
 
   try {
-    const hashedUniqueString = await bcrypt.hash(uniqueString, 10)
+    const hashedUniqueString = await bcrypt.hash(uniqueString, 10);
     // console.log(hashedUniqueString);
     const newUserVerification = new userVerification({
       uid: _id,
       uString: hashedUniqueString,
       createdAt: Date.now(),
       expiresAt: Date.now() + 21600000,
-    })
-    await newUserVerification.save()
-    await transport.sendMail(mailOptions)
-    return "mail sent!!"
+    });
+    await newUserVerification.save();
+    await transport.sendMail(mailOptions);
+    return "mail sent!!";
   } catch (error) {
     return res.json({
       message: "Error at sending the email.",
       success: false
     }).status(StatusCodes.INTERNAL_SERVER_ERROR)
   }
-}
+};
 
-router.post('/signup', async (req, res) => {
+router.post("/signup", async (req, res) => {
   try {
     const body = req.body;
     const hashedPassword = await bcrypt.hash(body.password, 10);
     const u = new user({
       username: body.username,
+      name: body.firstName + " " + body.lastName,
       name: body.firstName + " " + body.lastName,
       email: body.email,
       password: hashedPassword,

@@ -49,6 +49,13 @@ const ProfileForm = ({ onClose }) => {
       if (response.data.success === false) {
         alert("Username already exists");
       }
+      else {
+        // Clear the input field after successful update
+        document.getElementById(field).value = "";
+        setFirstNameFilled(false);
+        setLastNameFilled(false);
+        setUsernameFilled(false);
+      }
     } catch (error) {
       console.error(error);
     }

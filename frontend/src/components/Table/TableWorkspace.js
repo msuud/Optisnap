@@ -105,7 +105,7 @@ export default function BasicTable({ workspace }) {
                     <button
                       className="three-button"
                       onClick={() => handleDelete(row)}
-                      style={{ paddingLeft: "50px" }}
+                      // style={{ paddingLeft: "50px" }}
                     >
                       <DeleteIcon />
                     </button>
@@ -140,6 +140,6 @@ export default function BasicTable({ workspace }) {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
-  );
+    </div>
+  );
 }

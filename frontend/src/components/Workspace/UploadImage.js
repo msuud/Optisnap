@@ -68,4 +68,4 @@ const UploadImage = ({ onClose, handleworkspace }) => {
   );
 };
 
-export default UploadImage;
+export default UploadImage;
