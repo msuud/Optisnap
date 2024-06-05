@@ -60,8 +60,8 @@ const LoginForm = () => {
         );
         console.log("Response", response.data);
 
-        if (response.data == "Email is not verified") {
-          alert("Email is not verified");
+        if (!response.data.success) {
+          alert(response.data.message);
         } else if (response.data.message == "Authentication Successful") {
           localStorage.setItem("accessToken", response.data.accessToken);
           setIsLoggedIn(true);

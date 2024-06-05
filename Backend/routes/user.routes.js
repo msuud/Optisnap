@@ -28,13 +28,13 @@ router.post('/login', async (req, res) => {
     let u = await user.findOne({ email: body.email });
     if (u === null) {
       return res.json({
-        messsage: "Email is not registered",
+        message: "Email is not registered",
         success: false
       }).status(StatusCodes.UNAUTHORIZED)
     }
     else if (!u.verified) {
       return res.json({
-        messsage: "Email is not verified",
+        message: "Email is not verified",
         success: false
       }).status(StatusCodes.UNAUTHORIZED)
     }
@@ -56,7 +56,7 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.json({
-      messsage: error.message,
+      message: error.message,
       success: false
     }).status(StatusCodes.INTERNAL_SERVER_ERROR);
   }

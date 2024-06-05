@@ -72,13 +72,10 @@ const SignupForm = () => {
           email: regformValues.email,
           password: regformValues.password,
         });
-        console.log("Response", response.data);
         setLoading(false);
-        if (response.data == "username exist") {
-          alert("Username already exist");
-        } else if (response.data == "Email exists") {
-          alert("Email already exists");
-        } else if (response.data.message == "User Created , mail sent!!") {
+        if (!response.data.success) {
+          alert(response.data.message);
+        }else {
           alert(
             "An email has been sent to your registered email id. Please verify it !"
           );
