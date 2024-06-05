@@ -6,6 +6,7 @@ import PopupForm from "./PopupForm";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DropdownWorkspace from "./DropdownWorkspace";
 import axios from "axios";
+import "react-loading-skeleton/dist/skeleton.css"; // Import Skeleton CSS
 
 const WorkspaceUser = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,6 +24,12 @@ const WorkspaceUser = () => {
   const handleLinkClick = (event, workspaceId) => {
     if (event.target.tagName !== "BUTTON") {
       navigate(`/workspace-user/${workspaceId}`);
+    }
+  };
+
+  const handleClickOutside = (event) => {
+    if (showDropdown && !event.target.closest('.workspace-box')) {
+      setShowDropdown(false);
     }
   };
 
@@ -44,10 +51,23 @@ const WorkspaceUser = () => {
         setWorkspaceDetails(response.data.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+        // settime out: set in order see skelton loading 
+        // setIsLoading(false); 
       }
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [showDropdown]);
 
   return (
     <div className="bg-image1 rounded box4 ">
@@ -55,16 +75,59 @@ const WorkspaceUser = () => {
         <h1 className="heading1">Your Workspaces</h1>
         <div className="grid1 rounded fixed top-0 left-0 right-0 z-10 text-center p-5">
           <div className="app1">
-            {workspaceDetails.length > 0 &&
+            {isLoading ? (
+              // Display Skeleton elements while loading
+              <>
+              <div className="workspace-box skeleton">
+                <div className="workspace-text1">
+              <h2 className="h2-skeleton">Name</h2>
+                      <h4 className="mt-3 h2-skeleton">
+                        Images: 
+                      </h4>
+                      </div>
+              </div>
+              <div className="workspace-box skeleton">
+              <div className="workspace-text1">
+              <h2 className="h2-skeleton">Name</h2>
+                      <h4 className="mt-3 h2-skeleton">
+                        Images: 
+                      </h4>
+                      </div>
+              </div>
+              <div className="workspace-box skeleton">
+              <div className="workspace-text1">
+              <h2 className="h2-skeleton">Name</h2>
+                      <h4 className="mt-3 h2-skeleton">
+                        Images: 
+                      </h4>
+                      </div>
+              </div>
+              <div className="workspace-box skeleton">
+              <div className="workspace-text1">
+              <h2 className="h2-skeleton">Name</h2>
+                      <h4 className="mt-3 h2-skeleton">
+                        Images: 
+                      </h4>
+                      </div>
+              </div>
+              <div className="workspace-box skeleton">
+              <div className="workspace-text1">
+              <h2 className="h2-skeleton">Name</h2>
+                      <h4 className="mt-3 h2-skeleton">
+                        Images: 
+                      </h4>
+                      </div>
+              </div>
+              </>
+            ) : (
+              workspaceDetails.length > 0 &&
               workspaceDetails.map((workspaceDetails) => {
                 return (
                   <div key={workspaceDetails.name} className="workspace-box">
                     <div>
                       <button
                         className="three-button"
-                        onClick={() =>
-                          handleDropdownClick(workspaceDetails.name)
-                        }
+                        onClick={() => handleDropdownClick(workspaceDetails.name)}
                       >
                         <MoreVertIcon />
                       </button>
@@ -78,9 +141,7 @@ const WorkspaceUser = () => {
                     </div>
                     <Link
                       to={`/workspace-user/${workspaceDetails.name}`}
-                      onClick={(event) =>
-                        handleLinkClick(event, workspaceDetails.name)
-                      }
+                      onClick={(event) => handleLinkClick(event, workspaceDetails.name)}
                       className="workspace-text"
                     >
                       <h2>{workspaceDetails.name}</h2>
@@ -90,7 +151,8 @@ const WorkspaceUser = () => {
                     </Link>
                   </div>
                 );
-              })}
+              })
+            )}
             <div
               className="workspace-box create-workspace"
               onClick={() => setShowModel(true)}

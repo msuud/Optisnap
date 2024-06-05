@@ -6,19 +6,36 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import moment from "moment";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
-function createData(image, size, Uploaddate) {
-  return { image, size, Uploaddate };
-}
+export default function BasicTable({ workspace }) {
+  const { WSname } = useParams();
+  const handleDelete = async (row) => {
+    try {
+      const imageName = row.name;
+      console.log(imageName);
+      if (window.confirm("Do you want to delete the image ?")) {
+        const response = await axios.delete(
+          `http://localhost:4000/pic/delPic/${WSname}/${imageName}`,
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.data.success === true) {
+          window.location.reload();
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-const rows = [
-  createData("image 1", "450MB", "21 December 2023", "20 March 2024"),
-  createData("image 2", "700MB", "2 December 2023", "22 December 2023"),
-  createData("image 3", "1GB", "3 January 2023", "2 February 2024"),
-  createData("image 4", "210MB", "22 May 2023", "4 January 2023"),
-];
-
-export default function BasicTable() {
+  let rows = workspace.images;
   return (
     <div className="table">
       <TableContainer
@@ -38,7 +55,19 @@ export default function BasicTable() {
             <TableRow>
               <TableCell
                 align="center"
-                style={{ fontSize: "20px", color: "green", fontWeight: "bold" }}
+                style={{
+                  fontSize: "20px",
+                  color: "green",
+                  width: "20px",
+                }}
+              ></TableCell>
+              <TableCell
+                align="center"
+                style={{
+                  fontSize: "20px",
+                  color: "green",
+                  fontWeight: "bold",
+                }}
               >
                 Image
               </TableCell>
@@ -59,42 +88,58 @@ export default function BasicTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell
-                  align="center"
-                  component="th"
-                  scope="row"
-                  style={{ fontSize: "17px" }}
+            {rows &&
+              rows.map((row) => (
+                <TableRow
+                  key={row.name}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  {row.image}
-                </TableCell>
-                <TableCell
-                  align="center"
-                  component="th"
-                  scope="row"
-                  style={{ fontSize: "17px" }}
-                >
-                  {row.size}
-                </TableCell>
-                <TableCell
-                  align="center"
-                  component="th"
-                  scope="row"
-                  style={{ fontSize: "17px" }}
-                >
-                  {row.Uploaddate}
-                </TableCell>
-                {/* <TableCell align="left">{row.name}</TableCell>
-                <TableCell align="left">{row.link}</TableCell> */}
-              </TableRow>
-            ))}
+                  <TableCell
+                    align="center"
+                    component="th"
+                    scope="row"
+                    style={{
+                      fontSize: "17px",
+                    }}
+                  >
+                    <button
+                      className="three-button"
+                      onClick={() => handleDelete(row)}
+                      // style={{ paddingLeft: "50px" }}
+                    >
+                      <DeleteIcon />
+                    </button>
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    component="th"
+                    scope="row"
+                    style={{ fontSize: "17px" }}
+                  >
+                    {row.name}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    component="th"
+                    scope="row"
+                    style={{ fontSize: "17px" }}
+                  >
+                    {row.size}
+                    {" MB"}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    component="th"
+                    scope="row"
+                    style={{ fontSize: "17px" }}
+                  >
+                    {moment(row.uploadedAt).format("MM-DD-YYYY")}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
-  );
+    </div>
+  );
 }

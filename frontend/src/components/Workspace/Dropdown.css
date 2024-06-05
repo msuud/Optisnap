@@ -1,5 +1,6 @@
 .workspace-list {
   list-style: none;
+  border-radius: 20px;
 }
 
 .workspace-btn {
@@ -14,6 +15,10 @@
   border: 1px solid #ddd;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   padding: 10px;
+  z-index: 2;
+}
+.edit-workspace{
+  z-index: 2;
 }
 
 .workspace-btn {
@@ -24,6 +29,7 @@
   background-color: #fff;
   color: #333;
   cursor: pointer;
+  border-radius: 15px;
 }
 
 .workspace-btn:hover {

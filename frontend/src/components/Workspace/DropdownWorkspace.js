@@ -11,20 +11,24 @@ const DropdownWorkspace = ({ workspaceDetails }) => {
   };
 
   const handleDelete = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:4000/pic/deleteWS/${workspaceDetails.name}`,
-        {
-          withCredentials: true,
+    if (window.confirm("Do you want to delete this workspace ?")) {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/pic/deleteWS/${workspaceDetails.name}`,
+          {
+            withCredentials: true,
+          }
+        );
+        console.log(response);
+        if (response.data.message == "WorskSpace deleted") {
+          alert("Workspace deleted successfully !");
+          window.location.reload();
+        } else if (response.data.success === false && response.status === 200) {
+          alert(response.data.message);
         }
-      );
-      console.log(response);
-      if (response.data.message == "WorskSpace deleted") {
-        alert("Workspace deleted successfully !");
-        window.location.reload();
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
     }
   };
   return (
@@ -42,7 +46,7 @@ const DropdownWorkspace = ({ workspaceDetails }) => {
         </li>
       </ul>
       {editForm && (
-        <div className="popup-modal">
+        <div className="popup-modal edit-workspace">
           <div className="popup-form-container">
             <EditWorkspace
               onClose={onClose}

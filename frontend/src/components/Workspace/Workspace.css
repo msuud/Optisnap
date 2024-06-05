@@ -55,7 +55,7 @@ h1 {
   border: none;
 }
 
-.workspace-text{
+.workspace-text {
   text-decoration: none;
   /* margin-right: 40%; */
   position: relative;
@@ -71,13 +71,12 @@ h1 {
   text-overflow: ellipsis; /* This adds an ellipsis (...) if the text overflows */
 }
 
-
-.three-button{
+.three-button {
   border: none;
   background-color: transparent;
 }
 
-.three-button:hover{
+.three-button:hover {
   /* border: 2px solid rgb(159, 159, 159); */
   background-color: rgba(99, 151, 116, 0.4);
 }
@@ -161,7 +160,6 @@ h1 {
   margin-right: 10px;
 }
 
-
 .app1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -236,26 +234,79 @@ h4 {
     grid-template-columns: repeat(2, 1fr); /* Adjust for two columns */
     margin-left: 200%;
   }
-  .workspace-box{
+  .workspace-box {
     min-width: 270px;
   }
 }
 
 @media (max-width: 800px) {
   .app1 {
-    grid-template-columns: repeat(1, 1fr); /* Single column for smaller screens */
-    margin-top: 0; 
+    grid-template-columns: repeat(
+      1,
+      1fr
+    ); /* Single column for smaller screens */
+    margin-top: 0;
     margin-left: 330%;
   }
-  h1{
+  h1 {
     font-size: 3rem;
   }
 
   .container {
     padding-top: 20px; /* Add top padding for content below navbar */
   }
-  .workspace-box{
+  .workspace-box {
     min-width: 250px;
     margin-left: 10px;
+  }
+}
+
+/* skeletons */
+.skeleton{
+  background-color: rgba(75, 134, 94, 0.2);
+}
+.h2-skeleton{
+  background-color: rgba(75, 134, 94, 0.4);
+  color: rgba(75, 134, 94, 0);
+  margin-left: 3px;
+  border-radius: 30px;
+}
+.workspace-text1{
+  text-decoration: none;
+  /* margin-right: 40%; */
+  position: relative;
+  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
+  margin-top: 10%;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, rgba(75, 134, 94, 0.2) 25%, rgba(75, 134, 94, 0.4) 50%, rgba(75, 134, 94, 0.2) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-animation 1.5s infinite;
+}
+.h2-skeleton {
+  background-color: rgba(75, 134, 94, 0.4);
+  color: rgba(75, 134, 94, 0);
+  margin-left: 3px;
+  border-radius: 30px;
+}
+.workspace-text1 {
+  text-decoration: none;
+  /* margin-right: 40%; */
+  position: relative;
+  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
+  margin-top: 10%;
+}
+
+@keyframes skeleton-animation {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }

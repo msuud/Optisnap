@@ -135,3 +135,50 @@ h1 {
     transform: scale(1);
   }
 }
+ 
+/* skeletons */
+.skeleton{
+  background-color: rgba(75, 134, 94, 0.2);
+  color: transparent;
+}
+.h2-skeleton-details{
+  background-color: rgba(75, 134, 94, 0.4);
+  color: rgba(75, 134, 94, 0);
+  border-radius: 30px;
+  width: 30%;
+}
+.details-skeleton{
+  width: 60%;
+  margin: 0 auto;
+  border-radius: 30px;
+  color: transparent;
+  margin-top: 20px;
+}
+.width-small{
+  width: 30%;
+}
+.width-large{
+  width: 900px;
+  height: 30px;
+}
+.width-verysmall-d{
+  width: 15%;
+  border-radius: 30px;
+  height: 40px;
+  margin: 0 auto;
+}
+.skeleton1{
+  background-color: rgba(75, 134, 94, 0.2);
+  color: transparent;
+  padding: 20px;
+  border-radius: 30px;
+}
+.small-grid-bg-s {
+  border-radius: 100%;
+  width: 300px;
+  padding: 20px;
+  border-radius: 30px;
+}
+.border-r{
+  border-radius: 30px;
+}

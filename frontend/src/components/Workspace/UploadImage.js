@@ -5,12 +5,36 @@ import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/esm/CloseButton";
 import { useNavigate } from "react-router-dom";
 import "./UploadImage.css";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const UploadImage = ({ onClose, handleworkspace }) => {
   const navigate = useNavigate();
+  const { WSname } = useParams();
 
-  const handleworkspace1 = () => {
-    navigate("/workspace-user");
+  const handleworkspace1 = async () => {
+    const formData = new FormData();
+    const imageInput = document.querySelector('input[type="file"]');
+    formData.append("image", imageInput.files[0]);
+    formData.append("WSname", WSname);
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/pic/addPic",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
+      console.log(response);
+      if (response.data.success === true) {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -30,22 +54,11 @@ const UploadImage = ({ onClose, handleworkspace }) => {
 
         <Modal.Body>
           <form>
-            Name:{" "}
-            <input
-              type="text"
-              placeholder="Enter Image Name"
-              className="pop-placeholder"
-            />
-            Choose Image:
-            <br />
-            <input type="file" />
+            <input type="file" accept="image/*" />
           </form>
         </Modal.Body>
 
         <Modal.Footer>
-          <Button type="secondary" onClick={onClose}>
-            Close
-          </Button>
           <Button type="submit" onClick={handleworkspace1}>
             Save changes
           </Button>
@@ -55,4 +68,4 @@ const UploadImage = ({ onClose, handleworkspace }) => {
   );
 };
 
-export default UploadImage;
+export default UploadImage;

@@ -95,7 +95,7 @@ router.post(
             return res
               .json({
                 message: "Image Uploaded Successfully!",
-                sucess: true,
+                success: true,
               })
               .status(StatusCodes.OK);
           }
@@ -153,6 +153,44 @@ router.get("/deleteWS/:WSname", authenticateToken, async (req, res) => {
       .status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 });
+
+router.delete(
+  "/delPic/:WSname/:picName",
+  authenticateToken,
+  async (req, res) => {
+    try {
+      const WSname = req.params.WSname;
+      const picName = req.params.picName;
+      let ws = await WS.findOne({ name: WSname });
+      ws.images = ws.images.filter((image) => image.name !== picName);
+      await ws.save();
+      let user1 = await user.findById(req.user.id);
+      user1.recent = user1.recent.filter((image) => image.name !== picName);
+      user1.img_count = user1.img_count - 1;
+      await user1.save();
+      let params = { Bucket: "opti-snap9574", Key: picName };
+
+      s3.deleteObject(params, function (err, data) {
+        if (err) {
+          return res.json({
+            message: error.message,
+            success: false,
+          });
+        } else {
+          return res.json({
+            message: "image deleted",
+            success: true,
+          });
+        }
+      });
+    } catch (error) {
+      return res.json({
+        message: error.message,
+        success: false,
+      });
+    }
+  }
+);
 
 router.patch("/editWS", authenticateToken, async (req, res) => {
   try {
