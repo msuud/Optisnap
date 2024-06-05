@@ -13,7 +13,7 @@ const Dashboard = () => {
   const [tableData, setTableData] = useState({
     uploadedImages: [],
   });
-  const [isLoading, setIsLoading] = useState(true); // Flag for loading state
+  const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +35,7 @@ const Dashboard = () => {
       } catch (error) {
         console.error(error);
       } finally {
-        setIsLoading(false); // Set loading to false after data fetching
+        setIsLoading(false); 
       }
     };
 
