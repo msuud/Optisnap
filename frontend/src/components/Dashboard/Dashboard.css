@@ -182,3 +182,7 @@ h1 {
 .border-r{
   border-radius: 30px;
 }
+.padding-skeleton{
+  position: relative;
+  top: 30%;
+}
