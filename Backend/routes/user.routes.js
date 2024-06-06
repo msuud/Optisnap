@@ -195,15 +195,13 @@ router.post("/logout", authenticateToken, async (req, res) => {
 router.get("/user", authenticateToken, async (req, res) => {
   try {
     let u = await user.findById(req.user.id).select('-_id -password -recent -createdAt -lastModified -__v')
-    // console.log(u);
-    let WScount = await WS.find({ uid: u._id });
-    u.WScount = WScount.length
+    let WScount = await WS.find({ uid: req.user.id });
     return res.json({
       data: {
         username: u.username,
         firstName: u.name.split(" ")[0],
         lastName: u.name.split(" ")[1],
-        WScount: u.WScount,
+        WScount: WScount.length,
         img_count: u.img_count,
         email: u.email
       },
