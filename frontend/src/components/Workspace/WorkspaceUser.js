@@ -23,7 +23,7 @@ const WorkspaceUser = () => {
 
   const handleLinkClick = (event, workspaceId) => {
     if (event.target.tagName !== "BUTTON") {
-      navigate(`/workspace-user/${workspaceId}`);
+      navigate(`/workspace-user/${workspaceId}` );
     }
   };
 
