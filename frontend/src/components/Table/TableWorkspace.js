@@ -20,7 +20,6 @@ export default function BasicTable({ workspace }) {
   const handleDelete = async (row) => {
     try {
       const imageName = row.name;
-
       if (window.confirm("Do you want to delete the image ?")) {
         toast.info("Image is being deleted!");
         const response = await axios.delete(
@@ -146,6 +145,7 @@ export default function BasicTable({ workspace }) {
           </TableBody>
         </Table>
       </TableContainer>
+      <ToastContainer />
     </div>
   );
 }

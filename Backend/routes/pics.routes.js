@@ -50,7 +50,7 @@ router.post(
       const time = new Date();
       const sizeInMB = req.file.size / (1024 * 1024);
 
-      // console.log(Image size: ${ sizeInMB.toFixed(2) } MB);
+      // console.log(`Image size: ${ sizeInMB.toFixed(2) } MB`);
 
       const newImage = {
         name: req.file.originalname,
@@ -261,7 +261,7 @@ router.get("/dashboard", authenticateToken, async (req, res) => {
 //working
 router.get("/workspace", authenticateToken, async (req, res) => {
   try {
-    let response = await WS.find({ uid: req.user.id }).select("-id -uid -_v");
+    let response = await WS.find({ uid: req.user.id }).select("-_id -uid -__v");
     return res.json({
       message: "data sent",
       data: response,
@@ -280,7 +280,7 @@ router.get("/workspace/:WSname", authenticateToken, async (req, res) => {
   try {
     let WSname = req.params.WSname;
     let response = await WS.findOne({ uid: req.user.id, name: WSname }).select(
-      "-id -uid -_v"
+      "-_id -uid -__v"
     );
     return res.json({
       message: "data sent",

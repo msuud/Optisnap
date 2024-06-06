@@ -26,6 +26,12 @@ const WorkspaceUser = () => {
     }
   };
 
+  const handleClickOutside = (event) => {
+    if (showDropdown && !event.target.closest(".workspace-box")) {
+      setShowDropdown(false);
+    }
+  };
+
   const onClose = () => {
     setShowModel(false);
   };
@@ -54,6 +60,13 @@ const WorkspaceUser = () => {
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [showDropdown]);
 
   return (
     <div className="bg-image1 rounded box4 ">

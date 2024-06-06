@@ -29,14 +29,14 @@ router.post("/login", async (req, res) => {
     if (u === null) {
       return res
         .json({
-          messsage: "Email is not registered",
+          message: "Email is not registered",
           success: false,
         })
         .status(StatusCodes.UNAUTHORIZED);
     } else if (!u.verified) {
       return res
         .json({
-          messsage: "Email is not verified",
+          message: "Email is not verified",
           success: false,
         })
         .status(StatusCodes.UNAUTHORIZED);
@@ -63,7 +63,7 @@ router.post("/login", async (req, res) => {
     console.log(error);
     return res
       .json({
-        messsage: error.message,
+        message: error.message,
         success: false,
       })
       .status(StatusCodes.INTERNAL_SERVER_ERROR);
@@ -217,7 +217,7 @@ router.get("/user", authenticateToken, async (req, res) => {
   try {
     let u = await user
       .findById(req.user.id)
-      .select("-id -password -recent -createdAt -lastModified -_v");
+      .select("-_id -password -recent -createdAt -lastModified -__v");
     // console.log(u);
     let WScount = await WS.find({ uid: u._id });
     u.WScount = WScount.length;
