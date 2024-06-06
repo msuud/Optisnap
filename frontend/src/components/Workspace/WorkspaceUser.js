@@ -6,7 +6,6 @@ import PopupForm from "./PopupForm";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DropdownWorkspace from "./DropdownWorkspace";
 import axios from "axios";
-import "react-loading-skeleton/dist/skeleton.css"; // Import Skeleton CSS
 
 const WorkspaceUser = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,12 +22,12 @@ const WorkspaceUser = () => {
 
   const handleLinkClick = (event, workspaceId) => {
     if (event.target.tagName !== "BUTTON") {
-      navigate(`/workspace-user/${workspaceId}` );
+      navigate(`/workspace-user/${workspaceId}`);
     }
   };
 
   const handleClickOutside = (event) => {
-    if (showDropdown && !event.target.closest('.workspace-box')) {
+    if (showDropdown && !event.target.closest(".workspace-box")) {
       setShowDropdown(false);
     }
   };
@@ -55,17 +54,17 @@ const WorkspaceUser = () => {
         setTimeout(() => {
           setIsLoading(false);
         }, 2000);
-        // settime out: set in order see skelton loading 
-        // setIsLoading(false); 
+        // settime out: set in order see skelton loading
+        // setIsLoading(false);
       }
     };
     fetchData();
   }, []);
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, [showDropdown]);
 
@@ -78,46 +77,36 @@ const WorkspaceUser = () => {
             {isLoading ? (
               // Display Skeleton elements while loading
               <>
-              <div className="workspace-box skeleton">
-                <div className="workspace-text1">
-              <h2 className="h2-skeleton">Name</h2>
-                      <h4 className="mt-3 h2-skeleton">
-                        Images: 
-                      </h4>
-                      </div>
-              </div>
-              <div className="workspace-box skeleton">
-              <div className="workspace-text1">
-              <h2 className="h2-skeleton">Name</h2>
-                      <h4 className="mt-3 h2-skeleton">
-                        Images: 
-                      </h4>
-                      </div>
-              </div>
-              <div className="workspace-box skeleton">
-              <div className="workspace-text1">
-              <h2 className="h2-skeleton">Name</h2>
-                      <h4 className="mt-3 h2-skeleton">
-                        Images: 
-                      </h4>
-                      </div>
-              </div>
-              <div className="workspace-box skeleton">
-              <div className="workspace-text1">
-              <h2 className="h2-skeleton">Name</h2>
-                      <h4 className="mt-3 h2-skeleton">
-                        Images: 
-                      </h4>
-                      </div>
-              </div>
-              <div className="workspace-box skeleton">
-              <div className="workspace-text1">
-              <h2 className="h2-skeleton">Name</h2>
-                      <h4 className="mt-3 h2-skeleton">
-                        Images: 
-                      </h4>
-                      </div>
-              </div>
+                <div className="workspace-box skeleton">
+                  <div className="workspace-text1">
+                    <h2 className="h2-skeleton">Name</h2>
+                    <h4 className="mt-3 h2-skeleton">Images:</h4>
+                  </div>
+                </div>
+                <div className="workspace-box skeleton">
+                  <div className="workspace-text1">
+                    <h2 className="h2-skeleton">Name</h2>
+                    <h4 className="mt-3 h2-skeleton">Images:</h4>
+                  </div>
+                </div>
+                <div className="workspace-box skeleton">
+                  <div className="workspace-text1">
+                    <h2 className="h2-skeleton">Name</h2>
+                    <h4 className="mt-3 h2-skeleton">Images:</h4>
+                  </div>
+                </div>
+                <div className="workspace-box skeleton">
+                  <div className="workspace-text1">
+                    <h2 className="h2-skeleton">Name</h2>
+                    <h4 className="mt-3 h2-skeleton">Images:</h4>
+                  </div>
+                </div>
+                <div className="workspace-box skeleton">
+                  <div className="workspace-text1">
+                    <h2 className="h2-skeleton">Name</h2>
+                    <h4 className="mt-3 h2-skeleton">Images:</h4>
+                  </div>
+                </div>
               </>
             ) : (
               workspaceDetails.length > 0 &&
@@ -127,7 +116,9 @@ const WorkspaceUser = () => {
                     <div>
                       <button
                         className="three-button"
-                        onClick={() => handleDropdownClick(workspaceDetails.name)}
+                        onClick={() =>
+                          handleDropdownClick(workspaceDetails.name)
+                        }
                       >
                         <MoreVertIcon />
                       </button>
@@ -141,7 +132,9 @@ const WorkspaceUser = () => {
                     </div>
                     <Link
                       to={`/workspace-user/${workspaceDetails.name}`}
-                      onClick={(event) => handleLinkClick(event, workspaceDetails.name)}
+                      onClick={(event) =>
+                        handleLinkClick(event, workspaceDetails.name)
+                      }
                       className="workspace-text"
                     >
                       <h2>{workspaceDetails.name}</h2>
