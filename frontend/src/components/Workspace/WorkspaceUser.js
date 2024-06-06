@@ -9,8 +9,9 @@ import axios from "axios";
 
 const WorkspaceUser = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [data, setData, setIsLoggedIn] = useState([]);
   const [showModel, setShowModel] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false); // New state variable for dropdown visibility
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState(null);
   const navigate = useNavigate();
 
@@ -43,6 +44,12 @@ const WorkspaceUser = () => {
         setWorkspaceDetails(response.data.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+        // settime out: set in order see skelton loading
+        // setIsLoading(false);
       }
     };
     fetchData();
@@ -54,7 +61,42 @@ const WorkspaceUser = () => {
         <h1 className="heading1">Your Workspaces</h1>
         <div className="grid1 rounded fixed top-0 left-0 right-0 z-10 text-center p-5">
           <div className="app1">
-            {workspaceDetails.length > 0 &&
+            {isLoading ? (
+              // Display Skeleton elements while loading
+              <>
+                <div className="workspace-box skeleton">
+                  <div className="workspace-text1">
+                    <h2 className="h2-skeleton">Name</h2>
+                    <h4 className="mt-3 h2-skeleton">Images:</h4>
+                  </div>
+                </div>
+                <div className="workspace-box skeleton">
+                  <div className="workspace-text1">
+                    <h2 className="h2-skeleton">Name</h2>
+                    <h4 className="mt-3 h2-skeleton">Images:</h4>
+                  </div>
+                </div>
+                <div className="workspace-box skeleton">
+                  <div className="workspace-text1">
+                    <h2 className="h2-skeleton">Name</h2>
+                    <h4 className="mt-3 h2-skeleton">Images:</h4>
+                  </div>
+                </div>
+                <div className="workspace-box skeleton">
+                  <div className="workspace-text1">
+                    <h2 className="h2-skeleton">Name</h2>
+                    <h4 className="mt-3 h2-skeleton">Images:</h4>
+                  </div>
+                </div>
+                <div className="workspace-box skeleton">
+                  <div className="workspace-text1">
+                    <h2 className="h2-skeleton">Name</h2>
+                    <h4 className="mt-3 h2-skeleton">Images:</h4>
+                  </div>
+                </div>
+              </>
+            ) : (
+              workspaceDetails.length > 0 &&
               workspaceDetails.map((workspaceDetails) => {
                 return (
                   <div key={workspaceDetails.name} className="workspace-box">
@@ -89,7 +131,8 @@ const WorkspaceUser = () => {
                     </Link>
                   </div>
                 );
-              })}
+              })
+            )}
             <div
               className="workspace-box create-workspace"
               onClick={() => setShowModel(true)}

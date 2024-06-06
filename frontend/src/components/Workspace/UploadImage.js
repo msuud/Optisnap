@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import "./UploadImage.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UploadImage = ({ onClose, handleworkspace }) => {
   const navigate = useNavigate();
@@ -18,6 +20,7 @@ const UploadImage = ({ onClose, handleworkspace }) => {
     formData.append("image", imageInput.files[0]);
     formData.append("WSname", WSname);
     try {
+      toast.info("Image is being uploaded !");
       const response = await axios.post(
         "http://localhost:4000/pic/addPic",
         formData,
@@ -64,6 +67,7 @@ const UploadImage = ({ onClose, handleworkspace }) => {
           </Button>
         </Modal.Footer>
       </Modal.Dialog>
+      <ToastContainer />
     </div>
   );
 };

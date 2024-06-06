@@ -46,7 +46,6 @@ router.post(
   upload.single("image"),
   async (req, res) => {
     try {
-      console.log(req.body);
       const body = req.body;
       const time = new Date();
       const sizeInMB = req.file.size / (1024 * 1024);

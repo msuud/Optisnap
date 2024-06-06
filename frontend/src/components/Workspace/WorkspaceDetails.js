@@ -38,24 +38,41 @@ const WorkspaceDetails = () => {
   return (
     <div className="bg-image1 rounded d-flex flex-column ">
       <div className="grid1w rounded fixed top-0 left-0 right-0 z-10 text-center p-5">
-        <h1 className="workspace-heading">Workspace Details</h1>
+        <h1 className="workspace-heading">{workspace.name}</h1>
         <div className="cointainer-workspace mt-4">
-          <h2 className="">Workspace Name : {workspace.name}</h2>
-          <h2 className="">Images : {workspace?.images?.length || 0}</h2>
+          {/* <h2 className="workspace-name">{workspace.name}</h2> */}
+          <h4 className="workspace-images">
+            Images : {workspace?.images?.length || 0}
+          </h4>
           <div className="d-flex justify-content-center mt-4">
             <div className="Table-workspace">
-              <div className="d-flex justify-content-start my-2 mx-3 upload-button">
-                <button
-                  className="text-start"
-                  onClick={() => setShowForm(true)}
-                >
-                  Upload Image
-                </button>
-              </div>
               {!workspace.images.length ? (
-                <h3>No uploaded images !</h3>
+                <>
+                  <div className="justify-content-center upload-button">
+                    <button onClick={() => setShowForm(true)}>
+                      Upload Image
+                    </button>
+                  </div>
+                  <h3
+                    style={{
+                      textAlign: "center",
+                      alignContent: "center",
+                      marginTop: "20%",
+                    }}
+                  >
+                    No uploaded images !
+                  </h3>
+                </>
               ) : (
                 <>
+                  <div className="d-flex justify-content-start my-2 mx-3 upload-button">
+                    <button
+                      className="text-start"
+                      onClick={() => setShowForm(true)}
+                    >
+                      Upload Image
+                    </button>
+                  </div>
                   <TableWorkspace workspace={workspace} />
                 </>
               )}

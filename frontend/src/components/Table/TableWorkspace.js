@@ -12,20 +12,24 @@ import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function BasicTable({ workspace }) {
   const { WSname } = useParams();
   const handleDelete = async (row) => {
     try {
       const imageName = row.name;
-      console.log(imageName);
+
       if (window.confirm("Do you want to delete the image ?")) {
+        toast.info("Image is being deleted!");
         const response = await axios.delete(
           `http://localhost:4000/pic/delPic/${WSname}/${imageName}`,
           {
             withCredentials: true,
           }
         );
+
         if (response.data.success === true) {
           window.location.reload();
         }
@@ -71,8 +75,7 @@ export default function BasicTable({ workspace }) {
               >
                 Image
               </TableCell>
-              {/* <TableCell align="left">Name</TableCell>
-              <TableCell align="left">URL</TableCell> */}
+
               <TableCell
                 align="center"
                 style={{ fontSize: "20px", color: "green", fontWeight: "bold" }}
@@ -105,7 +108,10 @@ export default function BasicTable({ workspace }) {
                     <button
                       className="three-button"
                       onClick={() => handleDelete(row)}
-                      style={{ paddingLeft: "50px" }}
+                      style={{
+                        border: "1px solid black",
+                        borderRadius: "20px",
+                      }}
                     >
                       <DeleteIcon />
                     </button>

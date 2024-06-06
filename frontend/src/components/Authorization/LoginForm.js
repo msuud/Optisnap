@@ -60,14 +60,12 @@ const LoginForm = () => {
         );
         console.log("Response", response.data);
 
-        if (response.data == "Email is not verified") {
-          alert("Email is not verified");
-        } else if (response.data.message == "Authentication Successful") {
+        if (!response.data.success) {
+          alert(response.data.message);
+        } else {
           localStorage.setItem("accessToken", response.data.accessToken);
           setIsLoggedIn(true);
           navigate("/");
-        } else {
-          alert("Invalid Credentials");
         }
       } catch (error) {
         console.error(error);

@@ -25,20 +25,13 @@
 } */
 h1 {
   font-size: 60px;
-  /* font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif; */
   font-weight: bold;
   color: white;
   margin: 5px;
   padding: 10px;
   font-style: normal;
   font-family: "AmstelvarAlpha";
-  background: linear-gradient(90deg, #012f19, #1fa11f, #012f19);
-  background-repeat: inherit;
-  background-size: 80%;
-  animation: animate 5s linear infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: rgba(204, 199, 201, 0);
+  color: rgb(11, 78, 0);
 }
 
 @keyframes animate {
@@ -69,18 +62,6 @@ h1 {
   border-radius: 5px;
 }
 
-.small-grid-bg p:hover {
-  background: linear-gradient(
-    45deg,
-    rgba(125, 213, 153, 0.452),
-    rgba(9, 84, 20, 0.5)
-  );
-  border-radius: 100%; /* Gradient hover color */
-  border-radius: 5px;
-  padding: 10px;
-  transition: background 0.3s ease;
-}
-
 .workspace {
   font-size: 30px;
   padding: 5px;
@@ -99,9 +80,9 @@ h1 {
 
 .grid2 {
   position: absolute;
-  left: 28%;
   /* backdrop-filter: blur(15px); */
   margin-bottom: 0%;
+  margin-left: 2%;
   width: 70%;
   color: rgb(79, 83, 79);
 }
