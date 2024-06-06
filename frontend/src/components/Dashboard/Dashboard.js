@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import "./Dashboard.css";
 import Table from "../Table/Table";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

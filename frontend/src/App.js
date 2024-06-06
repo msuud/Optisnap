@@ -55,9 +55,9 @@ function App() {
       <BrowserRouter>
         {isLoggedIn ? (
           <div>
-            <div className="d-flex flex-row min-vh-100 ">
+            <div className="flex flex-row h-screen">
               <Navbar />
-              <div className="container-fluid dashboard content-cointainer mt-0 px-0">
+              <div className="w-full h-screen">
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/about-us" element={<AboutUs />} />
@@ -82,4 +82,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;

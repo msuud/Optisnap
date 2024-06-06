@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import "./Profile.css";
 import ProfileForm from "./ProfileForm";
-import "../Workspace/Workspace.css";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";

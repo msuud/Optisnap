@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "./WorkspaceDetails.css";
-import "./Workspace.css";
 import TableWorkspace from "../Table/TableWorkspace";
 import UploadImage from "./UploadImage";
 import axios from "axios";
