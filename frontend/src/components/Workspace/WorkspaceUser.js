@@ -6,7 +6,6 @@ import PopupForm from "./PopupForm";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DropdownWorkspace from "./DropdownWorkspace";
 import axios from "axios";
-import "react-loading-skeleton/dist/skeleton.css"; // Import Skeleton CSS
 
 const WorkspaceUser = () => {
   const [isLoading, setIsLoading] = useState(true);
