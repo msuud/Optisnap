@@ -54,7 +54,9 @@ export default function BasicTable({ tableData }) {
                     scope="row"
                     style={{ fontSize: "17px" }}
                   >
-                    {row.name}
+                    <a href={`http://localhost:4000/load/${row.name}`} target="_blank" rel="noopener noreferrer">
+                      {row.name}
+                    </a>
                   </TableCell>
 
                   <TableCell align="center" style={{ fontSize: "17px" }}>
