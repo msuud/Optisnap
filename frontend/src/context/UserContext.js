@@ -33,7 +33,6 @@ const UserProvider = ({ children }) => {
         const response = await axios.get("http://localhost:4000/user", {
           withCredentials: true,
         });
-        // console.log(response.data.data);
         setUser(response.data.data);
       } catch (error) {
         // console.error("Error fetching user data : ", error);
