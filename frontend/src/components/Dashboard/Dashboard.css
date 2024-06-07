@@ -68,18 +68,18 @@ h1 {
   box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
 }
-
+/* 
 .small-grid-bg p:hover {
   background: linear-gradient(
     45deg,
     rgba(125, 213, 153, 0.452),
     rgba(9, 84, 20, 0.5)
   );
-  border-radius: 100%; /* Gradient hover color */
+  border-radius: 100%; 
   border-radius: 5px;
   padding: 10px;
   transition: background 0.3s ease;
-}
+} */
 
 .workspace {
   font-size: 30px;
@@ -87,6 +87,8 @@ h1 {
   font-family: serif;
   color: rgb(40, 38, 38);
   font-weight: bold;
+  border: none;
+  background: transparent;
 }
 
 .image {
@@ -95,6 +97,8 @@ h1 {
   font-family: serif;
   color: black;
   font-weight: bolder;
+  border: none;
+  background: transparent;
 }
 
 .grid2 {
@@ -135,39 +139,39 @@ h1 {
     transform: scale(1);
   }
 }
- 
+
 /* skeletons */
-.skeleton{
+.skeleton {
   background-color: rgba(75, 134, 94, 0.2);
   color: transparent;
 }
-.h2-skeleton-details{
+.h2-skeleton-details {
   background-color: rgba(75, 134, 94, 0.4);
   color: rgba(75, 134, 94, 0);
   border-radius: 30px;
   width: 30%;
 }
-.details-skeleton{
+.details-skeleton {
   width: 60%;
   margin: 0 auto;
   border-radius: 30px;
   color: transparent;
   margin-top: 20px;
 }
-.width-small{
+.width-small {
   width: 30%;
 }
-.width-large{
+.width-large {
   width: 900px;
   height: 30px;
 }
-.width-verysmall-d{
+.width-verysmall-d {
   width: 15%;
   border-radius: 30px;
   height: 40px;
   margin: 0 auto;
 }
-.skeleton1{
+.skeleton1 {
   background-color: rgba(75, 134, 94, 0.2);
   color: transparent;
   padding: 20px;
@@ -179,10 +183,10 @@ h1 {
   padding: 20px;
   border-radius: 30px;
 }
-.border-r{
+.border-r {
   border-radius: 30px;
 }
-.padding-skeleton{
+.padding-skeleton {
   position: relative;
-  top: 30%;
+  top:30%;
 }

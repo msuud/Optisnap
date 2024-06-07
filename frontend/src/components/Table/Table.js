@@ -19,6 +19,7 @@ export default function BasicTable({ tableData }) {
           borderRadius: "20px",
           width: "900px",
           alignSelf: "center",
+          maxHeight: "300px"
         }}
       >
         <Table
