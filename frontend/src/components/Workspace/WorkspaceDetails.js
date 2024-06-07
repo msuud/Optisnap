@@ -70,7 +70,7 @@ const WorkspaceDetails = () => {
             </>
           ) : (
             <>
-              {!workspace && <div>Workspace not found!</div>}
+              {!workspace && <h2>Workspace not found!</h2>}
               {workspace && (
                 <>
                   <h2 className="">Workspace Name : {workspace.name}</h2>
