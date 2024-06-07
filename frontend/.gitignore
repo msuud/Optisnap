@@ -1,0 +1,5 @@
+Backend/node_modules
+Backend/.env
+Backend/uploads
+Backend/aws.js
+frontend/node_modules
