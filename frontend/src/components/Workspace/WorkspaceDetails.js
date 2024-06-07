@@ -8,8 +8,8 @@ import axios from "axios";
 
 const WorkspaceDetails = () => {
   const [workspace, setWorkspace] = useState(null);
-  const [showForm, setShowForm]=useState(false);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [showForm, setShowForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { WSname } = useParams();
 
   useEffect(() => {
@@ -27,14 +27,21 @@ const WorkspaceDetails = () => {
       } finally {
         setTimeout(() => {
           setIsLoading(false);
-        }, 2000); // Timeout set to 4 seconds
+        }, 2000);
       }
     };
     fetchData();
-  }, []);
+  }, [WSname]);
 
   const onClose = () => {
     setShowForm(false);
+  };
+
+  const removeImage = (imageName) => {
+    setWorkspace((prevWorkspace) => ({
+      ...prevWorkspace,
+      images: prevWorkspace.images.filter((image) => image.name !== imageName),
+    }));
   };
 
   return (
@@ -45,23 +52,30 @@ const WorkspaceDetails = () => {
           {isLoading ? (
             <>
               <h2 className="skeleton details-skeleton">Workspace Name:</h2>
-              <h2 className="skeleton details-skeleton width-small mt-3">Images:</h2>
-              <div className=""> 
-              <div className="d-flex justify-content-center mt-4">
-                <div className="Table-workspace">
-                      <div className="">
-                        <div className="skeleton width-verysmall">
-                          Upload Image
-                        </div>
-                        <div className="skeleton1 mt-2">
-                  <div className="skeleton details-skeleton width-large">Table data1</div>
-                  <div className="skeleton details-skeleton width-large">Table data2</div>
-                  <div className="skeleton details-skeleton width-large">Table data3</div>
-                </div>
+              <h2 className="skeleton details-skeleton width-small mt-3">
+                Images:
+              </h2>
+              <div className="">
+                <div className="d-flex justify-content-center mt-4">
+                  <div className="Table-workspace">
+                    <div className="">
+                      <div className="skeleton width-verysmall">
+                        Upload Image
                       </div>
-                      
+                      <div className="skeleton1 mt-2">
+                        <div className="skeleton details-skeleton width-large">
+                          Table data1
+                        </div>
+                        <div className="skeleton details-skeleton width-large">
+                          Table data2
+                        </div>
+                        <div className="skeleton details-skeleton width-large">
+                          Table data3
+                        </div>
+                      </div>
                     </div>
-              </div>
+                  </div>
+                </div>
               </div>
             </>
           ) : (
@@ -74,14 +88,20 @@ const WorkspaceDetails = () => {
                   <div className="d-flex justify-content-center mt-4">
                     <div className="Table-workspace">
                       <div className="d-flex justify-content-start my-2 mx-3 upload-button">
-                        <button className="text-start" onClick={() => setShowForm(true)}>
+                        <button
+                          className="text-start"
+                          onClick={() => setShowForm(true)}
+                        >
                           Upload Image
                         </button>
                       </div>
                       {!workspace.images.length ? (
                         <h3>No uploaded images !</h3>
                       ) : (
-                        <TableWorkspace workspace={workspace} />
+                        <TableWorkspace
+                          workspace={workspace}
+                          removeImage={removeImage}
+                        />
                       )}
                     </div>
                   </div>

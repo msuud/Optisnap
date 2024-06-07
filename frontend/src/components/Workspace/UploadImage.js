@@ -67,7 +67,7 @@ const UploadImage = ({ onClose, handleworkspace }) => {
           </Button>
         </Modal.Footer>
       </Modal.Dialog>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

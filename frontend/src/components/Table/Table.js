@@ -19,6 +19,8 @@ export default function BasicTable({ tableData }) {
           borderRadius: "20px",
           width: "900px",
           alignSelf: "center",
+          maxHeight: "300px",
+          justifyContent: "center",
         }}
       >
         <Table
@@ -54,7 +56,13 @@ export default function BasicTable({ tableData }) {
                     scope="row"
                     style={{ fontSize: "17px" }}
                   >
-                    {row.name}
+                    <a
+                      href={`http://localhost:4000/load/${row.name}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {row.name}
+                    </a>
                   </TableCell>
 
                   <TableCell align="center" style={{ fontSize: "17px" }}>

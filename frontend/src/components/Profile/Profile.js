@@ -7,31 +7,17 @@ import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 
 const Profile = () => {
-  // const [isLoading, setIsLoading] = useState(true);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     console.log("hello");
-  //     const response = await fetch("http://localhost:4000/pic", {
-  //       method: "GET",
-  //     });
-  //     console.log(response);
-
-  //     setTimeout(() => {
-  //       setIsLoading(false);
-  //     }, 2000);
-  //   };
-
-  //   fetchData();
-  // }, []);
-
   const onClose = () => {
     setShowProfileForm(false);
-    window.location.reload();
   };
 
   const [showProfileForm, setShowProfileForm] = useState(false);
   const { user } = useContext(UserContext);
+
+  const navigate = useNavigate();
+  const goToWorkspace = () => {
+    navigate("/workspace-user");
+  };
 
   return (
     <div className="rounded d-flex flex-column justify-content-center">
@@ -50,7 +36,7 @@ const Profile = () => {
             </div>
 
             <div className="container2">
-              <button className="workspace-grid">
+              <button className="workspace-grid" onClick={goToWorkspace}>
                 No. of Workspaces :- {user.WScount}
               </button>
               <button className="image-grid">
