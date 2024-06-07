@@ -64,8 +64,9 @@ router.get('/:img', async (req, res) => {
             Bucket: 'opti-snap9574',
             Key: img
         };
-        console.log("before aws call")
+        console.time("image")
         const data = await s3.getObject(params).promise();
+        console.timeEnd("image")
         let image = sharp(data.Body);
         if (w) image = image.resize(parseInt(w));
         if (h) image = image.resize({ height: parseInt(h) });
@@ -75,7 +76,7 @@ router.get('/:img', async (req, res) => {
         res.type(`image/${f || 'jpeg'}`).send(buffer);*/
 
         // downloading
-        /*const imageUrl = `https://opti-snap9574.s3.ap-south-1.amazonaws.com/${img}`;
+        /*const imageUrl = AWS_BUCKET_URL+img;
         const filePath = `./uploads/${img}`;
 
         await downloadImage(imageUrl, filePath);
@@ -99,17 +100,20 @@ router.get('/:img', async (req, res) => {
         });*/
 
         //not downloading
-        const imageUrl = `https://opti-snap9574.s3.ap-south-1.amazonaws.com/${img}`;
+        //const imageUrl = process.env.AWS_CLOUDFRONT_URL + img;
+        const imageUrl = process.env.AWS_BUCKET_URL + img;
         const filePath = `./uploads/${img}`;
+        console.time("fetch image")
         let image = await notDownloadImage(imageUrl, filePath);
+        console.timeEnd("fetch image")
         image = sharp(image);
 
-            if (w) image = image.resize(parseInt(w));
-            if (h) image = image.resize({ height: parseInt(h) });
-            if (f) image = image.toFormat(f);
-            image.jpeg({ quality: 50 })
-            const buffer = await image.toBuffer();
-            res.type(`image/${f || 'jpeg'}`).send(buffer);
+        if (w) image = image.resize(parseInt(w));
+        if (h) image = image.resize({ height: parseInt(h) });
+        if (f) image = image.toFormat(f);
+        image.jpeg({ quality: 50 })
+        const buffer = await image.toBuffer();
+        res.type(`image/${f || 'jpeg'}`).send(buffer);
 
     } catch (err) {
         console.error("error: ", err);

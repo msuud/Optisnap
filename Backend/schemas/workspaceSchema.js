@@ -6,8 +6,7 @@ const Schema = mongoose.Schema;
 const WorkspaceSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
-        unique: true,
+        required: true
     },
     uid: {
         type: Schema.Types.ObjectId,
@@ -17,6 +16,6 @@ const WorkspaceSchema = new mongoose.Schema({
     images: {
         type: Array
     },
-})
+}, { unique: true, index: { fields: ['uid', 'name'] } })
 
 module.exports = mongoose.model("workspaces", WorkspaceSchema)

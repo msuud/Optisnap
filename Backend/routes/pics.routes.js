@@ -14,37 +14,38 @@ router.use(express.json())
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3()
 
-
-//working
 router.post('/addWS', authenticateToken, async (req, res) => {
     try {
         const body = req.body;
+        if (!body.name || body.name.length > 13) {
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                message: "Workspace name must be between 1 and 13 characters",
+                success: false
+            });
+        }
         let ws = new WS({
             name: body.name,
             uid: req.user.id,
             images: [],
-        })
-        await ws.save()
+        });
+        await ws.save();
         return res.json({
             message: "Workspace Added!",
-            sucess: true
-        }).status(StatusCodes.OK)
+            success: true
+        }).status(StatusCodes.OK);
     } catch (error) {
         return res.json({
             message: error.message,
-            sucess: false
-        }).status(StatusCodes.INTERNAL_SERVER_ERROR)
+            success: false
+        }).status(StatusCodes.INTERNAL_SERVER_ERROR);
     }
-})
+});
 
-//working
 router.post('/addPic', authenticateToken, upload.single('image'), async (req, res) => {
     try {
         const body = req.body;
         const time = new Date()
         const sizeInMB = req.file.size / (1024 * 1024);
-
-        // console.log(`Image size: ${ sizeInMB.toFixed(2) } MB`);
 
         const newImage = {
             name: req.file.originalname,
@@ -114,21 +115,28 @@ router.get("/deleteWS/:WSname", authenticateToken, async (req, res) => {
     try {
         let WSname = req.params.WSname;
         let ws = await WS.findOne({ name: WSname });
-        // console.log(ws);
-        if (ws.images.length !== 0) {
-            return res.json({
-                message: "Please empty the WorkSpace before deleting",
-                success: false
-            })
-        }
-        else {
-            // needs to check
-            let response = await WS.findOneAndDelete({ name: WSname })
-            // if(response)
+        let picArr = []
+        ws.images.forEach((img) => {
+            picArr.push(img.name)
+        })
+        let user1 = await user.findOneAndUpdate({ _id: req.user.id }, {
+            $pull: { recent: { name: { $in: picArr } } }
+        })
+        user1.img_count -= ws.images.length;
+        user1.save()
+        let response = await WS.deleteOne({ name: WSname }, { name: WSname, uid: req.user.id })
+        console.log(response);
+
+        if (response.deletedCount > 0) {
             return res.json({
                 message: "WorskSpace deleted",
                 success: true
-            })
+            }).status(StatusCodes.OK)
+        } else {
+            return res.json({
+                message: "Error deleting Workspace",
+                success: false
+            }).status(StatusCodes.INTERNAL_SERVER_ERROR)
         }
     } catch (error) {
         return res.json({
@@ -142,34 +150,43 @@ router.delete('/delPic/:WSname/:picName', authenticateToken, async (req, res) =>
     try {
         const WSname = req.params.WSname
         const picName = req.params.picName
-        let ws = await WS.findOne({ name: WSname })
-        ws.images = ws.images.filter(image => image.name !== picName)
-        await ws.save()
-        let user1 = await user.findById(req.user.id)
-        user1.recent = user1.recent.filter(image => image.name !== picName)
-        user1.img_count = user1.img_count - 1
-        await user1.save()
-        let params = { Bucket: 'opti-snap9574', Key: picName };
+        let response = await WS.updateOne(
+            { name: WSname },
+            { $pull: { images: { name: picName } } }
+        )
+        console.log(response);
+        if (response.modifiedCount > 0) {
+            let user1 = await user.findById(req.user.id)
+            user1.recent = user1.recent.filter(image => image.name !== picName)
+            user1.img_count = user1.img_count - 1
+            await user1.save()
+            let params = { Bucket: 'opti-snap9574', Key: picName };
 
-        s3.deleteObject(params, function (err, data) {
-            if (err) {
-                return res.json({
-                    message: error.message,
-                    success: false
-                });
-            }
-            else {
-                return res.json({
-                    message: "image deleted",
-                    success: true
-                })
-            }
-        });
+            s3.deleteObject(params, function (err, data) {
+                if (err) {
+                    return res.json({
+                        message: error.message,
+                        success: false
+                    });
+                }
+                else {
+                    return res.json({
+                        message: "image deleted",
+                        success: true
+                    })
+                }
+            })
+        } else {
+            return res.json({
+                message: "image not found",
+                success: false
+            }).status(StatusCodes.BAD_REQUEST)
+        }
     } catch (error) {
         return res.json({
             message: error.message,
             success: false
-        })
+        }).status(StatusCodes.INTERNAL_SERVER_ERROR)
     }
 })
 
@@ -197,8 +214,6 @@ router.patch("/editWS", authenticateToken, async (req, res) => {
     }
 })
 
-//working
-//might need change with the data 
 router.get("/dashboard", authenticateToken, async (req, res) => {
     try {
         let u = await user.findOne({ _id: req.user.id }, {
@@ -219,43 +234,7 @@ router.get("/dashboard", authenticateToken, async (req, res) => {
                 recent: rev
             },
             success: true
-        });
-    } catch (error) {
-        return res.json({
-            message: error.message,
-            success: false
-        })
-    }
-})
-
-//working
-//working
-router.get("/workspace", authenticateToken, async (req, res) => {
-    try {
-        let response = await WS.find({ uid: req.user.id }).select("-_id -uid -__v")
-        return res.json({
-            message: "data sent",
-            data: response,
-            sucess: true
-        })
-    } catch (error) {
-        return res.json({
-            message: error.message,
-            success: false
-        })
-    }
-})
-
-//working
-router.get("/workspace/:WSname", authenticateToken, async (req, res) => {
-    try {
-        let WSname = req.params.WSname
-        let response = await WS.findOne({ uid: req.user.id, name: WSname }).select("-_id -uid -__v")
-        return res.json({
-            message: "data sent",
-            data: response,
-            sucess: true
-        })
+        }).status(StatusCodes.OK);
     } catch (error) {
         return res.json({
             message: error.message,
@@ -264,22 +243,31 @@ router.get("/workspace/:WSname", authenticateToken, async (req, res) => {
     }
 })
 
-//working
-router.get("/profile", authenticateToken, async (req, res) => {
+router.get("/workspace", authenticateToken, async (req, res) => {
     try {
-        let u = await user.findById(req.user.id, {
-            username: 1,
-            email: 1,
-            img_count: 1
-        })
-        let WScount = await WS.find({ uid: u._id });
-        // console.log(u);
+        let response = await WS.find({ uid: req.user.id }).select("-_id -uid -__v")
         return res.json({
-            username: u.username,
-            email: u.email,
-            WScount: WScount.length,
-            img_count: u.img_count
-        })
+            message: "data sent",
+            data: response,
+            sucess: true
+        }).status(StatusCodes.OK)
+    } catch (error) {
+        return res.json({
+            message: error.message,
+            success: false
+        }).status(StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+})
+
+router.get("/workspace/:WSname", authenticateToken, async (req, res) => {
+    try {
+        let WSname = req.params.WSname
+        let response = await WS.findOne({ uid: req.user.id, name: WSname }).select("-_id -uid -__v")
+        return res.json({
+            message: "data sent",
+            data: response,
+            sucess: true
+        }).status(StatusCodes.OK)
     } catch (error) {
         return res.json({
             message: error.message,

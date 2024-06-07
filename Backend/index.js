@@ -8,6 +8,7 @@ const picRoutes = require("./routes/pics.routes");
 const verifyRoutes = require("./routes/verify.routes");
 const cors = require("cors");
 const compression = require('compression')
+
 const run = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
