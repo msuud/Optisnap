@@ -142,22 +142,12 @@ router.post('/signup', async (req, res) => {
 
 
 // needs to change but later
-router.patch('/update/:field', authenticateToken, async (req, res) => {
+router.patch('/update', authenticateToken, async (req, res) => {
   try {
-    const field = req.params.field
     const body = req.body;
-    const u = await user.findById(req.user.id);
-    if (field === "username") {
-      u.username = body.name
-    }
-    else if (field === "firstName") {
-      u.name = u.name.replace(u.name.split(' ')[0], body.name);
-    }
-    else {
-      u.name = u.name.replace(u.name.split(' ')[1], body.name);
-    }
-    u.lastModified = Date.now()
-    await u.save()
+    const u = await user.findByIdAndUpdate(req.user.id,{
+      $set:{username: body.username,name: body.firstName+" "+body.lastName,lastModified: Date.now()}
+    });
     return res.json({
       message: "Updated successfully",
       success: true
@@ -167,7 +157,7 @@ router.patch('/update/:field', authenticateToken, async (req, res) => {
       message: error.message,
       success: false
     }).status(StatusCodes.INTERNAL_SERVER_ERROR);
-  }
+}
 });
 
 //added just for checking

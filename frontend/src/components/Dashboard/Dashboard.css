@@ -190,3 +190,10 @@ h1 {
   position: relative;
   top:30%;
 }
+.table-grid{
+  position: relative;
+  top: 40%;
+}
+.text-center{
+  margin: 0-auto;
+}

@@ -9,14 +9,45 @@ import axios from "axios";
 
 const WorkspaceUser = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState(null);
   const [workspaceDetails, setWorkspaceDetails] = useState([]);
   const [updatedWorkspaceNames, setUpdatedWorkspaceNames] = useState({});
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/pic/workspace", {
+          withCredentials: true,
+        });
+        setWorkspaceDetails(response.data.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 0);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const updateWorkspaceName = (oldName, newName) => {
+    setUpdatedWorkspaceNames((prev) => ({ ...prev, [oldName]: newName }));
+  };
+
+  const addNewWorkspace = (name) => {
+    setWorkspaceDetails((prev) => [
+      ...prev,
+      { name, images: [] },
+    ]);
+  };
+
+  const removeWorkspace = (name) => {
+    setWorkspaceDetails((prev) => prev.filter(ws => ws.name !== name));
+  };
 
   const handleDropdownClick = (workspaceId) => {
     setShowDropdown(!showDropdown);
@@ -40,45 +71,12 @@ const WorkspaceUser = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:4000/pic/workspace", {
-          withCredentials: true,
-        });
-        setWorkspaceDetails(response.data.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 2000);
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
     document.addEventListener("click", handleClickOutside);
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [showDropdown]);
-
-  const updateWorkspaceName = (oldName, newName) => {
-    setUpdatedWorkspaceNames((prev) => ({ ...prev, [oldName]: newName }));
-  };
-
-  const addNewWorkspace = (name) => {
-    setWorkspaceDetails((prev) => [
-      ...prev,
-      { name, images: [] }, // Add other default properties as necessary
-    ]);
-  };
-
-  const removeWorkspace = (name) => {
-    setWorkspaceDetails((prev) => prev.filter(ws => ws.name !== name));
-  };
 
   return (
     <div className="bg-image1 rounded box4">
@@ -87,7 +85,6 @@ const WorkspaceUser = () => {
         <div className="grid1 rounded fixed top-0 left-0 right-0 z-10 text-center p-5">
           <div className="app1">
             {isLoading ? (
-              // Display Skeleton elements while loading
               <>
                 {Array.from({ length: 5 }).map((_, index) => (
                   <div key={index} className="workspace-box skeleton">
@@ -118,7 +115,6 @@ const WorkspaceUser = () => {
                       {showDropdown &&
                         selectedWorkspaceId === workspaceDetails.name && (
                           <DropdownWorkspace
-                            onClose={() => setShowDropdown(false)}
                             workspaceDetails={workspaceDetails}
                             updateWorkspaceName={updateWorkspaceName}
                             removeWorkspace={removeWorkspace}
@@ -161,7 +157,7 @@ const WorkspaceUser = () => {
       {showModel && (
         <div className="popup-modal">
           <div className="popup-form-container">
-            <PopupForm onClose={() => setShowModel(false)} addNewWorkspace={addNewWorkspace} />
+            <PopupForm onClose={onClose} addNewWorkspace={addNewWorkspace} />
           </div>
           <div className="popup-backdrop" onClick={onClose} />
         </div>
