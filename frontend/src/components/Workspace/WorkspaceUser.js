@@ -71,10 +71,7 @@ const WorkspaceUser = () => {
   };
 
   const addNewWorkspace = (name) => {
-    setWorkspaceDetails((prev) => [
-      ...prev,
-      { name, images: [] }, // Add other default properties as necessary
-    ]);
+    setWorkspaceDetails((prev) => [...prev, { name, images: [] }]);
   };
 
   const removeWorkspace = (name) => {
@@ -88,7 +85,6 @@ const WorkspaceUser = () => {
         <div className="grid1 rounded fixed top-0 left-0 right-0 z-10 text-center p-5">
           <div className="app1">
             {isLoading ? (
-              // Display Skeleton elements while loading
               <>
                 {Array.from({ length: 5 }).map((_, index) => (
                   <div key={index} className="workspace-box skeleton">

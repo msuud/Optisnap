@@ -151,7 +151,6 @@ export default function BasicTable({ workspace, removeImage }) {
         </Table>
       </TableContainer>
       <ToastContainer />
-         
     </div>
   );
 }

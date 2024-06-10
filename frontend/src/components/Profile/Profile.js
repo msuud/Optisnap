@@ -7,17 +7,40 @@ import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 
 const Profile = () => {
-  const onClose = () => {
-    setShowProfileForm(false);
-  };
-
   const [showProfileForm, setShowProfileForm] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const goToWorkspace = () => {
     navigate("/workspace-user");
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        const response = await axios.get("http://localhost:4000/user", {
+          withCredentials: true,
+        });
+        setUser(response.data.data);
+        setLoading(false);
+      } catch (error) {
+        // Handle error
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [setUser]);
+
+  const onClose = () => {
+    setShowProfileForm(false);
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="rounded d-flex flex-column justify-content-center">

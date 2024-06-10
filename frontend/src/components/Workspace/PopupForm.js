@@ -23,6 +23,8 @@ const PopupForm = ({ onClose, addNewWorkspace }) => {
         addNewWorkspace(workspaceName);
         onClose();
         alert("Workspace created!");
+      } else {
+        alert("Workspace name is not unique");
       }
     } catch (error) {
       console.error("Error creating workspace:", error);
