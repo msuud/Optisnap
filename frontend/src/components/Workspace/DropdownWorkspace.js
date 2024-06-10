@@ -3,15 +3,20 @@ import "./Dropdown.css";
 import EditWorkspace from "./EditWorkspace";
 import axios from "axios";
 
-const DropdownWorkspace = ({ workspaceDetails }) => {
+const DropdownWorkspace = ({
+  workspaceDetails,
+  updateWorkspaceName,
+  removeWorkspace,
+}) => {
   const [editForm, setEditForm] = useState(false);
-  const onClose = () => {
-    setEditForm(false);
-    window.location.reload();
+
+  const handleEdit = () => {
+    setEditForm(true);
   };
 
   const handleDelete = async () => {
     try {
+      removeWorkspace(workspaceDetails.name);
       const response = await axios.get(
         `http://localhost:4000/pic/deleteWS/${workspaceDetails.name}`,
         {
@@ -19,9 +24,8 @@ const DropdownWorkspace = ({ workspaceDetails }) => {
         }
       );
       console.log(response);
-      if (response.data.message == "WorskSpace deleted") {
+      if (response.data.message === "WorskSpace deleted") {
         alert("Workspace deleted successfully !");
-        window.location.reload();
       } else if (response.data.success === false && response.status === 200) {
         alert(response.data.message);
       }
@@ -29,11 +33,12 @@ const DropdownWorkspace = ({ workspaceDetails }) => {
       console.error(error);
     }
   };
+
   return (
     <div>
       <ul className="workspace-list">
         <li>
-          <button className="workspace-btn" onClick={() => setEditForm(true)}>
+          <button className="workspace-btn" onClick={handleEdit}>
             Edit Workspace
           </button>
         </li>
@@ -47,11 +52,12 @@ const DropdownWorkspace = ({ workspaceDetails }) => {
         <div className="popup-modal">
           <div className="popup-form-container">
             <EditWorkspace
-              onClose={onClose}
+              onClose={() => setEditForm(false)}
               workspaceDetails={workspaceDetails}
+              updateWorkspaceName={updateWorkspaceName}
             />
           </div>
-          <div className="popup-backdrop" onClick={onClose} />
+          <div className="popup-backdrop" onClick={() => setEditForm(false)} />
         </div>
       )}
     </div>

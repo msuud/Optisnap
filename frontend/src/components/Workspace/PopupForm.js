@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import "./Workspace.css";
-import CloseIcon from "@mui/icons-material/Close";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/esm/CloseButton";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-const PopupForm = ({ onClose }) => {
-  const navigate = useNavigate();
+const PopupForm = ({ onClose, addNewWorkspace }) => {
   const [workspaceName, setWorkspaceName] = useState("");
 
   const handleChange = (event) => {
@@ -22,10 +19,10 @@ const PopupForm = ({ onClose }) => {
         { name: workspaceName },
         { withCredentials: true }
       );
-      if (response.data.message == "Workspace Added!") {
+      if (response.data.message === "Workspace Added!") {
+        addNewWorkspace(workspaceName);
         onClose();
-        alert("Workspace created! The page will refresh shortly.");
-        window.location.reload();
+        alert("Workspace created!");
       }
     } catch (error) {
       console.error("Error creating workspace:", error);
@@ -49,7 +46,6 @@ const PopupForm = ({ onClose }) => {
 
         <Modal.Body>
           <form onSubmit={(event) => event.preventDefault()}>
-            {" "}
             <input
               type="text"
               placeholder="Enter Workspace Name"

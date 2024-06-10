@@ -7,21 +7,20 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import moment from "moment";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function BasicTable({ workspace }) {
+export default function BasicTable({ workspace, removeImage }) {
   const { WSname } = useParams();
+
   const handleDelete = async (row) => {
     try {
       const imageName = row.name;
-      if (window.confirm("Do you want to delete the image ?")) {
-        toast.info("Image is being deleted!");
+      if (window.confirm("Do you want to delete the image?")) {
+        toast.info("Image deleted!");
         const response = await axios.delete(
           `http://localhost:4000/pic/delPic/${WSname}/${imageName}`,
           {
@@ -30,7 +29,7 @@ export default function BasicTable({ workspace }) {
         );
 
         if (response.data.success === true) {
-          window.location.reload();
+          removeImage(imageName);
         }
       }
     } catch (error) {
@@ -48,6 +47,7 @@ export default function BasicTable({ workspace }) {
           borderRadius: "20px",
           width: "1000px",
           alignSelf: "center",
+          maxHeight: "300px",
         }}
       >
         <Table
@@ -74,7 +74,6 @@ export default function BasicTable({ workspace }) {
               >
                 Image
               </TableCell>
-
               <TableCell
                 align="center"
                 style={{ fontSize: "20px", color: "green", fontWeight: "bold" }}
@@ -119,9 +118,13 @@ export default function BasicTable({ workspace }) {
                     align="center"
                     component="th"
                     scope="row"
-                    style={{ fontSize: "17px" }}
+                    style={{ fontSize: "17px", paddingLeft: "50px" }}
                   >
-                    <a href={`http://localhost:4000/load/${row.name}`} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={`http://localhost:4000/load/${row.name}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {row.name}
                     </a>
                   </TableCell>
@@ -148,6 +151,7 @@ export default function BasicTable({ workspace }) {
         </Table>
       </TableContainer>
       <ToastContainer />
+         
     </div>
   );
 }

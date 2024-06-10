@@ -45,7 +45,7 @@
 .vertical-navbar a {
   text-decoration: none;
   color: #333;
-  font-size: 2rem; /* Adjust for smaller screens */
+  font-size: 1.5rem; /* Adjust for smaller screens */
   display: block;
   padding: 7%;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
@@ -108,7 +108,7 @@
   font-weight: bold;
   color: #333;
   padding-bottom: 25px;
-  font-size: 270%;
+  font-size: 260%;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   background: -webkit-linear-gradient(right, rgba(20, 173, 10), rgba(1, 35, 6));
   background: -webkit-linear-gradient(right, rgba(20, 173, 10), rgba(1, 35, 6));

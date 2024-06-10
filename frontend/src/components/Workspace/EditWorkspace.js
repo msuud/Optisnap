@@ -4,20 +4,18 @@ import CloseIcon from "@mui/icons-material/Close";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/esm/CloseButton";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const EditWorkspace = ({ onClose, workspaceDetails }) => {
-  const navigate = useNavigate();
-  const [inputValue, setInputValue] = useState("");
+const EditWorkspace = ({ onClose, workspaceDetails, updateWorkspaceName }) => {
+  const [inputValue, setInputValue] = useState(workspaceDetails.name);
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
   };
 
-  const isSaveButtonDisabled = inputValue.trim() === "";
+  const isSaveButtonDisabled = inputValue.trim() === workspaceDetails.name;
 
-  const handleworkspace = async () => {
+  const handleWorkspace = async () => {
     try {
       const response = await axios.patch(
         "http://localhost:4000/pic/editWS",
@@ -32,16 +30,20 @@ const EditWorkspace = ({ onClose, workspaceDetails }) => {
       console.log(response);
       if (response.data.success === false) {
         alert("Workspace name already exists");
+      } else {
+        updateWorkspaceName(workspaceDetails.name, inputValue);
+        workspaceDetails.name = inputValue;
       }
     } catch (error) {
       console.error(error);
     }
+    onClose();
   };
 
   return (
     <div
       className="modal show"
-      style={{ display: "block", position: "initial" }}
+      style={{ display: "block", position: "initial", zIndex: 4 }}
     >
       <Modal.Dialog>
         <Modal.Header>
@@ -68,7 +70,7 @@ const EditWorkspace = ({ onClose, workspaceDetails }) => {
         <Modal.Footer>
           <Button
             type="submit"
-            onClick={handleworkspace}
+            onClick={handleWorkspace}
             disabled={isSaveButtonDisabled} // Disable button conditionally
           >
             Save changes
