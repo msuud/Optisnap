@@ -24,7 +24,11 @@ export default function BasicTable({ tableData }) {
         }}
       >
         <Table
-          sx={{ tableLayout: "fixed", borderRadius: "20px" }}
+          sx={{
+            tableLayout: "fixed",
+            borderRadius: "20px",
+            justifyContent: "center",
+          }}
           aria-label="simple table"
         >
           <TableHead>

@@ -40,7 +40,7 @@ const Dashboard = () => {
       }
     };
 
-    setTimeout(fetchData, 1000); // Fetch data after 4 seconds
+    setTimeout(fetchData, 0);
   }, []);
 
   const navigate = useNavigate();
@@ -113,15 +113,15 @@ const Dashboard = () => {
               </div>
             </div>
             {!tableData.uploadedImages.length ? (
-              <h3>No recently uploaded images !</h3>
+              <h3 className="">No recently uploaded images !</h3>
             ) : (
-              <>
-                <h3>Recently Uploaded Images</h3>
-                <div className="grid2 text-gray">
+              <div className="table-grid">
+                <h3 className="text-center">Recently Uploaded Images</h3>
+                <div className="text-gray">
                   {/* <Table /> */}
                   <Table tableData={tableData} />
                 </div>
-              </>
+              </div>
             )}
           </div>
         </>

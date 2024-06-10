@@ -11,6 +11,7 @@ const WorkspaceDetails = () => {
   const [showForm, setShowForm] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { WSname } = useParams();
+  const [images, setImages] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,12 +23,11 @@ const WorkspaceDetails = () => {
           }
         );
         setWorkspace(response.data.data);
+        setImages(response.data.data.images);
       } catch (error) {
         console.error(error);
       } finally {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 2000);
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -38,10 +38,13 @@ const WorkspaceDetails = () => {
   };
 
   const removeImage = (imageName) => {
-    setWorkspace((prevWorkspace) => ({
-      ...prevWorkspace,
-      images: prevWorkspace.images.filter((image) => image.name !== imageName),
-    }));
+    setImages((prevImages) =>
+      prevImages.filter((image) => image.name !== imageName)
+    );
+  };
+
+  const addImage = (newImage) => {
+    setImages((prevImages) => [...prevImages, newImage]);
   };
 
   return (
@@ -84,24 +87,36 @@ const WorkspaceDetails = () => {
               {workspace && (
                 <>
                   <h2 className="">Workspace Name : {workspace.name}</h2>
-                  <h2 className="">Images : {workspace.images?.length || 0}</h2>
+                  <h2 className="">Images : {images.length || 0}</h2>
                   <div className="d-flex justify-content-center mt-4">
                     <div className="Table-workspace">
-                      <div className="d-flex justify-content-start my-2 mx-3 upload-button">
-                        <button
-                          className="text-start"
-                          onClick={() => setShowForm(true)}
-                        >
-                          Upload Image
-                        </button>
-                      </div>
-                      {!workspace.images.length ? (
-                        <h3>No uploaded images !</h3>
+                      {!images.length ? (
+                        <>
+                          <div className="upload-button">
+                            <button
+                              className="text-start my-5"
+                              onClick={() => setShowForm(true)}
+                            >
+                              Upload Image
+                            </button>
+                          </div>
+                          <h2>No uploaded images!</h2>
+                        </>
                       ) : (
-                        <TableWorkspace
-                          workspace={workspace}
-                          removeImage={removeImage}
-                        />
+                        <>
+                          <div className="d-flex justify-content-start my-2 mx-3 upload-button">
+                            <button
+                              className="text-start"
+                              onClick={() => setShowForm(true)}
+                            >
+                              Upload Image
+                            </button>
+                          </div>
+                          <TableWorkspace
+                            workspace={{ ...workspace, images }}
+                            removeImage={removeImage}
+                          />
+                        </>
                       )}
                     </div>
                   </div>
@@ -114,7 +129,7 @@ const WorkspaceDetails = () => {
       {showForm && (
         <div className="popup-modal">
           <div className="popup-form-container">
-            <UploadImage onClose={onClose} />
+            <UploadImage onClose={onClose} addImage={addImage} />
           </div>
           <div className="popup-backdrop" onClick={onClose} />
         </div>

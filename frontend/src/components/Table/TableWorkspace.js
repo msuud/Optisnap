@@ -118,7 +118,7 @@ export default function BasicTable({ workspace, removeImage }) {
                     align="center"
                     component="th"
                     scope="row"
-                    style={{ fontSize: "17px" }}
+                    style={{ fontSize: "17px", paddingLeft: "50px" }}
                   >
                     <a
                       href={`http://localhost:4000/load/${row.name}`}

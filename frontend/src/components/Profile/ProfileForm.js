@@ -31,17 +31,18 @@ const ProfileForm = ({ onClose }) => {
         ...user,
         ...profile,
       });
-      // const response = await axios.patch(
-      //   `http://localhost:4000/update`,
-      //   profile,
-      //   {
-      //     withCredentials: true,
-      //   }
-      // );
-      // console.log(response);
-      // if (response.data.success === false) {
-      //   alert("Username already exists");
-      // }
+      const response = await axios.patch(
+        `http://localhost:4000/update`,
+        profile,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response);
+      if (response.data.success === false) {
+        alert("Username already exists");
+      }
+      onClose();
     } catch (error) {
       console.error(error);
     }

@@ -9,9 +9,9 @@ const DropdownWorkspace = ({
   removeWorkspace,
 }) => {
   const [editForm, setEditForm] = useState(false);
-  const onClose = () => {
-    setEditForm(false);
-    // window.location.reload();
+
+  const handleEdit = () => {
+    setEditForm(true);
   };
 
   const handleDelete = async () => {
@@ -38,7 +38,7 @@ const DropdownWorkspace = ({
     <div>
       <ul className="workspace-list">
         <li>
-          <button className="workspace-btn" onClick={() => setEditForm(true)}>
+          <button className="workspace-btn" onClick={handleEdit}>
             Edit Workspace
           </button>
         </li>
@@ -52,12 +52,12 @@ const DropdownWorkspace = ({
         <div className="popup-modal">
           <div className="popup-form-container">
             <EditWorkspace
-              onClose={onClose}
+              onClose={() => setEditForm(false)}
               workspaceDetails={workspaceDetails}
               updateWorkspaceName={updateWorkspaceName}
             />
           </div>
-          <div className="popup-backdrop" onClick={onClose} />
+          <div className="popup-backdrop" onClick={() => setEditForm(false)} />
         </div>
       )}
     </div>
