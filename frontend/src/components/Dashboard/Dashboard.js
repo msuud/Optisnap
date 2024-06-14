@@ -3,7 +3,6 @@ import "./Dashboard.css";
 import Table from "../Table/Table";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import WorkspaceUser from "../Workspace/WorkspaceUser";
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({
