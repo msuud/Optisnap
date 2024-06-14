@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./Workspace.css";
-import CloseIcon from "@mui/icons-material/Close";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/esm/CloseButton";

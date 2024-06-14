@@ -1,18 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import "../Workspace/Workspace.css";
-import CloseIcon from "@mui/icons-material/Close";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/esm/CloseButton";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { getLinearProgressUtilityClass } from "@mui/material";
 import { UserContext } from "../../context/UserContext";
-import ModalFooter from "react-bootstrap/esm/ModalFooter";
 
 const ProfileForm = ({ onClose }) => {
   const { user, setUser } = useContext(UserContext);
-  const navigate = useNavigate();
   const [profile, setProfile] = useState({
     firstName: user.firstName,
     lastName: user.lastName,

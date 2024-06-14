@@ -1,9 +1,7 @@
 import React from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/esm/CloseButton";
-import { useNavigate } from "react-router-dom";
 import "./UploadImage.css";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,7 +9,6 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 
 const UploadImage = ({ onClose, addImage }) => {
-  const navigate = useNavigate();
   const { WSname } = useParams();
 
   const handleworkspace1 = async () => {

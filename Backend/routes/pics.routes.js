@@ -147,8 +147,6 @@ router.get("/deleteWS/:WSname", authenticateToken, async (req, res) => {
       { name: WSname },
       { name: WSname, uid: req.user.id }
     );
-    console.log(response);
-
     if (response.deletedCount > 0) {
       return res
         .json({

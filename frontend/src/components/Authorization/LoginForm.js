@@ -5,13 +5,10 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../assets/logo1.png";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
-import { UserContext } from "../../context/UserContext";
 
 const LoginForm = () => {
   const initialValues = { email: "", password: "" };
   const [formValues, setFormValues] = useState(initialValues);
-  const [errors, setErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
   const { setIsLoggedIn } = useContext(AuthContext);
 
@@ -49,26 +46,20 @@ const LoginForm = () => {
       alert("Password must not be more than 10 characters");
     }
 
-    setErrors(validationErrors);
-
     if (Object.keys(validationErrors).length === 0) {
-      setIsSubmit(true);
       try {
         const response = await axios.post(
           "http://localhost:4000/login",
           formValues,
           { withCredentials: true }
         );
-        console.log("Response", response.data);
 
         if (!response.data.success) {
           alert(response.data.message);
-        } else if (response.data.message == "Authentication Successful") {
+        } else {
           localStorage.setItem("accessToken", response.data.accessToken);
           setIsLoggedIn(true);
           navigate("/");
-        } else {
-          alert("Invalid Credentials");
         }
       } catch (error) {
         console.error(error);

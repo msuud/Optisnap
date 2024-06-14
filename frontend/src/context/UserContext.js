@@ -29,13 +29,12 @@ const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const accessToken = localStorage.getItem("accessToken");
         const response = await axios.get("http://localhost:4000/user", {
           withCredentials: true,
         });
         setUser(response.data.data);
       } catch (error) {
-        // console.error("Error fetching user data : ", error);
+        console.error("Error fetching user data : ", error);
       }
     };
     fetchUser();

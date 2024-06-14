@@ -19,7 +19,6 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const accessToken = localStorage.getItem("accessToken");
         const response = await axios.get("http://localhost:4000/user", {
           withCredentials: true,
         });

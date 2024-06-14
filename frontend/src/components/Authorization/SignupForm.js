@@ -1,10 +1,10 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Starter.css";
 import logo from "../../assets/logo1.png";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Audio } from "react-loader-spinner";
 
@@ -17,9 +17,7 @@ const SignupForm = () => {
     password: "",
   };
   const [regformValues, setRegformValues] = useState(startValues);
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
@@ -59,9 +57,7 @@ const SignupForm = () => {
       alert("Password must not be more than 10 characters");
     }
 
-    setErrors(validationErrors);
     if (Object.keys(validationErrors).length === 0) {
-      setIsSubmitted(true);
       try {
         setLoading(true);
 

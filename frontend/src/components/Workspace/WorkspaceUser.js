@@ -9,7 +9,6 @@ import axios from "axios";
 
 const WorkspaceUser = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState(null);
