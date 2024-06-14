@@ -8,9 +8,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import logo from "../../assets/logo1.png";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import axios from "axios";
-import { UserContext } from "../../context/UserContext";
 import { AuthContext } from "../../context/AuthContext";
 
 const navigationItems = [

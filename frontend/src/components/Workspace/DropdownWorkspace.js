@@ -23,6 +23,7 @@ const DropdownWorkspace = ({
           withCredentials: true,
         }
       );
+      console.log(response);
       if (response.data.message === "WorskSpace deleted") {
         alert("Workspace deleted successfully !");
       } else if (response.data.success === false && response.status === 200) {

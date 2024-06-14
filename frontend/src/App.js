@@ -10,9 +10,7 @@ import WorkspaceUser from "./components/Workspace/WorkspaceUser";
 import WorkspaceDetails from "./components/Workspace/WorkspaceDetails";
 import { AuthContext } from "./context/AuthContext";
 
-
 function App() {
-
   const { isLoggedIn } = useContext(AuthContext);
 
   return (

@@ -11,7 +11,11 @@ const WorkspaceUser = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showModel, setShowModel] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState(null);
+  const [workspaceDetails, setWorkspaceDetails] = useState([]);
+  const [updatedWorkspaceNames, setUpdatedWorkspaceNames] = useState({});
+
   const [workspaceDetails, setWorkspaceDetails] = useState([]);
   const [updatedWorkspaceNames, setUpdatedWorkspaceNames] = useState({});
 
@@ -25,10 +29,12 @@ const WorkspaceUser = () => {
   const handleLinkClick = (event, workspaceId) => {
     if (event.target.tagName !== "BUTTON") {
       navigate(`/workspace-user/${workspaceId}`);
+      navigate(`/workspace-user/${workspaceId}`);
     }
   };
 
   const handleClickOutside = (event) => {
+    if (showDropdown && !event.target.closest(".workspace-box")) {
     if (showDropdown && !event.target.closest(".workspace-box")) {
       setShowDropdown(false);
     }
@@ -52,15 +58,19 @@ const WorkspaceUser = () => {
         console.error(error);
       } finally {
         setIsLoading(false);
+        setIsLoading(false);
       }
     };
     fetchData();
   }, []);
 
+
   useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
     document.addEventListener("click", handleClickOutside);
 
     return () => {
+      document.removeEventListener("click", handleClickOutside);
       document.removeEventListener("click", handleClickOutside);
     };
   }, [showDropdown]);
@@ -82,13 +92,21 @@ const WorkspaceUser = () => {
 
   return (
     <div className="bg-image1 rounded box4">
+    <div className="bg-image1 rounded box4">
       <div className="cointainer">
         <h1 className="heading1">Your Workspaces</h1>
         <div className="grid1 rounded fixed top-0 left-0 right-0 z-10 text-center p-5">
           <div className="app1">
             {isLoading ? (
-              // Display Skeleton elements while loading
               <>
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <div key={index} className="workspace-box skeleton">
+                    <div className="workspace-text1">
+                      <h2 className="h2-skeleton">Name</h2>
+                      <h4 className="mt-3 h2-skeleton">Images:</h4>
+                    </div>
+                  </div>
+                ))}
                 {Array.from({ length: 5 }).map((_, index) => (
                   <div key={index} className="workspace-box skeleton">
                     <div className="workspace-text1">
@@ -104,11 +122,17 @@ const WorkspaceUser = () => {
                 const displayName =
                   updatedWorkspaceNames[workspaceDetails.name] ||
                   workspaceDetails.name;
+                const displayName =
+                  updatedWorkspaceNames[workspaceDetails.name] ||
+                  workspaceDetails.name;
                 return (
                   <div key={workspaceDetails.name} className="workspace-box">
                     <div>
                       <button
                         className="three-button"
+                        onClick={() =>
+                          handleDropdownClick(workspaceDetails.name)
+                        }
                         onClick={() =>
                           handleDropdownClick(workspaceDetails.name)
                         }
@@ -122,6 +146,8 @@ const WorkspaceUser = () => {
                             workspaceDetails={workspaceDetails}
                             updateWorkspaceName={updateWorkspaceName}
                             removeWorkspace={removeWorkspace}
+                            updateWorkspaceName={updateWorkspaceName}
+                            removeWorkspace={removeWorkspace}
                           />
                         )}
                     </div>
@@ -130,8 +156,12 @@ const WorkspaceUser = () => {
                       onClick={(event) =>
                         handleLinkClick(event, workspaceDetails.name)
                       }
+                      onClick={(event) =>
+                        handleLinkClick(event, workspaceDetails.name)
+                      }
                       className="workspace-text"
                     >
+                      <h2>{displayName}</h2>
                       <h2>{displayName}</h2>
                       <h4 className="mt-3">
                         Images: {workspaceDetails?.images?.length || 0}
@@ -161,6 +191,10 @@ const WorkspaceUser = () => {
       {showModel && (
         <div className="popup-modal">
           <div className="popup-form-container">
+            <PopupForm
+              onClose={() => setShowModel(false)}
+              addNewWorkspace={addNewWorkspace}
+            />
             <PopupForm
               onClose={() => setShowModel(false)}
               addNewWorkspace={addNewWorkspace}
