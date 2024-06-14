@@ -18,7 +18,7 @@ const Profile = () => {
   const goToWorkspace = () => {
     navigate("/workspace-user");
   };
-
+  
   return (
     <div className="rounded d-flex flex-column justify-content-center">
       <div className="bg-image1 rounded d-flex flex-column justify-content-center">
