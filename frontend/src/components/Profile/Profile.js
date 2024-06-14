@@ -4,6 +4,7 @@ import ProfileForm from "./ProfileForm";
 import "../Workspace/Workspace.css";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import axios from "axios";
 
 const Profile = () => {
   const [showProfileForm, setShowProfileForm] = useState(false);
@@ -18,6 +19,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        const accessToken = localStorage.getItem("accessToken");
         const response = await axios.get("http://localhost:4000/user", {
           withCredentials: true,
         });
@@ -85,4 +87,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Profile;

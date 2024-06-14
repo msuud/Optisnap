@@ -69,7 +69,6 @@ h1 {
   border-radius: 5px;
 }
 /* 
-/* 
 .small-grid-bg p:hover {
   background: linear-gradient(
     45deg,
@@ -77,11 +76,9 @@ h1 {
     rgba(9, 84, 20, 0.5)
   );
   border-radius: 100%; 
-  border-radius: 100%; 
   border-radius: 5px;
   padding: 10px;
   transition: background 0.3s ease;
-} */
 } */
 
 .workspace {
@@ -92,8 +89,6 @@ h1 {
   font-weight: bold;
   border: none;
   background: transparent;
-  border: none;
-  background: transparent;
 }
 
 .image {
@@ -102,8 +97,6 @@ h1 {
   font-family: serif;
   color: black;
   font-weight: bolder;
-  border: none;
-  background: transparent;
   border: none;
   background: transparent;
 }
@@ -147,21 +140,17 @@ h1 {
   }
 }
 
-
 /* skeletons */
-.skeleton {
 .skeleton {
   background-color: rgba(75, 134, 94, 0.2);
   color: transparent;
 }
-.h2-skeleton-details {
 .h2-skeleton-details {
   background-color: rgba(75, 134, 94, 0.4);
   color: rgba(75, 134, 94, 0);
   border-radius: 30px;
   width: 30%;
 }
-.details-skeleton {
 .details-skeleton {
   width: 60%;
   margin: 0 auto;
@@ -170,22 +159,18 @@ h1 {
   margin-top: 20px;
 }
 .width-small {
-.width-small {
   width: 30%;
 }
-.width-large {
 .width-large {
   width: 900px;
   height: 30px;
 }
-.width-verysmall-d {
 .width-verysmall-d {
   width: 15%;
   border-radius: 30px;
   height: 40px;
   margin: 0 auto;
 }
-.skeleton1 {
 .skeleton1 {
   background-color: rgba(75, 134, 94, 0.2);
   color: transparent;
@@ -199,19 +184,11 @@ h1 {
   border-radius: 30px;
 }
 .border-r {
-.border-r {
   border-radius: 30px;
 }
 .padding-skeleton {
   position: relative;
-  top:30%;
-}
-.table-grid{
-  position: relative;
-  top: 40%;
-}
-.text-center{
-  margin: 0-auto;
+  top: 30%;
 }
 .table-grid {
   position: relative;
