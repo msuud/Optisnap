@@ -19,10 +19,16 @@ export default function BasicTable({ tableData }) {
           borderRadius: "20px",
           width: "900px",
           alignSelf: "center",
+          maxHeight: "300px",
+          justifyContent: "center",
         }}
       >
         <Table
-          sx={{ tableLayout: "fixed", borderRadius: "20px" }}
+          sx={{
+            tableLayout: "fixed",
+            borderRadius: "20px",
+            justifyContent: "center",
+          }}
           aria-label="simple table"
         >
           <TableHead>
@@ -54,7 +60,11 @@ export default function BasicTable({ tableData }) {
                     scope="row"
                     style={{ fontSize: "17px" }}
                   >
-                    <a href={`http://localhost:4000/load/${row.name}`} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={`http://localhost:4000/load/${row.name}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       {row.name}
                     </a>
                   </TableCell>

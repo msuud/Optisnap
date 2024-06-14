@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../Workspace/Workspace.css";
 import CloseIcon from "@mui/icons-material/Close";
 import Button from "react-bootstrap/Button";
@@ -6,41 +6,31 @@ import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/esm/CloseButton";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { getLinearProgressUtilityClass } from "@mui/material";
+import { UserContext } from "../../context/UserContext";
 
 const ProfileForm = ({ onClose }) => {
-  const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
+  const [profile, setProfile] = useState({
+    firstName: user.firstName,
+    lastName: user.lastName,
+    username: user.username,
+  });
 
-  const [firstNameFilled, setFirstNameFilled] = useState(false);
-  const [lastNameFilled, setLastNameFilled] = useState(false);
-  const [usernameFilled, setUsernameFilled] = useState(false);
-  const handleInputChange = (event) => {
-    const inputName = event.target.name;
-    const value = event.target.value;
-
-    switch (inputName) {
-      case "firstName":
-        setFirstNameFilled(value.trim() !== "");
-        break;
-      case "lastName":
-        setLastNameFilled(value.trim() !== "");
-        break;
-      case "username":
-        setUsernameFilled(value.trim() !== "");
-        break;
-      default:
-        break;
-    }
+  const handleInputChange = (e, field) => {
+    setProfile({ ...profile, [field]: e.target.value });
   };
 
-  const handleChangesClick = async (event, field) => {
+  const handleChangesClick = async (event) => {
     event.preventDefault();
     try {
+      console.log(profile);
+      setUser({
+        ...user,
+        ...profile,
+      });
       const response = await axios.patch(
-        `http://localhost:4000/update/${field}`,
-        {
-          name: document.getElementById(field).value,
-        },
+        `http://localhost:4000/update`,
+        profile,
         {
           withCredentials: true,
         }
@@ -49,6 +39,7 @@ const ProfileForm = ({ onClose }) => {
       if (response.data.success === false) {
         alert("Username already exists");
       }
+      onClose();
     } catch (error) {
       console.error(error);
     }
@@ -59,7 +50,7 @@ const ProfileForm = ({ onClose }) => {
       className="modal show"
       style={{ display: "block", position: "initial" }}
     >
-      <Modal.Dialog>
+      <Modal.Dialog style={{ width: "25%" }}>
         <Modal.Header>
           <Modal.Title>
             <h4>Edit Profile</h4>
@@ -73,54 +64,44 @@ const ProfileForm = ({ onClose }) => {
           <form>
             <input
               type="text"
-              placeholder="Enter First Name"
-              className="pop-placeholder w-50 m-3"
+              placeholder={user.firstName}
+              className="pop-placeholder m-3"
+              style={{ width: "80%" }}
               name="firstName"
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e, "firstName")}
               id="firstName"
             />
-            <Button
-              type="submit"
-              disabled={!firstNameFilled}
-              className="button mx-4"
-              onClick={(event) => handleChangesClick(event, "firstName")}
-            >
-              Save changes
-            </Button>
+
             <input
               type="text"
-              placeholder="Enter Last Name"
-              className="pop-placeholder w-50 m-3"
+              placeholder={user.lastName}
+              className="pop-placeholder m-3"
+              style={{ width: "80%" }}
               name="lastName"
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e, "lastName")}
               id="lastName"
             />
-            <Button
-              type="submit"
-              disabled={!lastNameFilled}
-              className="button mx-4"
-              onClick={(event) => handleChangesClick(event, "lastName")}
-            >
-              Save changes
-            </Button>
+
             <input
               type="text"
-              placeholder="Enter Username"
-              className="pop-placeholder w-50 m-3"
+              placeholder={user.username}
+              className="pop-placeholder m-3"
+              style={{ width: "80%" }}
               name="username"
-              onChange={handleInputChange}
+              onChange={(e) => handleInputChange(e, "username")}
               id="username"
             />
-            <Button
-              type="submit"
-              disabled={!usernameFilled}
-              className="button mx-4"
-              onClick={(event) => handleChangesClick(event, "username")}
-            >
-              Save changes
-            </Button>
           </form>
         </Modal.Body>
+        <Modal.Footer>
+          <Button
+            type="submit"
+            className="button mx-4"
+            onClick={(event) => handleChangesClick(event)}
+          >
+            Save changes
+          </Button>
+        </Modal.Footer>
       </Modal.Dialog>
     </div>
   );
