@@ -3,4 +3,4 @@ Optisnap
 
 
 
-I made this project for practice purpose.
+A group project to manage images in the cloud.
