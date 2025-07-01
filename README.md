@@ -3,4 +3,4 @@ Optisnap
 
 
 
-I have made this project only for practice purpose.
+I made this project for practice purpose.
