@@ -1,6 +1,6 @@
-Optisnap
+Optisnap (Manage images efficiently using cloudinary)
 
 
 
 
-A group project to manage images in the cloud.
+A group project.
